@@ -1,1 +1,19 @@
 {% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Consulta de Reserva</h2>
+    <form id="reservaForm">
+        <div class="input-group">
+            <label for="reservaId">Número de Reserva</label>
+            <input type="text" id="reservaId" name="reservaId" required>
+        </div>
+        <div class="input-group">
+            <label for="email">Correo Electrónico</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <button type="button" class="boton-reservar" onclick="consultarReserva()">Consultar</button>
+    </form>
+    <div class="message" id="message"></div>
+</div>
+{% endblock %}
