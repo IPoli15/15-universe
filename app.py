@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('pago.html')
+    return render_template('index.html')
 
 @app.route('/futbol')
 def Futbol():
