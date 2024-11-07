@@ -12,7 +12,7 @@ body {
 }
 
 main {
-    background-image: url("background.jpg");
+    background-image: url("/static/img/background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     margin: auto;
