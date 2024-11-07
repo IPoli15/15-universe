@@ -6,10 +6,6 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/futbol')
-def Futbol():
-    return render_template('futbol.html')
-
 @app.route('/reserva')
 def Reserva():
     return render_template('reserva.html')
