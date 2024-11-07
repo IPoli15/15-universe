@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('reserva.html')
+    return render_template('pago.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
