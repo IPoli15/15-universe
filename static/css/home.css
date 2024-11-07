@@ -1,0 +1,45 @@
+main{
+    display: block;
+}
+#categorias {
+    display: flex;
+    width: 100%;
+}
+.categoria {
+    width: 14%;
+    margin-top: 0;
+
+}
+.categoria h3 {
+    text-align: center;
+}
+.cat_logo {
+    width: 80%;
+    margin-left: 15PX;
+   }
+#recomendaciones {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.recom {
+    display: flex;
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+
+}
+
+.recomendacion {
+    width: 25%;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.img_evento {
+    width: 300px;
+    height: 300px;
+    
+  
+}
