@@ -10,6 +10,10 @@ def index():
 def musica():
     return render_template('musica.html')
 
+@app.route('/cultura_jp')
+def cultura_jp():
+    return render_template('cultura_jp.html')
+
 @app.route('/error')
 def error():
     return render_template('error.html')
