@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/eSports.css') }}">
+
+<div class="container">
+    <section class="seccion-1">
+        <div class="Portada">
+            <h1 id="class">Eventos ESports</h1>
+            <p>
+                Reserva tu entrada para los mejores eventos del mundo del gaming.
+                Disfruta viendo a tus jugadores favoritos jugar o inscribete en un torno para jugar con amigos y demostrar tu nivel.
+            </p> 
+        </div>
+    </section>
+
+    <section class="seccion-2">
+        <div class="eventos">
+            <h2>Eventos Disponibles</h2>
+            <ul class="lista_eventos">
+                <li class="elemtos_lista">Counter Strike con amigos</li>
+                <img src="{{ url_for('static', filename='/img/foto-counter.jpg') }}">
+                <br>
+                <a href="#" class="btn1">Reserva Aqui</a>
+                <li class="elemtos_lista">Worlds LOL 2024</li>
+                <img src="{{ url_for('static', filename='/img/worlds-lol.jpg') }}">
+                <br>
+                <a href="#" class="btn1">Reserva Aqui</a>
+            </ul>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

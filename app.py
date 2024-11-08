@@ -18,6 +18,10 @@ def cultura_jp():
 def fiestas():
     return render_template('fiestas.html')
 
+@app.route('/eSports')
+def esports():
+    return render_template('eSports.html')
+
 @app.route('/error')
 def error():
     return render_template('error.html')
