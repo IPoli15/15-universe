@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/fiestas.css') }}">
+
+<!-- <div id="banner">
+    <h1 id="titulo">Eventos</h1>
+</div> -->
+
+<div class="contenedor-eventos">
+    <div class="evento">
+        <h2>Fiesta GRIM</h2>
+        <div class="contenido-evento">
+            <div class="parte-izquierda">
+                <p>Este Sábado 26 les traemos la sexta edición de la fiesta que se apodera de la noche...</p>
+                <p>La Grim no se podía quedar sin su edición de HALLOWEEN</p>
+                <ul>
+                    <li>Estilos principales: Metal - Alternativo - Pop Punk - Industrial - Nu Metal</li>
+                    <li>Con la compra de tu anticipada participas en un sorteo para ir a ver a SAUROM en vivo.</li>
+                </ul>
+                <p>Los esperamos en El Teatrito - Sarmiento 1752 - CABA</p>
+                <p><strong>Horario:</strong> 23:55hs a 6:00am</p>
+                <p><strong>Ingreso:</strong> Con DNI +18</p>
+                <a id="enlace" href="">Comprar Entrada</a>
+            </div>
+            <div class="parte-derecha">
+                <img src="{{ url_for('static', filename='/img/mapa_grim.png') }}" alt="Mapa Fiesta GRIM" class="mapa">
+            </div>
+        </div>
+    </div>
+
+    <div class="evento">
+        <h2>Fiesta Electrónica FEBA</h2>
+        <div class="contenido-evento">
+            <div class="parte-izquierda">
+                <p>¡LA BIBLIOTECA, WE ARE BACK! Este Sábado 5 de Octubre presentamos en el Main Stage a FOLGAR [Bedrock - Anjunadeep] Extended 3hs Set!</p>
+                <p>Abre la pista Ema Iglesias y calentando la pista Fafi Ledesma</p>
+                <p>Mientras en el Alternative Stage tendremos a los residentes de Downtempo Rooftop!</p>
+                <p>Una noche única en un lugar mágico!</p>
+                <p>Early, tanda 1 y 2 agotadas! Tanda 3 a la venta! (Link en Bio)</p>
+                <p>Mesas VIP Backstage disponibles!</p>
+                <p><strong>Ubicación:</strong> La Biblioteca - México 524, CABA</p>
+                <a id="enlace" href="">Comprar Entrada</a>
+            </div>
+            <div class="parte-derecha">
+                <img src="{{ url_for('static', filename='/img/feba.png') }}" alt="Mapa Fiesta FEBA" class="mapa">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

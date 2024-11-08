@@ -14,6 +14,10 @@ def musica():
 def cultura_jp():
     return render_template('cultura_jp.html')
 
+@app.route('/fiestas')
+def fiestas():
+    return render_template('fiestas.html')
+
 @app.route('/error')
 def error():
     return render_template('error.html')
