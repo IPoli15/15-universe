@@ -12,7 +12,7 @@
         <div class="contenedor-header">
             <img src="{{ url_for('static', filename='img/logo1.png') }}" alt="Logo" class="logo">
             <input type="text" placeholder="Buscar" class="barra-busqueda">
-            <button class="boton-reservar">Reserva aquí</button>
+            <a class="boton-reservar" href="{{url_for('Reserva')}}">Consulta tu reserva</a>
         </div>
     </header>
     <main>
