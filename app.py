@@ -30,6 +30,10 @@ def Reserva():
 def Pago():
     return render_template('pago.html')
 
+@app.route('/futbol')
+def Futbol():
+    return render_template('futbol.html')
+
 @app.route('/tu-reserva')
 def Tu_reserva():
     nombre="Juan Perez"
