@@ -1,5 +1,7 @@
 # Página de Eventos con Flask
 
+<img src="15-universe/static/img/logo.jpg" alt="Logo de la empresa" width="200"/>
+
 Este proyecto es una aplicación web para la gestión de eventos, construida con Flask como backend. La aplicación permite a los usuarios ver la lista de eventos disponibles, y a los administradores crear, editar y eliminar eventos. 
 
 ## Características
@@ -13,8 +15,7 @@ Este proyecto es una aplicación web para la gestión de eventos, construida con
 
 - **Backend**: Flask (Python)
 - **Frontend**: HTML, CSS, JavaScript
-- **Base de datos**: 
-- **Autenticación**: 
+- **Base de datos**: MySql
 
 ## Requisitos
 
@@ -33,12 +34,12 @@ Antes de comenzar, asegúrate de tener los siguientes requisitos instalados:
    cd 15-universe
 
 
-## Grupo {15}
+## Grupo 15 (Universe)
 
 [Sol Yohara Szinvelski](https://github.com/Yohsz)  
 [Blas Perez](https://github.com/BlassPerez)  
 [Alejandro Cabrera Díaz](https://github.com/Alehdiaz)  
 [Ruy Mori](https://github.com/Ruyllex)  
 [Henry Yahuasi Padron](https://github.com/HenryYahuasi)  
-[Santiago Di MAsso](https://github.com/)  
-[Ignacio Mauel Poli Salvador](https://github.com/)  
+[Santiago Di MAsso](https://github.com/SantiagoDiMasso)  
+[Ignacio Mauel Poli Salvador](https://github.com/IPoli15)  
