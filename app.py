@@ -14,6 +14,14 @@ def musica():
 def cultura_jp():
     return render_template('cultura_jp.html')
 
+@app.route('/fiestas')
+def fiestas():
+    return render_template('fiestas.html')
+
+@app.route('/eSports')
+def esports():
+    return render_template('eSports.html')
+
 @app.route('/error')
 def error():
     return render_template('error.html')
@@ -25,6 +33,10 @@ def Reserva():
 @app.route('/pago')
 def Pago():
     return render_template('pago.html')
+
+@app.route('/futbol')
+def Futbol():
+    return render_template('futbol.html')
 
 @app.route('/tu-reserva')
 def Tu_reserva():
