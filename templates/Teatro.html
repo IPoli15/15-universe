@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teatro</title>
+    <link rel="stylesheet" href="Teatro.css">
+    <script src="Teatro.js" defer></script> 
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">
+        <img src="Logo.jpg" alt="Logo">
+    </div>
+    <div class="search-bar">
+        <input type="text" placeholder="Buscar...">
+    </div>
+    <button class="reserve-button">
+        <img src="Reserva.png" alt="Reservar aquí">
+    </button>
+</header>
+
+<main class="main-content">
+    <section class="ticket-selection">
+        <h2>Funciones</h2>
+        <table class="ticket-table">
+            <thead>
+                <tr>
+                    <th>Obras</th>
+                    <th>Disponibles</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr onclick="selectSector(this)"><td>Cascanueces</td><td>30 tickets</td></tr>
+                <tr onclick="selectSector(this)"><td>Orquesta estable</td><td>40 tickets</td></tr>
+                <tr onclick="selectSector(this)"><td>Moliendo a Moliere</td><td>20 tickets</td></tr>
+                <tr onclick="selectSector(this)"><td>El lago de los cisnes</td><td>15 tickets</td></tr>
+            </tbody>
+        </table>
+        <button id="select-btn" class="select-btn" onclick="confirmSelection()" disabled>Seleccionar</button>
+        <p id="selected-sector"></p>
+    </section>
+
+    <section class="event-details">
+        <h2>Teatro Colón</h2>
+        <div class="event-media">
+            <img id="event-image" src="Teatro.jpg" alt="Imagen del evento" class="event-image">
+            <p id="event-description">Descubre la magia del Teatro Colón, un espacio emblemático donde se combinan funciones de ópera, ballet, conciertos y espectáculos de primer nivel, brindando una experiencia cultural única que deleitará todos tus sentidos.</p>
+        </div>
+    </section>
+</main>
+
+<aside class="event-map">
+    <iframe src="https://maps.google.com/maps?q=Teatro+Colón,+Tucumán+1171,+Buenos+Aires&hl=es&t=&z=17&ie=UTF8&iwloc=&output=embed" frameborder="0" allowfullscreen></iframe>
+</aside>
+
+<footer class="footer">
+    <div class="social-media">
+        <a href="#"><img src="Instagram.png" alt="Instagram"></a>
+        <a href="#"><img src="Facebook.png" alt="Facebook"></a>
+        <a href="#"><img src="Whatsapp.png" alt="WhatsApp"></a>
+    </div>
+    <div class="creators">
+        <p>Creadores</p>
+        <ul>
+            <li>Ignacio Mauel Poli Salvador</li>
+            <li>Sol Yohara Szinvelski</li>
+            <li>Blas Perez</li>
+            <li>Alejandro Cabrera Diaz</li>
+            <li>Henry Yahuasi</li>
+            <li>Santiago Di Masso</li>
+            <li>Ruy Mori</li>
+        </ul>
+    </div>
+</footer>
+</body>
+</html>
