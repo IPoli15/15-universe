@@ -1,8 +1,10 @@
-# Página de Eventos con Flask
 
-<img src="15-universe/static/img/logo.jpg" alt="Logo de la empresa" width="200"/>
+<img src="static/img/logo.jpg" alt="Texto alternativo" width="500">
+
+## Página de Eventos con Flask
 
 Este proyecto es una aplicación web para la gestión de eventos, construida con Flask como backend. La aplicación permite a los usuarios ver la lista de eventos disponibles, y a los administradores crear, editar y eliminar eventos. 
+
 
 ## Características
 
