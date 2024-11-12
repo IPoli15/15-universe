@@ -1,5 +1,5 @@
 
-<img src="static/img/logo.jpg" alt="Texto alternativo" width="500">
+<img src="FRONT/static/img/logo.jpg" alt="Texto alternativo" width="500">
 
 ## Página de Eventos con Flask
 
