@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/stand_up.css') }}">
+
+<section id="proximos-eventos" class="event-section">
+    <h2>Próximos Eventos</h2>
+    
+    <article class="event">
+        <h3>Comedy Night con Carlos Sánchez</h3>
+        <p><strong>Fecha:</strong> 20 de Noviembre, 2024</p>
+        <p><strong>Lugar:</strong> Teatro La Escalera, CDMX</p>
+        <p><strong>Descripción:</strong> Disfruta de una noche de risas con Carlos Sánchez y otros comediantes invitados.</p>
+        <a id="enlace" href="{{url_for('Pago')}}">Comprar Entrada</a>
+    </article>
+    
+    <article class="event">
+        <h3>Noche de Comedia con Ana López</h3>
+        <p><strong>Fecha:</strong> 5 de Diciembre, 2024</p>
+        <p><strong>Lugar:</strong> Teatro Colón, Monterrey</p>
+        <p><strong>Descripción:</strong> No te pierdas el show de Ana López, una de las comediantes más divertidas del momento.</p>
+        <a id="enlace" href="{{url_for('Pago')}}">Comprar Entrada</a>
+    </article>
+
+</section>
+
+
+{% endblock %}

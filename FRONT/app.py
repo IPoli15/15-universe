@@ -42,6 +42,10 @@ def Pago():
 def Futbol():
     return render_template('futbol.html')
 
+@app.route('/stand-up')
+def Stand_up():
+    return render_template('stand_up.html')
+
 @app.route('/tu-reserva')
 def Tu_reserva():
     nombre="Juan Perez"
