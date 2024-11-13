@@ -12,7 +12,7 @@ body {
 }
 
 main {
-    background-image: url("/static/img/background.jpg");
+    background-image: url("/static/img/musica/fondo-concierto.jpeg");
     background-size: cover;
     background-repeat: no-repeat;
     margin: auto;
@@ -67,6 +67,16 @@ main {
 
 }
 
+h1 {
+    font-size: 35px;
+    justify-self: center;
+}
+
+h2 {
+    font-size: 20px;
+    justify-self: left;
+}
+
 /*TODO_________________________________________________________*/
 
 /*TODO_______________________parte derecha____________________*/
@@ -74,6 +84,7 @@ main {
 #parte-derecha {
     /* border: solid yellow; */
     display: grid;
+    padding: 5%;
 }
 
 #parte-derecha .texto-derecha {
