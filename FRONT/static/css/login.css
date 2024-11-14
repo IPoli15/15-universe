@@ -1,5 +1,19 @@
-main {
+/* main {
     background-image: url(/15-universe/FRONT/static/img/fondo-login.jpg);
+} */
+
+main {
+    background-image: url("/static/img/fondologin.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 1270px; 
+    height: 500px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto; 
+    padding: 0;
 }
 
 
