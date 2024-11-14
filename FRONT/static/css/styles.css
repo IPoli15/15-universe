@@ -54,6 +54,7 @@ header {
     font-size: 18px;
     border-radius: 10px;
     cursor: pointer;
+    text-decoration: none;
 }
 
 main {
