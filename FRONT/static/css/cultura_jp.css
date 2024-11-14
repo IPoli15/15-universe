@@ -212,14 +212,7 @@
     }
     }
 
-    .footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background-color: #6C1A91;
-    flex-wrap: wrap;
-    }
+
     
     .footer .social-media {
     display: flex;
