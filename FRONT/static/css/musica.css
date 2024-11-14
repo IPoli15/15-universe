@@ -26,7 +26,7 @@ main {
     display: grid;
     justify-content: center;
     align-items: start;
-    grid-template-columns: 50% auto;
+    grid-template-columns: 40% auto;
     border-radius: 20px;
 }
 
@@ -48,12 +48,15 @@ main {
 
 #parte-izquierda {
     /* border: solid red; */
-    margin: auto;
+    display: grid;
+    padding: 5%;
+    height: 500px;
+    width: 350px;
 }
 
 #parte-izquierda .texto-izquierda {
     justify-self: right;
-    padding: 15%;
+    padding: 5%;
     color: #000000;
 
 }
@@ -76,6 +79,7 @@ h2 {
     /* border: solid yellow; */
     display: grid;
     padding: 5%;
+    width: 500px;
 }
 
 #parte-derecha .texto-derecha {
@@ -88,8 +92,9 @@ aside {
     /* border: 2px solid green; */
     display: grid;
     justify-self: center;
-    max-width: 80%;
-    height: auto;
+    width: 400px;
+    width: 100%; /* Ajusta el ancho según sea necesario */
+    height: 400px;
     padding: 0;
     border-radius: 20px;
     overflow: hidden;
