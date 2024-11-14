@@ -1,88 +1,51 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Descripción de Evento - El Cascanueces</title>
-    <link rel="stylesheet" href="Descripcion_evento.css">
-</head>
-<body>
-    <header class="header">
-        <div class="logo">
-            <img src="Logo.jpg" alt="Logo de Universe">
-        </div>
-        <div class="search-bar">
-            <input type="text" placeholder="Buscar">
-        </div>
-        <button class="reserve-button">
-    <img src="Reserva.png" alt="Reservar aquí">
-</button>
-    </header>
+{% extends "base.html" %}
 
-    <main class="main-content">
-        <section class="event-info">
-            <h1>El Cascanueces</h1>
-            <p>El Centro Nacional de las Artes Delia Zapata Olivella (CNA) confirmo que el mitico Teatro Colon Llegara una de las obras mas importantes del compositor ruso Piotr Ilich Tchaikovsky.</p>
-            <div class="ticket-selection">
-                <h2>Entradas</h2>
-                <label for="ticket-count">Seleccione la cantidad que desea:</label>
-                <select id="ticket-count">
-                    <option>1 ticket/s</option>
-                    <option>2 ticket/s</option>
-                    <option>3 ticket/s</option>
-                </select>
-                <table class="ticket-table">
-                    <thead>
-                        <tr>
-                            <th>Sector</th>
-                            <th>Disponibles</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr onclick="selectSector(this)"><td>Galería 1er Lateral</td><td>14 tickets</td></tr>
-                        <tr onclick="selectSector(this)"><td>Paraíso</td><td>5 tickets</td></tr>
-                        <tr onclick="selectSector(this)"><td>Galería 1er Fila 2do Lateral</td><td>Agotado</td></tr>
-                        <tr onclick="selectSector(this)"><td>Cazuela de pie</td><td>20 tickets</td></tr>
-                        <tr onclick="selectSector(this)"><td>Tertulia de pie</td><td>9 tickets</td></tr>
-                        <tr onclick="selectSector(this)"><td>Paraíso de pie</td><td>Agotado</td></tr>
-                    </tbody>
-                </table>
-                <button id="select-btn" class="select-btn" onclick="confirmSelection()" disabled>Seleccionar</button>
-                <p id="selected-sector"></p>
-            </div>
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/Descripcion_evento.css') }}">
+<script src="{{ url_for('static', filename='js/Descripcion_evento.js') }}" defer></script>
+
+<main class="main-content">
+    <section class="event-info">
+        <h1>El Cascanueces</h1>
+        <p>El Centro Nacional de las Artes Delia Zapata Olivella (CNA) confirmó que en el mítico Teatro Colón se presentará una de las obras más importantes del compositor ruso Piotr Ilich Tchaikovsky.</p>
+        <div class="ticket-selection">
+            <h2>Entradas</h2>
+            <label for="ticket-count">Seleccione la cantidad que desea:</label>
+            <select id="ticket-count">
+                <option>1 ticket/s</option>
+                <option>2 ticket/s</option>
+                <option>3 ticket/s</option>
+            </select>
+            <table class="ticket-table">
+                <thead>
+                    <tr>
+                        <th>Sector</th>
+                        <th>Disponibles</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr onclick="selectSector(this)"><td>Galería 1er Lateral</td><td>14 tickets</td></tr>
+                    <tr onclick="selectSector(this)"><td>Paraíso</td><td>5 tickets</td></tr>
+                    <tr onclick="selectSector(this)"><td>Galería 1er Fila 2do Lateral</td><td>Agotado</td></tr>
+                    <tr onclick="selectSector(this)"><td>Cazuela de pie</td><td>20 tickets</td></tr>
+                    <tr onclick="selectSector(this)"><td>Tertulia de pie</td><td>9 tickets</td></tr>
+                    <tr onclick="selectSector(this)"><td>Paraíso de pie</td><td>Agotado</td></tr>
+                </tbody>
+            </table>
+            <button id="select-btn" class="select-btn" onclick="confirmSelection()" disabled>Seleccionar</button>
+            <p id="selected-sector"></p>
+        </div>
     </section>
+
     <aside class="event-media">
-        <img src="Imagen_evento.jpg" alt="Imagen del evento">
+        <img src="{{ url_for('static', filename='img/Imagen_evento.jpg') }}" alt="Imagen del evento" class="event-image">
     </aside>
 </main>
 
 <aside class="event-map">
     <iframe src="https://maps.google.com/maps?q=Teatro+Colón,+Tucumán+1171,+Buenos+Aires&hl=es&t=&z=17&ie=UTF8&iwloc=&output=embed" frameborder="0" allowfullscreen></iframe>
 </aside>
-</main>
 
-    <footer class="footer">
-        <div class="social-media">
-            <a href="#"><img src="Instagram.png" alt="Instagram"></a>
-            <a href="#"><img src="Facebook.png" alt="Facebook"></a>
-            <a href="#"><img src="Whatsapp.png" alt="WhatsApp"></a>
-        </div>
-        <div class="creators">
-<div class="creators">
-    <p>Creadores</p>
-    <ul>
-        <li>Ignacio Mauel Poli Salvador</li>
-        <li>Sol Yohara Szinvelski</li>
-        <li>Blas Perez</li>
-        <li>Alejandro Cabrera Diaz</li>
-        <li>Henry Yahuasi</li>
-        <li>Santiago Di Masso</li>
-        <li>Ruy Mori</li>
-    </ul>
-</div>
-    </footer>
-
-    <script src="Descripcion_evento.js"></script>
-</body>
-</html>
+{% endblock %}
 
