@@ -1,6 +1,6 @@
 main{
     display: block;
-    background-image: url(/static/img/prueba.jpg);
+    background-image: url("/static/img/fondohome.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     padding: 100px;
