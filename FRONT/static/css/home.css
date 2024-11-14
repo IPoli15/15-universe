@@ -1,6 +1,6 @@
 main{
     display: block;
-    background-image: url(/static/img/fondologin.jpg);
+    background-image: url(/static/img/prueba.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     padding: 100px;
@@ -8,11 +8,10 @@ main{
 #categorias {
 
     /* border: 2px solid green; */
-    background-color: rgba(101, 11, 175, 0.445);
     display: flex;
     justify-content: center;
     align-content: center;
-    padding: 20px;
+    padding: 0;
     width: auto;
     height: auto;
     border-radius: 20px;
@@ -26,7 +25,7 @@ a {
 .categoria {
     width: 10%;
     margin-top: 0;
-    padding: 10px;
+    padding: 0;
 
 }
 .categoria h3 {
@@ -34,7 +33,12 @@ a {
 }
 
 #texto {
-    text-align: left;
+    /* border: 2px solid green; */
+    text-align: center;
+    /* background-color: #0f032496; */
+    padding: 15px;
+    font-size: 20px;
+    border-radius: 20px;
 }
 
 h2 {
@@ -54,8 +58,10 @@ h2 {
 #recomendaciones {
     display: grid;
     /* border: 2px solid green; */
+    /* background-color: #220752; */
     width: auto;
     height: auto;
+    padding: 20px;
     justify-content: center;
 }
 
