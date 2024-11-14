@@ -46,6 +46,14 @@ def Futbol():
 def Stand_up():
     return render_template('stand_up.html')
 
+""" @app.route('/crear_evento')
+def crear_evento():
+    return render_template('crear_evento.html')  """
+@app.route('/crear_evento')
+def crear_evento_form():
+    return render_template('crear_evento.html')
+
+
 @app.route('/tu-reserva')
 def Tu_reserva():
     nombre="Juan Perez"
@@ -57,4 +65,4 @@ def Tu_reserva():
     return render_template('tu-reserva.html', nombre=nombre,dni=dni, codigo_reserva=codigo_reserva, sector=sector, cantidad_tickets=cantidad_tickets, precio_total=precio_total)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5000)
