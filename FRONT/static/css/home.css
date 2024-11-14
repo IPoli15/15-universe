@@ -13,7 +13,7 @@ main{
     justify-content: center;
     align-content: center;
     padding: 20px;
-    width: 90%;
+    width: auto;
     height: auto;
     border-radius: 20px;
 }
