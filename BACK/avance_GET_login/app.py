@@ -8,6 +8,7 @@ from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
 QUERY_RESERVA_BY_ID = "SELECT id_usuarios, id_evento, cant_tickets FROM reservas WHERE id_reserva = :id_reserva"
+QUERY_INGRESAR_RESERVA = "INSERT INTO reservas (id_usuarios, id_evento, id_reserva, cant_tickets) VALUES (:id_usuarios, :id_evento,  :id_reserva, :cant_tickets)"
 
 
 app = Flask(__name__)
@@ -65,7 +66,7 @@ def reserva_by_id(id_reserva):
     return run_query(QUERY_RESERVA_BY_ID, {'id_reserva': id_reserva}).fetchall()
 
 @app.route('/consultar-reserva/<int:id_reserva>', methods=['GET'])
-def get_by_padron(id_reserva):
+def consultar_reserva(id_reserva):
     try:
         result = reserva_by_id(id_reserva)
     except Exception as e:
@@ -79,6 +80,32 @@ def get_by_padron(id_reserva):
 
 
 
+#---METODO POST, INSERTAR RESERVAS ----#
+
+
+def insertar_reserva(data):
+    run_query(QUERY_INGRESAR_RESERVA, data)
+
+@app.route('/crear-reserva', methods=['POST'])
+def add_reserva():
+    data = request.get_json()
+
+    keys = ('id_usuarios', 'id_evento', 'id_reserva', 'cant_tickets')
+    for key in keys:
+        if key not in data:
+            return jsonify({'error': f'Falta el dato {key}'}), 400
+
+    try:
+        result = reserva_by_id(data['id_reserva'])
+        if len(result) > 0:
+            return jsonify({'error': 'La reserva ya existe'}), 400
+
+        insertar_reserva(data)
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+    return jsonify(data), 201
 
 
 
