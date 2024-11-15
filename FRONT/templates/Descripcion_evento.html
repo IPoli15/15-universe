@@ -1,44 +1,38 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 <link rel="stylesheet" href="{{ url_for('static', filename='css/Descripcion_evento.css') }}">
 <script src="{{ url_for('static', filename='js/Descripcion_evento.js') }}" defer></script>
 
 <main class="main-content">
-    <section class="event-info">
-        <h1>El Cascanueces</h1>
-        <p>El Centro Nacional de las Artes Delia Zapata Olivella (CNA) confirmó que en el mítico Teatro Colón se presentará una de las obras más importantes del compositor ruso Piotr Ilich Tchaikovsky.</p>
-        <div class="ticket-selection">
-            <h2>Entradas</h2>
-            <label for="ticket-count">Seleccione la cantidad que desea:</label>
-            <select id="ticket-count">
-                <option>1 ticket/s</option>
-                <option>2 ticket/s</option>
-                <option>3 ticket/s</option>
-            </select>
-            <table class="ticket-table">
-                <thead>
-                    <tr>
-                        <th>Sector</th>
-                        <th>Disponibles</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr onclick="selectSector(this)"><td>Galería 1er Lateral</td><td>14 tickets</td></tr>
-                    <tr onclick="selectSector(this)"><td>Paraíso</td><td>5 tickets</td></tr>
-                    <tr onclick="selectSector(this)"><td>Galería 1er Fila 2do Lateral</td><td>Agotado</td></tr>
-                    <tr onclick="selectSector(this)"><td>Cazuela de pie</td><td>20 tickets</td></tr>
-                    <tr onclick="selectSector(this)"><td>Tertulia de pie</td><td>9 tickets</td></tr>
-                    <tr onclick="selectSector(this)"><td>Paraíso de pie</td><td>Agotado</td></tr>
-                </tbody>
-            </table>
-            <button id="select-btn" class="select-btn" onclick="confirmSelection()" disabled>Seleccionar</button>
-            <p id="selected-sector"></p>
-        </div>
+    <section id="ticket-box">
+        <h2>Entradas</h2>
+        <label for="ticket-count">Seleccione la cantidad:</label>
+        <select id="ticket-count">
+            <option>1 ticket/s</option>
+            <option>2 ticket/s</option>
+            <option>3 ticket/s</option>
+        </select>
+        <table class="ticket-table">
+            <thead>
+                <tr>
+                    <th>Sector</th>
+                    <th>Disponibles</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr onclick="selectSector(this)"><td>Galería 1er Lateral</td><td>14 tickets</td></tr>
+                <tr onclick="selectSector(this)"><td>Paraíso</td><td>5 tickets</td></tr>
+                <tr onclick="selectSector(this)"><td>Galería 1er Fila 2do Lateral</td><td>Agotado</td></tr>
+                <tr onclick="selectSector(this)"><td>Cazuela de pie</td><td>20 tickets</td></tr>
+                <tr onclick="selectSector(this)"><td>Tertulia de pie</td><td>9 tickets</td></tr>
+                <tr onclick="selectSector(this)"><td>Paraíso de pie</td><td>Agotado</td></tr>
+            </tbody>
+        </table>
+        <button class="select-btn" id="select-btn" onclick="confirmSelection()" disabled>Seleccionar</button>
     </section>
 
-    <aside class="event-media">
+    <aside class="event-info">
         <img src="{{ url_for('static', filename='img/Imagen_evento.jpg') }}" alt="Imagen del evento" class="event-image">
     </aside>
 </main>
@@ -46,6 +40,5 @@
 <aside class="event-map">
     <iframe src="https://maps.google.com/maps?q=Teatro+Colón,+Tucumán+1171,+Buenos+Aires&hl=es&t=&z=17&ie=UTF8&iwloc=&output=embed" frameborder="0" allowfullscreen></iframe>
 </aside>
-
 {% endblock %}
 
