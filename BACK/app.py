@@ -9,7 +9,9 @@ from sqlalchemy.exc import SQLAlchemyError
 
 QUERY_RESERVA_BY_ID = "SELECT id_usuarios, id_evento, cant_tickets FROM reservas WHERE id_reserva = :id_reserva"
 QUERY_INGRESAR_RESERVA = "INSERT INTO reservas (id_usuarios, id_evento, id_reserva, cant_tickets) VALUES (:id_usuarios, :id_evento,  :id_reserva, :cant_tickets)"
-
+QUERY_ELIMINAR_RESERVA = "DELETE FROM reservas WHERE id_reserva = :id_reserva"
+QUERY_RESERVAS_EVENTO = "SELECT COUNT(*) FROM eventos WHERE id_evento = :id_evento"
+QUERY_ELIMINAR_EVENTO = "DELETE FROM eventos WHERE id_evento = :id_evento"
 
 app = Flask(__name__)
 
@@ -114,8 +116,7 @@ def add_reserva():
 def eliminar_reserva(id_reserva):
     try:
     
-        query_eliminar_reserva = "DELETE FROM query_tabla_reservas WHERE id_reserva = :id_reserva"
-        result = run_query(query_eliminar_reserva, {'id_reserva': id_reserva})
+        result = run_query(QUERY_ELIMINAR_RESERVA, {'id_reserva': id_reserva})
 
         if result.rowcount == 0:
             return jsonify({'error': 'No se encontró una reserva con este ID'}), 404
@@ -131,16 +132,13 @@ def eliminar_reserva(id_reserva):
 @app.route('/eliminar-evento/<int:id_evento>', methods=['DELETE'])
 def eliminar_evento(id_evento):
     try:      
-        query_reservas_evento = "SELECT COUNT(*) FROM query_tabla_reservas WHERE id_evento = :id_evento"
-        result_reservas = run_query(query_reservas_evento, {'id_evento': id_evento}).fetchone()
+        result_reservas = run_query(QUERY_RESERVAS_EVENTO, {'id_evento': id_evento}).fetchone()
 
         if result_reservas[0] > 0:
         
-            query_eliminar_reservas = "DELETE FROM query_tabla_reservas WHERE id_evento = :id_evento"
-            run_query(query_eliminar_reservas, {'id_evento': id_evento})
+            run_query(QUERY_ELIMINAR_RESERVA, {'id_evento': id_evento})
         
-        query_eliminar_evento = "DELETE FROM query_tabla_eventos WHERE id_evento = :id_evento"
-        result = run_query(query_eliminar_evento, {'id_evento': id_evento})
+        result = run_query(QUERY_ELIMINAR_EVENTO, {'id_evento': id_evento})
 
        
         if result.rowcount == 0:
