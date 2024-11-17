@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tiny5&display=swap');
+
+#imagen {
+    width: 100px;
+    height: 100px;
+}
+
+#contenido {
+    /* border: 2px solid green; */
+    margin: 10px;
+    display: grid;
+    place-items: center;
+    grid-template-rows: auto 1fr auto auto;
+    grid-template-columns: auto;
+    height: auto;
+    color: gray;
+}
+
+#contenido h1 {
+    /*border: 2px solid green;*/
+    font-family: "Tiny5", sans-serif;
+    font-size: 3.5em;
+    grid-row: 1;
+    margin: 25px;
+    padding: 0;
+    text-align: center;
+}
+
+#contenido img {
+    /*border: 2px solid green;*/
+    grid-row: 2;
+    margin: 0;
+    padding: 0;
+    height: 500px;
+}
+
+#contenido p {
+    /*border: 2px solid green;*/
+    grid-row: 3;
+    font-size: 1.5em;
+    text-align: center;
+    margin: 20px;
+}
+
+#contenido a {
+    /*border: 2px solid green;*/
+    grid-row: 4;
+    font-size: 15px;
+    text-align: center;
+}
+
+#enlace {
+    text-decoration: none;
+    color: #fff; /* Color del texto */
+    background-color: rgb(88, 2, 88); /* Color de fondo */
+    padding: 10px 10px; /* Espacio interno entre el texto y el borde */
+    border-radius: 5px; /* Bordes redondeados */
+}
+
+#enlace:hover {
+    background-color: #4d047e;
+}

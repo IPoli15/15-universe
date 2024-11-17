@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/Teatro.css') }}">
+<script src="{{ url_for('static', filename='js/Teatro.js') }}" defer></script>
+
+<div id="contenedor-principal">
+    <div id="contenedor-secundario">
+        <div id="parte-izquierda">
+            <div class="texto-izquierda">
+                <h1>Teatro Colón</h1>
+                <h2>Funciones</h2>
+                <table class="ticket-table">
+                    <thead>
+                        <tr>
+                            <th>Obras</th>
+                            <th>Tickets Disponibles</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr onclick="selectSector(this)" data-img="{{ url_for('static', filename='img/Cascanueces1.jpg') }}" data-description="El Centro Nacional de las Artes Delia Zapata Olivella (CNA) confirmo que el mitico Teatro Colon Llegara una de las obras mas importantes del compositor ruso Piotr Ilich Tchaikovsky.">
+                            <td>Cascanueces</td><td>30 tickets</td>
+                        </tr>
+                        <tr onclick="selectSector(this)" data-img="{{ url_for('static', filename='img/Orquesta_estable.jpg') }}" data-description="La orquesta estable dirigida por Gustavo Fontana se presenta en el Teatro Colon, se interpretaran las Danzas Polovtsianas de El principe Igor de Borodin y la Quinta Sinfonia de Tchaikovsky.">
+                            <td>Orquesta Estable</td><td>40 tickets</td>
+                        </tr>
+                        <tr onclick="selectSector(this)" data-img="{{ url_for('static', filename='img/Moliendo_moliere.jpg') }}" data-description="Espectaculo sobre textos de Moliere y musica de Jean-Baptiste Lully, la obra pone en escena a compañia de artistas, de dudosa reputacion, que se embarca en una mision disparatada para mejorar su situacion.">
+                            <td>Moliendo a Moliere</td><td>20 tickets</td>
+                        </tr>
+                        <tr onclick="selectSector(this)" data-img="{{ url_for('static', filename='img/Lago_cisnes.jpg') }}" data-description="En el Teatro Colon se presenta el reestreno de El lago de los cisnes con Mario Galizzi. Entre otros bailaran Marianela Nuñez. la rusa Natalia Osipova y el italiano Roberto Bolle.">
+                            <td>El Lago de los Cisnes</td><td>15 tickets</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button id="select-btn" class="select-btn" onclick="confirmSelection()" disabled>Confirmar Selección</button>
+                <p id="selected-sector"></p>
+            </div>
+        </div>
+
+        <div id="parte-derecha">
+            <div class="event-media">
+                <img id="event-image" src="{{ url_for('static', filename='img/Teatro.jpg') }}" alt="Evento" class="event-image">
+            </div>
+            <div class="event-description">
+                <p id="event-description">El mitico Teatro Colon abre sus puertas con obras maravillosas para todo publico.</p>
+            </div>
+        </div>
+    </div>
+
+    <aside class="event-map">
+        <iframe src="https://maps.google.com/maps?q=Teatro+Colón,+Tucumán+1171,+Buenos+Aires&hl=es&t=&z=17&ie=UTF8&iwloc=&output=embed" frameborder="0" allowfullscreen></iframe>
+    </aside>
+</div>
+
+{% endblock %}

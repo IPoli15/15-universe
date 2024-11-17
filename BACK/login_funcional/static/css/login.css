@@ -1,0 +1,100 @@
+/* main {
+    background-image: url(/15-universe/FRONT/static/img/fondo-login.jpg);
+} */
+
+main {
+    background-image: url("/static/img/fondologin.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 1270px; 
+    height: 500px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto; 
+    padding: 0;
+}
+
+
+.contenedor-login {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 2em;
+    background-color: #D9B2EC;
+    border: 1px solid #8400ff;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.contenedor-login h2 {
+    margin-bottom: 1.5em;
+    color: #4b0082;
+}
+
+.contenedor-login form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contenedor-login label {
+    margin-bottom: 0.5em;
+    color: #4b0082;
+    font-weight: bold;
+    text-align: left;
+}
+
+.contenedor-login input[type="text"],
+.contenedor-login input[type="password"] {
+    padding: 0.75em;
+    margin-bottom: 1em;
+    border: 1px solid #b29fce;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.contenedor-login input[type="text"]:focus,
+.contenedor-login input[type="password"]:focus {
+    outline: none;
+    border-color: #4b0082;
+}
+
+.contenedor-contraseña {
+    display: flex;
+    align-items: center;
+    border: 1px solid #b29fce;
+    border-radius: 5px;
+    margin-bottom: 1em;
+}
+
+.contenedor-contraseña input {
+    flex: 1;
+    border: none;
+    padding: 0.75em;
+    border-radius: 5px 0 0 5px;
+}
+
+.contenedor-contraseña button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0 10px;
+    font-size: 1.2em;
+    color: #4b0082;
+}
+
+.contenedor-login button[type="submit"] {
+    padding: 0.75em;
+    background-color: #4b0082;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.contenedor-login button[type="submit"]:hover {
+    background-color: #3a006a;
+}
