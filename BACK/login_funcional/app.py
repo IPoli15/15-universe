@@ -17,15 +17,12 @@ engine = create_engine("mysql+mysqlconnector://root:1234@localhost:3306/universe
 # estas estan disponibles en toda la aplicacion y son accesibles desde cualquier parte de la misma
 app.config['ES_ADMIN'] = False
 
-@app.route('/')
-def index():
-    return render_template('index.html')
 
 #--------------------------------------------------------TABLA USUARIOS-----------------------------------#
 
-@app.route('/admin')
-def admin_index():
-    return render_template('admin-index.html')
+@app.route('/')
+def index():
+    return render_template('index.html', es_admin=app.config['ES_ADMIN'])
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -44,7 +41,7 @@ def login():
         if usuario and usuario.password == password:
             print("Contraseña correcta")
             app.config['ES_ADMIN'] = True
-            return redirect(url_for('admin_index'))
+            return redirect(url_for('index'))
         else:
             print("Contraseña incorrecta o usuario no encontrado")
             return redirect(url_for('login'))
