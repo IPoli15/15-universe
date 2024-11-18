@@ -46,6 +46,7 @@ def Futbol():
 def Stand_up():
     return render_template('stand_up.html')
 
+
 """ @app.route('/crear_evento')
 def crear_evento():
     return render_template('crear_evento.html')  """
@@ -53,6 +54,9 @@ def crear_evento():
 def crear_evento_form():
     return render_template('crear_evento.html')
 
+@app.route('/teatro')
+def Teatro():
+    return render_template('Teatro.html')
 
 @app.route('/tu-reserva')
 def Tu_reserva():
