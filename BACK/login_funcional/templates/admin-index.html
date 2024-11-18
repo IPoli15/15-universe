@@ -1,0 +1,34 @@
+{% extends "admin-base.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin-home.css') }}">
+        
+<div id="categorias">
+    <a href="{{url_for('Futbol')}}" class="categoria"><img src="/static/img/cat_futbol.png" alt="Futbol" class="cat_logo"><h3>futbol</h3></a>
+    <a href="{{url_for('musica')}}" class="categoria"><img src="/static/img/cat_conciertos.png" alt="Conciertos" class="cat_logo"><h3>conciertos</h3></a>
+    <a href="{{url_for('fiestas')}}" class="categoria"><img src="/static/img/cat_fiestas.png" alt="Fiestas" class="cat_logo"><h3>Fiestas</h3></a>
+    <a href="{{url_for('Teatro')}}" class="categoria"><img src="/static/img/cat_teatro.png" alt="Teatro" class="cat_logo"><h3>Teatro</h3></a>
+    <a href="{{url_for('cultura_jp')}}" class="categoria"><img src="/static/img/jp.png" alt="JP" class="cat_logo"><h3>Cultura japonesa</h3></a>
+    <a href="{{url_for('esports')}}" class="categoria"><img src="/static/img/cat_esport.png" alt="Logo" class="cat_logo"><h3>E-sports</h3></a>
+    <a href="{{url_for('Stand_up')}}" class="categoria"><img src="/static/img/stand_up_icon.png" alt="Logo" class="cat_logo"><h3>Stand-Up</h3></a>
+</div>
+
+
+<h2 id="texto">Nuestras recomendaciones</h2>
+<div id="recomendaciones">
+    <div class="recom">
+        <a href="{{url_for('index')}}" class="recomendacion"><img src="static/img/recom_lib.png" class="img_evento" alt="a"></a>
+        <a href="{{url_for('index')}}" class="recomendacion"><img src="static/img/recom_sud.png" class="img_evento" alt="b"></a>
+        <a href="{{url_for('index')}}" class="recomendacion"><img src="static/img/recom_concierto.png" class="img_evento" alt="c"></a>
+        <a href="{{url_for('index')}}" class="recomendacion"><img src="static/img/recom_comic.png" class="img_evento" alt="d"></a>
+    </div>
+    <div class="recom">
+        <a href="{{url_for('index')}}" class="recomendacion"><img src="static/img/recom_ca.jpg" class="img_evento" alt="e"></a>
+        <a href="{{url_for('index')}}" class="recomendacion"><img src="static/img/recom_tenis.jpg" class="img_evento" alt="f"></a>
+        <a href="{{url_for('index')}}" class="recomendacion"><img src="static/img/recom_teatro.jpg" class="img_evento" alt="g"></a>
+        <a href="{{url_for('index')}}" class="recomendacion"><img src="static/img/recom_f1.jpg" class="img_evento" alt="h"></a>
+    </div>
+</div>
+
+{% endblock %}

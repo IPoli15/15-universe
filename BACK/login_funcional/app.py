@@ -12,11 +12,15 @@ db.init_app(app)
 # Recordar que los datos de la db en cuanto a nombre, usuario y contraseña varian.
 engine = create_engine("mysql+mysqlconnector://root:1234@localhost:3306/universe")
 
-#--------------------------------------------------------TABLA USUARIOS-----------------------------------#
-
 @app.route('/')
 def index():
     return render_template('index.html')
+
+#--------------------------------------------------------TABLA USUARIOS-----------------------------------#
+
+@app.route('/admin')
+def admin_index():
+    return render_template('admin-index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -34,7 +38,7 @@ def login():
         
         if usuario and usuario.password == password:
             print("Contraseña correcta")
-            return redirect(url_for('index'))
+            return redirect(url_for('admin_index'))
         else:
             print("Contraseña incorrecta o usuario no encontrado")
             return redirect(url_for('login'))
