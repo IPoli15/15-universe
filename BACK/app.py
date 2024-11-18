@@ -7,22 +7,31 @@ from sqlalchemy import create_engine
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
+# Queries SQL
+QUERY_CREAR_EVENTO = """
+    INSERT INTO eventos (nombre_evento, categoria, descripcion, entradas_disponibles, localizacion, precio_entrada)
+    VALUES (:nombre_evento, :categoria, :descripcion, :entradas_disponibles, :localizacion, :precio_entrada)
+"""
+
 QUERY_RESERVA_BY_ID = "SELECT id_usuarios, id_evento, cant_tickets FROM reservas WHERE id_reserva = :id_reserva"
 QUERY_INGRESAR_RESERVA = "INSERT INTO reservas (id_usuarios, id_evento, id_reserva, cant_tickets) VALUES (:id_usuarios, :id_evento,  :id_reserva, :cant_tickets)"
 QUERY_ELIMINAR_RESERVA = "DELETE FROM reservas WHERE id_reserva = :id_reserva"
 QUERY_RESERVAS_EVENTO = "SELECT COUNT(*) FROM eventos WHERE id_evento = :id_evento"
 QUERY_ELIMINAR_EVENTO = "DELETE FROM eventos WHERE id_evento = :id_evento"
 
-app = Flask(__name__)
+""" app = Flask(__name__) """
+app = Flask(__name__, template_folder='../FRONT/templates', static_folder='../FRONT/static')
 
 app.config.from_object(Config)
 
 db.init_app(app)
 
-engine = create_engine("mysql+mysqlconnector://root:tuclave@localhost:3306/universe")
+engine = create_engine("mysql+mysqlconnector://root:coqui2529@localhost:3306/universe")
+
 
 def run_query(query, parameters=None):
     with engine.connect() as conn:
+        print(f"Ejecutando consulta: {query} con parámetros: {parameters}")
         result = conn.execute(text(query), parameters)
         conn.commit()
 
@@ -34,6 +43,10 @@ def run_query(query, parameters=None):
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/reserva')
+def Reserva():
+    return render_template('reserva.html')  
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -58,6 +71,39 @@ def login():
 def dashboard():
     return "¡Bienvenido al Dashboard!"
 
+# ---------------------- FUNCIONES PARA EVENTOS ----------------------
+
+@app.route('/crear_evento', methods=['GET'])
+def crear_evento_form():
+    return render_template('crear_evento.html')
+
+@app.route('/crear_evento', methods=['POST'])
+def crear_evento():
+    # Obtener los datos del formulario
+    data = {
+        'nombre_evento': request.form['nombre_evento'],
+        'categoria': request.form['categoria'],
+        'descripcion': request.form['descripcion'],
+        'entradas_disponibles': request.form['entradas_disponibles'],
+        'localizacion': request.form['localizacion'],
+        'precio_entrada': request.form['precio_entrada']
+    }
+
+    # Validacion de datos
+    required_keys = ('nombre_evento', 'categoria', 'descripcion', 'entradas_disponibles', 'localizacion', 'precio_entrada')
+    for key in required_keys:
+        if not data.get(key):
+            flash(f'El campo {key} es obligatorio.', 'danger')
+            return redirect(url_for('crear_evento_form'))
+
+    try:
+        # Insertar el evento en la base de datos
+        run_query(QUERY_CREAR_EVENTO, data)
+        flash('Evento creado con éxito.', 'success')
+    except SQLAlchemyError as e:
+        flash(f'Error al crear el evento: {e}', 'danger')
+
+    return redirect(url_for('crear_evento_form'))
 
 #--------------------------------------------------------TABLA RESERVAS-----------------------------------#
 
