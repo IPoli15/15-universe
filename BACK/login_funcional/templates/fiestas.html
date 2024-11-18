@@ -1,4 +1,9 @@
-{% extends "base.html" %}
+{% if es_admin %}
+    {% extends "admin-base.html" %}
+{% else %}
+    {% extends "base.html" %}
+{% endif %}
+
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='/css/fiestas.css') }}">
 

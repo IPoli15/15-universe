@@ -12,6 +12,11 @@ db.init_app(app)
 # Recordar que los datos de la db en cuanto a nombre, usuario y contraseña varian.
 engine = create_engine("mysql+mysqlconnector://root:1234@localhost:3306/universe")
 
+# Variable para validar si es admin o no,
+# app.config es un diccionario especial de flask para almacenar configuraciones de la aplicación,
+# estas estan disponibles en toda la aplicacion y son accesibles desde cualquier parte de la misma
+app.config['ES_ADMIN'] = False
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -38,6 +43,7 @@ def login():
         
         if usuario and usuario.password == password:
             print("Contraseña correcta")
+            app.config['ES_ADMIN'] = True
             return redirect(url_for('admin_index'))
         else:
             print("Contraseña incorrecta o usuario no encontrado")
@@ -50,43 +56,43 @@ def login():
 
 @app.route('/musica')
 def musica():
-    return render_template('musica.html')
+    return render_template('musica.html', es_admin=app.config['ES_ADMIN'])
 
 @app.route('/cultura_jp')
 def cultura_jp():
-    return render_template('cultura_jp.html')
+    return render_template('cultura_jp.html', es_admin=app.config['ES_ADMIN'])
 
 @app.route('/fiestas')
 def fiestas():
-    return render_template('fiestas.html')
+    return render_template('fiestas.html', es_admin=app.config['ES_ADMIN'])
 
 @app.route('/eSports')
 def esports():
-    return render_template('eSports.html')
+    return render_template('eSports.html', es_admin=app.config['ES_ADMIN'])
 
 @app.route('/error')
 def error():
-    return render_template('error.html')
+    return render_template('error.html', es_admin=app.config['ES_ADMIN'])
 
 @app.route('/reserva')
 def Reserva():
-    return render_template('reserva.html')
+    return render_template('reserva.html', es_admin=app.config['ES_ADMIN'])
 
 @app.route('/pago')
 def Pago():
-    return render_template('pago.html')
+    return render_template('pago.html', es_admin=app.config['ES_ADMIN'])
 
 @app.route('/futbol')
 def Futbol():
-    return render_template('futbol.html')
+    return render_template('futbol.html', es_admin=app.config['ES_ADMIN'])
 
 @app.route('/stand-up')
 def Stand_up():
-    return render_template('stand_up.html')
+    return render_template('stand_up.html', es_admin=app.config['ES_ADMIN'])
 
 @app.route('/teatro')
 def Teatro():
-    return render_template('Teatro.html')
+    return render_template('Teatro.html', es_admin=app.config['ES_ADMIN'])
 
 @app.route('/tu-reserva')
 def Tu_reserva():
@@ -96,7 +102,7 @@ def Tu_reserva():
     sector="7B"
     cantidad_tickets=2
     precio_total = "$40.000"
-    return render_template('tu-reserva.html', nombre=nombre,dni=dni, codigo_reserva=codigo_reserva, sector=sector, cantidad_tickets=cantidad_tickets, precio_total=precio_total)
+    return render_template('tu-reserva.html', nombre=nombre,dni=dni, codigo_reserva=codigo_reserva, sector=sector, cantidad_tickets=cantidad_tickets, precio_total=precio_total, es_admin=app.config['ES_ADMIN'])
 
 #---------------------------------------------------------------------------------------------------------#
 
