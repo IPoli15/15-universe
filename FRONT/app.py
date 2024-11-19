@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, current_app
+import requests
 
 app = Flask(__name__)
 
@@ -30,8 +31,47 @@ def esports():
 def error():
     return render_template('error.html')
 
-@app.route('/reserva')
+@app.route('/reserva', methods=["GET", "POST"])
 def Reserva():
+    if request.method == "POST":
+        id_reserva = request.form.get('id_reserva')
+
+        try:
+            response = requests.get('http://127.0.0.1:5001/consultar-reservas')
+            response.raise_for_status()
+            datos_reserva = response.json()
+        except requests.exceptions.RequestException as e:
+            current_app.logger.error(f'Error: {e}')
+            return str(e), 500
+    
+        try:
+            reserva = [
+                dato for dato in datos_reserva
+                if dato['id_reserva'] == int(id_reserva)
+            ]
+            if reserva:
+
+                dato = reserva[0]
+                nombre_usuario=dato['nombre_usuario']
+                nombre_evento=dato['nombre_evento']
+                precio_entrada=dato['precio_entradda']
+                id_reserva=dato['id_reserva']
+                cant_tickets=dato['cant_tickets']
+
+                return render_template(
+                'tu-reserva.html',  id_reserva=id_reserva,
+                                    cant_tickets=cant_tickets, 
+                                    nombre_usuario=nombre_usuario, 
+                                    nombre_evento=nombre_evento, 
+                                    precio_entrada=precio_entrada,
+                                    total=precio_entrada*cant_tickets)
+            
+            else:
+                return "No se encontraron reservas con es numero de ID", 404
+
+        except Exception as e:
+            current_app.logger.error(f'Unexpected error: {e}')
+            return str(e), 500
     return render_template('reserva.html')
 
 @app.route('/pago')
@@ -50,15 +90,6 @@ def Stand_up():
 def Teatro():
     return render_template('Teatro.html')
 
-@app.route('/tu-reserva')
-def Tu_reserva():
-    nombre="Juan Perez"
-    dni="42100124"
-    codigo_reserva="ab1224"
-    sector="7B"
-    cantidad_tickets=2
-    precio_total = "$40.000"
-    return render_template('tu-reserva.html', nombre=nombre,dni=dni, codigo_reserva=codigo_reserva, sector=sector, cantidad_tickets=cantidad_tickets, precio_total=precio_total)
 
 if __name__ == '__main__':
     app.run(debug=True)

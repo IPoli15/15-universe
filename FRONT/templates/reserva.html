@@ -3,16 +3,12 @@
 {% block content %}
 <div class="container">
     <h2>Consulta de Reserva</h2>
-    <form id="reservaForm">
+    <form action="{{url_for('Reserva')}}" method="post"" id="reservaForm">
         <div class="input-group">
-            <label for="reservaId">Número de Reserva</label>
-            <input type="text" id="reservaId" name="id_reserva" required>
+            <label for="id_reserva">Número de Reserva</label>
+            <input type="text" id="id_reserva" name="id_reserva" required>
         </div>
-        <div class="input-group">
-            <label for="email">Nombre</label>
-            <input type="text" id="nombre" name="nombre" required>
-        </div>
-        <a href="{{url_for('Tu_reserva')}}" type="button" class="boton-reservar" onclick="consultarReserva()">Consultar</a>
+        <input type="submit" value="Buscar reserva">
     </form>
     <div class="message" id="message"></div>
 </div>
