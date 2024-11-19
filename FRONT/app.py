@@ -11,10 +11,6 @@ def index():
 def login():
     return render_template('login.html')
 
-@app.route('/crear_evento')
-def crear_evento():
-    return render_template('crear_evento.html')
-
 @app.route('/musica')
 def musica():
     return render_template('musica.html')
@@ -23,9 +19,9 @@ def musica():
 def cultura_jp():
     return render_template('cultura_jp.html')
 
-@app.route('/Fiesta')
-def Fiesta():
-    return render_template('Fiesta.html')
+@app.route('/fiestas')
+def fiestas():
+    return render_template('fiestas.html')
 
 @app.route('/eSports')
 def esports():
@@ -41,7 +37,7 @@ def Reserva():
         id_reserva = request.form.get('id_reserva')
 
         try:
-            response = requests.get('http://127.0.0.1:5001/consultar-reservas')
+            response = requests.get('http://127.0.0.1:5001/consultar-reserva/'+id_reserva)
             response.raise_for_status()
             datos_reserva = response.json()
         except requests.exceptions.RequestException as e:
@@ -49,18 +45,13 @@ def Reserva():
             return str(e), 500
     
         try:
-            reserva = [
-                dato for dato in datos_reserva
-                if dato['id_reserva'] == int(id_reserva)
-            ]
-            if reserva:
+            if datos_reserva:
 
-                dato = reserva[0]
-                nombre_usuario=dato['nombre_usuario']
-                nombre_evento=dato['nombre_evento']
-                precio_entrada=dato['precio_entradda']
-                id_reserva=dato['id_reserva']
-                cant_tickets=dato['cant_tickets']
+                nombre_usuario=datos_reserva['nombre_usuario']
+                nombre_evento=datos_reserva['nombre_evento']
+                precio_entrada=datos_reserva['precio_entradda']
+                id_reserva=datos_reserva['id_reserva']
+                cant_tickets=datos_reserva['cant_tickets']
 
                 return render_template(
                 'tu-reserva.html',  id_reserva=id_reserva,
