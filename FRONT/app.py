@@ -16,6 +16,10 @@ def index():
 def login():
     return render_template('login.html', es_admin=app.config['ES_ADMIN'])
 
+@app.route('/conciertos')
+def conciertos():
+    return render_template('conciertos.html', es_admin=app.config['ES_ADMIN'])
+
 @app.route('/musica')
 def musica():
     return render_template('musica.html', es_admin=app.config['ES_ADMIN'])
