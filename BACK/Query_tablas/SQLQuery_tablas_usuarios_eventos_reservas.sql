@@ -33,23 +33,22 @@ CREATE TABLE IF NOT EXISTS eventos (
     descripcion VARCHAR(200) NOT NULL,
     entradas_disponibles INT NOT NULL,
     localizacion VARCHAR(50) NOT NULL,
-    precio_entrada DECIMAL(5,2) NOT NULL
+    precio_entrada INT NOT NULL
 );
 
 -- Query Insert de Tabla eventos:
 INSERT INTO eventos (nombre_evento, categoria, descripcion, entradas_disponibles, localizacion, precio_entrada)
 VALUES
-('visita museo de boca juniors', 'futbol', 'conoce el museo de Boca Juniors con la exposicion de sus trofeos mas importantes', 100, 'Av directorio 1453', 20.00),
-('concierto camilo', 'musica', 'Concierto de camilo echeverry', 300, 'Movistar arena', 40.00),
-('fiesta grim', 'fiestas', 'Sexta edicion tematica HALLOWEEN', 50, 'Sarmiento 1752', 8.00),
-('cascanueces', 'teatro', 'evento en el teatro colon', 250, 'tucuman 1171', 70.00),
-('cultura japonesa', 'cultura japonesa', 'evento de cultura japonesa', 20, 'jardin japones', 4.00),
-('worlds 2024', 'esports', 'campeonato mundial de League of Legends', 800, 'Av Bartolome Mitre 219', 30.00),
-('show de stand up', 'stand up', 'el show de Franco Escamilla', 400, 'Teatro Gran Rex', 10.00);
+('visita museo de boca juniors', 'futbol', 'conoce el museo de Boca Juniors con la exposicion de sus trofeos mas importantes', 100, 'Av directorio 1453', 5000,
+('concierto camilo', 'musica', 'Concierto de camilo echeverry', 300, 'Movistar arena', 20000),
+('fiesta grim', 'fiestas', 'Sexta edicion tematica HALLOWEEN', 50, 'Sarmiento 1752', 7000),
+('cascanueces', 'teatro', 'evento en el teatro colon', 250, 'tucuman 1171', 9000),
+('cultura japonesa', 'cultura japonesa', 'evento de cultura japonesa', 20, 'jardin japones', 4000),
+('worlds 2024', 'esports', 'campeonato mundial de League of Legends', 800, 'Av Bartolome Mitre 219', 31000),
+('show de stand up', 'stand up', 'el show de Franco Escamilla', 400, 'Teatro Gran Rex', 11000);
 
 -- Query Select de Tabla eventos:
 SELECT * FROM eventos;
-
 ---------------------------------------------- RESERVAS
 
 -- Query Create de Tabla reservas:
