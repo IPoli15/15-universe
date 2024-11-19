@@ -80,7 +80,14 @@ def Pago():
 
 @app.route('/futbol')
 def Futbol():
-    return render_template('futbol.html')
+    nombre_categoria='Futbol'
+    descripcion_categoria = 'Disfruta de los mejores eventos de Futbol'
+    eventos=[{'nombre':"Visita al museo de Boca Juniors", 'descripcion':'Disfruta una visita al museo de uno de los mejores equipos de Argentina y America'},
+             {'nombre':"Visita al museo de Boca Juniors", 'descripcion':'Disfruta una visita al museo de uno de los mejores equipos de Argentina y America'},
+             {'nombre':"Visita al museo de Boca Juniors", 'descripcion':'Disfruta una visita al museo de uno de los mejores equipos de Argentina y America'},
+             {'nombre':"Visita al museo de Boca Juniors", 'descripcion':'Disfruta una visita al museo de uno de los mejores equipos de Argentina y America'}]
+
+    return render_template('futbol.html', nombre_categoria=nombre_categoria,descripcion_categoria=descripcion_categoria, eventos=eventos )
 
 @app.route('/stand-up')
 def Stand_up():
