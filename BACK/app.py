@@ -15,7 +15,7 @@ QUERY_TODAS_LAS_RESERVAS = """SELECT R.id_reserva, R.cant_tickets, U.nombre, E.n
 INNER JOIN usuarios U on U.id_usuario = R.id_usuario
 INNER JOIN eventos E on E.id_evento = R.id_evento"""
 QUERY_TODOS_LOS_EVENTOS = " SELECT id_evento, nombre_evento, categoria, descripcion, entradas_disponibles, localizacion, precio_entrada from eventos "
-
+QUERY_EVENTOS_POR_CATEGORIA = "SELECT id_evento, nombre_evento, categoria, descripcion, entradas_disponibles, localizacion, precio_entrada FROM eventos WHERE categoria = :categoria"
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -145,6 +145,25 @@ def eliminar_reserva(id_reserva):
         return jsonify({'error': str(e)}), 500
 
 #--------------------------------------------------------TABLA EVENTOS-----------------------------------#
+
+def eventos_por_categoria(categoria):
+    return run_query(QUERY_EVENTOS_POR_CATEGORIA, {'categoria': categoria}).fetchall()
+
+@app.route('/consultar-eventos/<string:categoria>', methods=['GET'])
+def consultar_eventos_por_categoria(categoria):
+    try:
+        result = eventos_por_categoria(categoria)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+    if len(result) == 0:
+        return jsonify({'error': 'No se encontró eventos'}), 404 # Not found
+
+    response = []
+    for row in result:
+        response.append({'id_evento': row[0], 'nombre_evento': row[1], 'categoria': row[2], 'descripcion': row[3], 'entradas_disponibles':row[4], 'localizacion':row[5], 'precio_entrada':row[6]})
+    return jsonify(response), 200
+
 
 def eventos():
     return run_query(QUERY_TODOS_LOS_EVENTOS).fetchall()
