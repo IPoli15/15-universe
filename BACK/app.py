@@ -1,7 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
-from werkzeug.security import check_password_hash
+from flask import Flask, render_template, request, redirect, url_for, jsonify, flash
 from config import Config
-from models import db, Usuario
+from models import db, Usuario, Evento, Reserva
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy import text
@@ -179,7 +178,6 @@ def eliminar_evento(id_evento):
         
         result = run_query(QUERY_ELIMINAR_EVENTO, {'id_evento': id_evento})
 
-       
         if result.rowcount == 0:
             return jsonify({'error': 'No se encontró un evento con este ID'}), 404
 
