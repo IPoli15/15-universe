@@ -50,6 +50,10 @@ def login():
 
 #---------------------------------------------------------------------------------------------------------#
 
+@app.route('/conciertos')
+def conciertos():
+    return render_template('conciertos.html', es_admin=app.config['ES_ADMIN'])
+
 @app.route('/musica')
 def musica():
     return render_template('musica.html', es_admin=app.config['ES_ADMIN'])
@@ -93,6 +97,7 @@ def Pago():
             db.session.add(nueva_reserva)
             db.session.commit()
 
+            # Por si se quiere validar la información de la reserva creada:
             """ print(f"Reserva creada: ID reserva: {nueva_reserva.id_reserva}")
             print(f"Usuario: {nombre}")
             print(f"ID usuario: {id_usuario}")
