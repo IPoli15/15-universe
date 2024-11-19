@@ -42,6 +42,17 @@
             </div>
         </div>
     </div>
+    <h1>Eventos {% if categoria %} de {{ categoria }}{% else %} disponibles{% endif %}</h1>
+    <ul>
+        {% for event in events %}
+            <li>
+                <h3>{{ event.nombre_evento }}</h3>
+                <p>{{ event.descripcion }}</p>
+                <p><strong>Localización:</strong> {{ event.localizacion }}</p>
+                <p><strong>Precio:</strong> {{ event.precio_entrada }}</p>
+            </li>
+        {% endfor %}
+    </ul>
 </section>
 
 {% endblock %}

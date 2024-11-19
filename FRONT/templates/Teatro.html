@@ -47,7 +47,17 @@
             </div>
         </div>
     </div>
-
+    <h1>Eventos {% if categoria %} de {{ categoria }}{% else %} disponibles{% endif %}</h1>
+    <ul>
+        {% for event in events %}
+            <li>
+                <h3>{{ event.nombre_evento }}</h3>
+                <p>{{ event.descripcion }}</p>
+                <p><strong>Localización:</strong> {{ event.localizacion }}</p>
+                <p><strong>Precio:</strong> {{ event.precio_entrada }}</p>
+            </li>
+        {% endfor %}
+    </ul>
     <aside class="event-map">
         <iframe src="https://maps.google.com/maps?q=Teatro+Colón,+Tucumán+1171,+Buenos+Aires&hl=es&t=&z=17&ie=UTF8&iwloc=&output=embed" frameborder="0" allowfullscreen></iframe>
     </aside>

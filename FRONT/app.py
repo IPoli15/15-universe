@@ -11,6 +11,10 @@ def index():
 def login():
     return render_template('login.html')
 
+@app.route('/crear_evento')
+def crear_evento():
+    return render_template('crear_evento.html')
+
 @app.route('/musica')
 def musica():
     return render_template('musica.html')
@@ -19,9 +23,9 @@ def musica():
 def cultura_jp():
     return render_template('cultura_jp.html')
 
-@app.route('/fiestas')
-def fiestas():
-    return render_template('fiestas.html')
+@app.route('/Fiesta')
+def Fiesta():
+    return render_template('Fiesta.html')
 
 @app.route('/eSports')
 def esports():
