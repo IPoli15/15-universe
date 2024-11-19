@@ -6,7 +6,7 @@ app = Flask(__name__)
 # Variable para validar si es admin o no,
 # app.config es un diccionario especial de flask para almacenar configuraciones de la aplicación,
 # estas estan disponibles en toda la aplicacion y son accesibles desde cualquier parte de la misma
-app.config['ES_ADMIN'] = True
+app.config['ES_ADMIN'] = False
 
 @app.route('/')
 def index():
