@@ -7,11 +7,17 @@ from sqlalchemy import create_engine
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
-QUERY_RESERVA_BY_ID = "SELECT id_usuarios, id_evento, cant_tickets FROM reservas WHERE id_reserva = :id_reserva"
-QUERY_INGRESAR_RESERVA = "INSERT INTO reservas (id_usuarios, id_evento, id_reserva, cant_tickets) VALUES (:id_usuarios, :id_evento,  :id_reserva, :cant_tickets)"
+QUERY_RESERVA_BY_ID = "SELECT id_usuario, id_evento, cant_tickets FROM reservas WHERE id_reserva = :id_reserva"
+QUERY_INGRESAR_RESERVA = "INSERT INTO reservas (id_usuario, id_evento, id_reserva, cant_tickets) VALUES (:id_usuario, :id_evento,  :id_reserva, :cant_tickets)"
 QUERY_ELIMINAR_RESERVA = "DELETE FROM reservas WHERE id_reserva = :id_reserva"
 QUERY_RESERVAS_EVENTO = "SELECT COUNT(*) FROM eventos WHERE id_evento = :id_evento"
 QUERY_ELIMINAR_EVENTO = "DELETE FROM eventos WHERE id_evento = :id_evento"
+QUERY_TODAS_LAS_RESERVAS = """SELECT R.id_reserva, R.cant_tickets, U.nombre, E.nombre_evento, E.precio_entrada FROM reservas R
+INNER JOIN usuarios U on U.id_usuario = R.id_usuario
+INNER JOIN eventos E on E.id_evento = R.id_evento"""
+QUERY_TODOS_LOS_EVENTOS = " SELECT id_evento, nombre_evento, categoria, descripcion, entradas_disponibles, localizacion, precio_entrada from eventos "
+
+
 
 app = Flask(__name__)
 
@@ -19,7 +25,7 @@ app.config.from_object(Config)
 
 db.init_app(app)
 
-engine = create_engine("mysql+mysqlconnector://root:tuclave@localhost:3306/universe")
+engine = create_engine("mysql+mysqlconnector://root:1234@localhost:3306/universe")
 
 def run_query(query, parameters=None):
     with engine.connect() as conn:
@@ -80,6 +86,23 @@ def consultar_reserva(id_reserva):
     result = result[0]
     return jsonify({'id_usuarios': result[0], 'id_evento': result[1], 'cant_tickets': result[2]}), 200
 
+#----METODO GET, CONSULTAR TODAS LAS RESERVAS -----#
+
+def reservas():
+    return run_query(QUERY_TODAS_LAS_RESERVAS).fetchall()
+
+@app.route('/consultar-reservas', methods=['GET'])
+def obtener_reservas():
+    try:
+        result = reservas()
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+    response = []
+    for row in result:
+        response.append({'id_reserva': row[0], 'cant_tickets': row[1], 'nombre_usuario': row[2], 'nombre_evento': row[3], 'precio_entradda':row[4]})
+
+    return jsonify(response), 200
 
 
 #---METODO POST, INSERTAR RESERVAS ----#
@@ -127,6 +150,22 @@ def eliminar_reserva(id_reserva):
         return jsonify({'error': str(e)}), 500
 
 #--------------------------------------------------------TABLA EVENTOS-----------------------------------#
+
+def eventos():
+    return run_query(QUERY_TODOS_LOS_EVENTOS).fetchall()
+
+@app.route('/consultar-eventos', methods=['GET'])
+def obtener_eventos():
+    try:
+        result = eventos()
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+    response = []
+    for row in result:
+        response.append({'id_evento': row[0], 'nombre_evento': row[1], 'categoria': row[2], 'descripcion': row[3], 'entradas_disponibles':row[4], 'localizacion':row[5], 'precio_entrada':row[6]})
+
+    return jsonify(response), 200
 
 
 @app.route('/eliminar-evento/<int:id_evento>', methods=['DELETE'])

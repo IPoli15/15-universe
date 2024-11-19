@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from config import Config
-from models import db, Usuario
+from models import db, Usuario, Evento, Reserva
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy import text
@@ -46,7 +46,6 @@ def login():
             print("Contraseña incorrecta o usuario no encontrado")
             return redirect(url_for('login'))
     
-    # Renderizar el template de login en caso de petición GET
     return render_template('login.html')
 
 #---------------------------------------------------------------------------------------------------------#
@@ -72,12 +71,43 @@ def error():
     return render_template('error.html', es_admin=app.config['ES_ADMIN'])
 
 @app.route('/reserva')
-def Reserva():
+def reserva():
     return render_template('reserva.html', es_admin=app.config['ES_ADMIN'])
 
-@app.route('/pago')
+#--------------------------------------------------------TABLA RESERVAS-----------------------------------#
+
+@app.route('/pago', methods=['GET', 'POST'])
 def Pago():
+    if request.method == 'POST':
+        # Creo variables para almacenar los datos del formulario:
+        nombre = request.form['nombre']
+        id_evento = request.form['id_evento']
+        cant_tickets = request.form['cant_tickets']
+
+        # Si el usuario y el id del evento existen en la base de datos, entonces crea una reserva:
+        try:
+
+            id_usuario = Usuario.query.filter_by(nombre=nombre).first().id_usuario
+
+            nueva_reserva = Reserva(id_usuario=id_usuario, id_evento=id_evento, cant_tickets=cant_tickets)
+            db.session.add(nueva_reserva)
+            db.session.commit()
+
+            """ print(f"Reserva creada: ID reserva: {nueva_reserva.id_reserva}")
+            print(f"Usuario: {nombre}")
+            print(f"ID usuario: {id_usuario}")
+            print(f"Evento: {Evento.query.filter_by(id_evento=id_evento).first().nombre_evento}")
+            print(f"ID evento: {id_evento}")
+            print(f"Cantidad de tickets: {cant_tickets}") """
+
+            return redirect(url_for('Tu_reserva'))
+        
+        # Si alguno de los dos no existe entonces devuelve un error y deja al usuario en el mismo html.
+        except:
+            print("Error al crear la reserva")
+        
     return render_template('pago.html', es_admin=app.config['ES_ADMIN'])
+#---------------------------------------------------------------------------------------------------------#
 
 @app.route('/futbol')
 def Futbol():
