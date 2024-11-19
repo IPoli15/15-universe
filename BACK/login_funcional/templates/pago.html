@@ -8,24 +8,36 @@
 
 <div class="container">
     <h2>Pago Seguro</h2>
-    <form id="paymentForm">
+    <form id="paymentForm" method="POST" action="{{ url_for('Pago') }}">
         <div class="input-group">
+            <label for="nombre">Nombre del Usuario</label>
+            <input type="text" id="nombre" name="nombre" required>
+        </div>
+        <div class="input-group">
+            <label for="id_evento">ID del Evento</label>
+            <input type="number" id="id_evento" name="id_evento" required>
+        </div>
+        <div class="input-group">
+            <label for="cant_tickets">Cantidad de Tickets</label>
+            <input type="number" id="cant_tickets" name="cant_tickets" required>
+        </div>
+<!--         <div class="input-group">
             <label for="cardNumber">Número de Tarjeta</label>
             <input type="text" id="cardNumber" name="cardNumber" required>
         </div>
         <div class="input-group">
             <label for="cardName">Nombre en la Tarjeta</label>
-            <input type="text" id="cardName" name="cardName"  required>
+            <input type="text" id="cardName" name="cardName" required>
         </div>
         <div class="input-group">
             <label for="expiryDate">Fecha de Vencimiento</label>
-            <input type="text"  required>
+            <input type="text" id="expiryDate" name="expiryDate" required>
         </div>
         <div class="input-group">
             <label for="cvv">CVV</label>
             <input type="text" id="cvv" name="cvv" required>
-        </div>
-        <button type="button" class="boton-reservar">Pagar Ahora</button>
+        </div> -->
+        <button type="submit" class="boton-reservar">Pagar Ahora</button>
     </form>
 </div>
 
