@@ -17,13 +17,10 @@ INNER JOIN eventos E on E.id_evento = R.id_evento"""
 QUERY_TODOS_LOS_EVENTOS = " SELECT id_evento, nombre_evento, categoria, descripcion, entradas_disponibles, localizacion, precio_entrada from eventos "
 
 
-
 app = Flask(__name__)
-
 app.config.from_object(Config)
-
 db.init_app(app)
-
+# Recordar que los datos de la db en cuanto a nombre, usuario y contraseña varian.
 engine = create_engine("mysql+mysqlconnector://root:1234@localhost:3306/universe")
 
 def run_query(query, parameters=None):
@@ -33,12 +30,11 @@ def run_query(query, parameters=None):
 
     return result
 
-""" with app.app_context():
-    db.create_all() """
-
 @app.route('/')
 def index():
     return render_template('index.html')
+
+#--------------------------------------------------------TABLA USUARIOS-----------------------------------#
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
