@@ -6,6 +6,8 @@ from sqlalchemy import create_engine
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
+PORT = 5001
+
 QUERY_INGRESAR_RESERVA = "INSERT INTO reservas (id_usuario, id_evento, id_reserva, cant_tickets) VALUES (:id_usuario, :id_evento,  :id_reserva, :cant_tickets)"
 QUERY_ELIMINAR_RESERVA = "DELETE FROM reservas WHERE id_reserva = :id_reserva"
 QUERY_RESERVAS_EVENTO = "SELECT COUNT(*) FROM eventos WHERE id_evento = :id_evento"
@@ -29,35 +31,22 @@ def run_query(query, parameters=None):
 
     return result
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+#---------------------------------------------------TABLA USUARIOS LOGIN-----------------------------------#
 
-#--------------------------------------------------------TABLA USUARIOS-----------------------------------#
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        nombre = request.form['nombre']
-        password = request.form['password']
-        
-        # Buscar el usuario en la base de datos
-        usuario = Usuario.query.filter_by(nombre=nombre).first()
-        
-        if usuario and usuario.password == password:
-            flash('Inicio de sesión exitoso', 'success')
-            return redirect(url_for('dashboard'))
-        else:
-            flash('Correo o contraseña incorrectos', 'danger')
-            return redirect(url_for('login'))
+@app.route('/usuarios-password', methods=['POST'])
+def tabla_usuarios():
     
-    # Renderizar el template de login en caso de petición GET
-    return render_template('login.html')
+    data = request.json
+    nombre_usuario = data['nombre']
+    password = data['password']
 
-@app.route('/dashboard')
-def dashboard():
-    return "¡Bienvenido al Dashboard!"
 
+    usuario = Usuario.query.filter_by(nombre=nombre_usuario).first()
+
+    if usuario and usuario.password == password:
+        return jsonify({'success': True, 'message': 'Usuario autenticado'}), 200
+    else:
+        return jsonify({'success': False, 'message': 'Usuario no autenticado'}), 401
 
 #--------------------------------------------------------TABLA RESERVAS-----------------------------------#
 
@@ -182,4 +171,4 @@ def eliminar_evento(id_evento):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=PORT)
