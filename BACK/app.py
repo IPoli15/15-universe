@@ -31,7 +31,7 @@ def run_query(query, parameters=None):
 
     return result
 
-#---------------------------------------------------TABLA USUARIOS LOGIN-----------------------------------#
+#------------------------------------------------------------------------------------- TABLA USUARIOS | LOGIN
 
 @app.route('/usuarios-password', methods=['POST'])
 def tabla_usuarios():
@@ -47,8 +47,38 @@ def tabla_usuarios():
         return jsonify({'success': True, 'message': 'Usuario autenticado'}), 200
     else:
         return jsonify({'success': False, 'message': 'Usuario no autenticado'}), 401
+    
 
-#--------------------------------------------------------TABLA RESERVAS-----------------------------------#
+#------------------------------------------------------------------------------------- TABLA RESERVAS | PAGO
+@app.route('/crear-reserva', methods=['POST'])
+def tabla_reservas():
+    data = request.json
+    nombre = data['nombre']
+    id_evento = data['id_evento']
+    cant_tickets = data['cant_tickets']
+
+    if not nombre or not id_evento or not cant_tickets:
+        return jsonify({'success': False, 'message': 'Faltan datos'}), 400
+
+    try:
+        usuario = Usuario.query.filter_by(nombre=nombre).first()
+        evento = Evento.query.filter_by(id_evento=id_evento).first()
+
+        if not usuario:
+            return jsonify({'success': False, 'message': 'Usuario no encontrado'}), 404
+
+        if not evento:
+            return jsonify({'success': False, 'message': 'Evento no encontrado'}), 404
+
+        nueva_reserva = Reserva(id_usuario=usuario.id_usuario, id_evento=evento.id_evento, cant_tickets=cant_tickets)
+        db.session.add(nueva_reserva)
+        db.session.commit()
+        return jsonify({'success': True, 'message': 'Reserva creada'}), 201
+
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+    
+#-------------------------------------------------------------------------------------
 
 
 #----METODO GET, CONSULTAR RESERVA POR ID DE RESERVA -----#

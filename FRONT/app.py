@@ -42,6 +42,36 @@ def login():
     
     return render_template('login.html', es_admin=app.config['ES_ADMIN'])
 
+@app.route('/pago', methods=['GET', 'POST'])
+def Pago():
+    
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        id_evento = request.form['id_evento']
+        cant_tickets = request.form['cant_tickets']
+        
+        try:
+            # Enviar los datos al backend
+            response = requests.post('http://localhost:5001/crear-reserva', json={
+                'nombre': nombre,
+                'id_evento': id_evento,
+                'cant_tickets': cant_tickets
+            })
+            data = response.json()
+            
+            if response.status_code == 201 and data['success']:
+                print('Pago successful')
+                return redirect(url_for('index'))
+            else:
+                print('Error en el pago: ' + data.get('message', 'Unknown error'))
+                return redirect(url_for('Pago'))
+        except Exception as e:
+            print(f'An error occurred: {str(e)}')
+            return redirect(url_for('error'))
+    
+    # Si el método es GET, renderizar la plantilla de pago
+    return render_template('pago.html', es_admin=app.config['ES_ADMIN'])
+
 
 @app.route('/conciertos')
 def conciertos():
@@ -105,10 +135,6 @@ def reserva():
             current_app.logger.error(f'Unexpected error: {e}')
             return str(e), 500
     return render_template('reserva.html', es_admin=app.config['ES_ADMIN'])
-
-@app.route('/pago')
-def Pago():
-    return render_template('pago.html', es_admin=app.config['ES_ADMIN'])
 
 @app.route('/futbol')
 def Futbol():
