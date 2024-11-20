@@ -18,6 +18,9 @@ INNER JOIN eventos E on E.id_evento = R.id_evento
 WHERE id_reserva = :id_reserva"""
 QUERY_TODOS_LOS_EVENTOS = " SELECT id_evento, nombre_evento, categoria, descripcion, entradas_disponibles, localizacion, precio_entrada from eventos "
 QUERY_EVENTOS_POR_CATEGORIA = "SELECT id_evento, nombre_evento, categoria, descripcion, entradas_disponibles, localizacion, precio_entrada FROM eventos WHERE categoria = :categoria"
+QUERY_EVENTOS_POR_ID = "SELECT id_evento, nombre_evento, categoria, descripcion, entradas_disponibles, localizacion, precio_entrada FROM eventos WHERE id_evento = :id_evento"
+
+
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -145,6 +148,8 @@ def eliminar_reserva(id_reserva):
 
 #--------------------------------------------------------TABLA EVENTOS-----------------------------------#
 
+#----METODO GET, CONSULTAR EVENTO POR NOMBRE DE CATEGORIA -----#
+
 def eventos_por_categoria(categoria):
     return run_query(QUERY_EVENTOS_POR_CATEGORIA, {'categoria': categoria}).fetchall()
 
@@ -161,6 +166,25 @@ def consultar_eventos_por_categoria(categoria):
     response = []
     for row in result:
         response.append({'id_evento': row[0], 'nombre_evento': row[1], 'categoria': row[2], 'descripcion': row[3], 'entradas_disponibles':row[4], 'localizacion':row[5], 'precio_entrada':row[6]})
+    return jsonify(response), 200
+
+#----METODO GET, CONSULTAR EVENTO POR ID DE EVENTO -----#
+
+def eventos_por_id(id_evento):
+    return run_query(QUERY_EVENTOS_POR_ID, {'id_evento': id_evento}).fetchall()
+
+@app.route('/consultar-eventos/<int:id_evento>', methods=['GET'])
+def consultar_eventos_por_id(id_evento):
+    try:
+        result = eventos_por_id(id_evento)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+    if len(result) == 0:
+        return jsonify({'error': 'No se encontró evento'}), 404 # Not found
+
+    result=result[0]
+    response = ({'id_evento': result[0], 'nombre_evento': result[1], 'categoria': result[2], 'descripcion': result[3], 'entradas_disponibles':result[4], 'localizacion':result[5], 'precio_entrada':result[6]})
     return jsonify(response), 200
 
 

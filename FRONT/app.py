@@ -170,6 +170,43 @@ def Stand_up():
 def Teatro():
     return render_template('Teatro.html', es_admin=app.config['ES_ADMIN'])
 
+@app.route('/descripcion-evento/<id_evento>')
+def Descripcion_evento(id_evento):
+    try:
+            response = requests.get('http://127.0.0.1:5001/consultar-eventos/'+id_evento)
+            response.raise_for_status()
+            datos_evento = response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data: {e}")
+        datos_evento = []
+        return str(e), 500
+    
+    try:
+        if datos_evento:
+                
+            id_evento=datos_evento['id_evento']
+            nombre_evento=datos_evento['nombre_evento']
+            categoria=datos_evento['categoria']
+            descripcion=datos_evento['descripcion']
+            entradas_disponibles=datos_evento['entradas_disponibles']
+            localizacion=datos_evento['localizacion']
+            precio_entrada=datos_evento['precio_entrada']
+
+            return render_template(
+            'descripcion_evento.html', es_admin=app.config['ES_ADMIN'],  id_evento=id_evento,
+                               nombre_evento=nombre_evento, 
+                               categoria=categoria, 
+                                descripcion=descripcion, 
+                                entradas_disponibles=entradas_disponibles,
+                                localizacion=localizacion,
+                                precio_entrada=precio_entrada)
+            
+        else:
+            return "No se encontraron reservas con ese numero de ID", 404
+
+    except Exception as e:
+        print(f'Unexpected error: {e}')
+        return str(e), 500
 
 if __name__ == '__main__':
     app.run(debug=True, port=PORT)
