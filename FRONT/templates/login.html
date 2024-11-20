@@ -1,25 +1,21 @@
-{% if es_admin %}
-    {% extends "admin-base.html" %}
-{% else %}
-    {% extends "base.html" %}
-{% endif %}
+{% extends "base.html" %}
 
 {% block content %}
 <main class="login-main">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 <div class="contenedor-login">
-    <h2>Iniciar sesion</h2>
-    <form>
-        <label for="username">Usuario</label>
-        <input type="text" id="username" name="username" required>
+    <h2>Iniciar sesión</h2>
+    <form method="POST" action="/login"> <!-- ! agrego el metodo POST para que se envie la informacion -->
+        <label for="nombre">Usuario</label>
+        <input type="text" id="nombre" name="nombre" required> <!-- debe coincidir name= "nombre" en el archivo app.py -->
 
         <label for="password">Contraseña</label>
         <div class="contenedor-contraseña">
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password" required><!--de igual forma con password -->
             <button type="button" onclick="togglePassword()">👁️</button>
         </div>
 
-        <button type="submit">Iniciar sesion</button>
+        <button type="submit">Iniciar sesión</button>
     </form>
 </div>
 </main>   

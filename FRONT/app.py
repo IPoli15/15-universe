@@ -1,5 +1,7 @@
-from flask import Flask, render_template, request, current_app
+from flask import Flask, render_template, request, current_app, redirect, url_for
 import requests
+
+PORT = 5000
 
 app = Flask(__name__)
 
@@ -12,9 +14,34 @@ app.config['ES_ADMIN'] = False
 def index():
     return render_template('index.html', es_admin=app.config['ES_ADMIN'])
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        password = request.form['password']
+        
+        try:
+            # Enviar los datos al backend
+            response = requests.post('http://localhost:5001/usuarios-password', json={
+                'nombre': nombre,
+                'password': password
+            })
+            data = response.json()
+            
+            if data['success']:
+                print('Login successful')
+                app.config['ES_ADMIN'] = True
+                return redirect(url_for('index'))
+            else:
+                print('Invalid credentials')
+                return redirect(url_for('login'))
+        except Exception as e:
+            print(f'An error occurred: {str(e)}')
+            return redirect(url_for('login'))
+    
     return render_template('login.html', es_admin=app.config['ES_ADMIN'])
+
 
 @app.route('/conciertos')
 def conciertos():
@@ -88,9 +115,9 @@ def Futbol():
     nombre_categoria='Futbol'
     descripcion_categoria = 'Disfruta de los mejores eventos de Futbol'
     eventos=[{'nombre':"Visita al museo de Boca Juniors", 'descripcion':'Disfruta una visita al museo de uno de los mejores equipos de Argentina y America'},
-             {'nombre':"Visita al museo de Boca Juniors", 'descripcion':'Disfruta una visita al museo de uno de los mejores equipos de Argentina y America'},
-             {'nombre':"Visita al museo de Boca Juniors", 'descripcion':'Disfruta una visita al museo de uno de los mejores equipos de Argentina y America'},
-             {'nombre':"Visita al museo de Boca Juniors", 'descripcion':'Disfruta una visita al museo de uno de los mejores equipos de Argentina y America'}]
+            {'nombre':"Visita al museo de Boca Juniors", 'descripcion':'Disfruta una visita al museo de uno de los mejores equipos de Argentina y America'},
+            {'nombre':"Visita al museo de Boca Juniors", 'descripcion':'Disfruta una visita al museo de uno de los mejores equipos de Argentina y America'},
+            {'nombre':"Visita al museo de Boca Juniors", 'descripcion':'Disfruta una visita al museo de uno de los mejores equipos de Argentina y America'}]
 
     return render_template('futbol.html', es_admin=app.config['ES_ADMIN'], nombre_categoria=nombre_categoria,descripcion_categoria=descripcion_categoria, eventos=eventos )
 
@@ -104,4 +131,4 @@ def Teatro():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=PORT)
