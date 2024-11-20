@@ -108,7 +108,8 @@ def reserva():
             response.raise_for_status()
             datos_reserva = response.json()
         except requests.exceptions.RequestException as e:
-            current_app.logger.error(f'Error: {e}')
+            print(f"Error fetching data: {e}")
+            datos_reserva = []
             return str(e), 500
     
         try:
@@ -129,10 +130,10 @@ def reserva():
                                     total=precio_entrada*cant_tickets)
             
             else:
-                return "No se encontraron reservas con es numero de ID", 404
+                return "No se encontraron reservas con ese numero de ID", 404
 
         except Exception as e:
-            current_app.logger.error(f'Unexpected error: {e}')
+            print(f'Unexpected error: {e}')
             return str(e), 500
     return render_template('reserva.html', es_admin=app.config['ES_ADMIN'])
 
