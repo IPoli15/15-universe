@@ -139,14 +139,28 @@ def reserva():
 
 @app.route('/futbol')
 def Futbol():
-    nombre_categoria='Futbol'
-    descripcion_categoria = 'Disfruta de los mejores eventos de Futbol'
-    eventos=[{'nombre':"Visita al museo de Boca Juniors", 'descripcion':'Disfruta una visita al museo de uno de los mejores equipos de Argentina y America'},
-            {'nombre':"Visita al museo de Boca Juniors", 'descripcion':'Disfruta una visita al museo de uno de los mejores equipos de Argentina y America'},
-            {'nombre':"Visita al museo de Boca Juniors", 'descripcion':'Disfruta una visita al museo de uno de los mejores equipos de Argentina y America'},
-            {'nombre':"Visita al museo de Boca Juniors", 'descripcion':'Disfruta una visita al museo de uno de los mejores equipos de Argentina y America'}]
+    nombre_categoria = 'futbol'
+    descripcion_categoria = '¡Disfruta de los mejores eventos del mundo del futbol!'
+    try:
+        response = requests.get('http://127.0.0.1:5001/consultar-eventos/'+nombre_categoria)
+        response.raise_for_status()
+        eventos = response.json()
+    except requests.exceptions.RequestException as e:
+        current_app.logger.error(f'Error: {e}')
+        return str(e), 500
+    
+    try:
+        lista_eventos=[]
+        if eventos:
+            for evento in eventos:
+                lista_eventos.append(evento)
+        else:
+            return "No se encontraron eventos para esta categoria"
+    except Exception as e:
+            current_app.logger.error(f'Unexpected error: {e}')
+            return str(e), 500
 
-    return render_template('futbol.html', es_admin=app.config['ES_ADMIN'], nombre_categoria=nombre_categoria,descripcion_categoria=descripcion_categoria, eventos=eventos )
+    return render_template('futbol.html', eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
 
 @app.route('/stand-up')
 def Stand_up():

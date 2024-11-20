@@ -64,17 +64,6 @@ button:hover {
     background-color: #6e32a7;
 }
 
-#boton_mas_info {
-    margin:13px;
-    font-size: 1.5em;
-    font-weight: bold;
-    padding: 8px 16px;
-    border-radius: 15px;
-    border: 1px solid rgb(114, 114, 114);
-    color: white;
-    background-color: blueviolet;
-    cursor:pointer;
-}
 
 .eventos{
     background-position: center center;
