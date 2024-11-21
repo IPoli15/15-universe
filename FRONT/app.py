@@ -293,7 +293,7 @@ def Teatro():
             current_app.logger.error(f'Unexpected error: {e}')
             return str(e), 500
 
-<<<<<<< HEAD
+
 # - -- - --crear evento----
 @app.route('/crear_evento', methods=['GET', 'POST'])
 def crear_evento():
