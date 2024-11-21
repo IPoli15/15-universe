@@ -8,19 +8,29 @@ from sqlalchemy.exc import SQLAlchemyError
 
 PORT = 5001
 
+QUERY_CREAR_EVENTO = """
+    INSERT INTO eventos (nombre_evento, categoria, descripcion, entradas_disponibles, localizacion, precio_entrada)
+    VALUES (:nombre_evento, :categoria, :descripcion, :entradas_disponibles, :localizacion, :precio_entrada)
+"""
+
 QUERY_INGRESAR_RESERVA = "INSERT INTO reservas (id_usuario, id_evento, id_reserva, cant_tickets) VALUES (:id_usuario, :id_evento,  :id_reserva, :cant_tickets)"
 QUERY_ELIMINAR_RESERVA = "DELETE FROM reservas WHERE id_reserva = :id_reserva"
 QUERY_RESERVAS_EVENTO = "SELECT COUNT(*) FROM eventos WHERE id_evento = :id_evento"
 QUERY_ELIMINAR_EVENTO = "DELETE FROM eventos WHERE id_evento = :id_evento"
 QUERY_RESERVA_POR_ID = """SELECT R.id_reserva, R.cant_tickets, U.nombre, E.nombre_evento, E.precio_entrada FROM reservas R
 INNER JOIN usuarios U on U.id_usuario = R.id_usuario
-INNER JOIN eventos E on E.id_evento = R.id_evento"""
+INNER JOIN eventos E on E.id_evento = R.id_evento
+WHERE id_reserva = :id_reserva"""
 QUERY_TODOS_LOS_EVENTOS = " SELECT id_evento, nombre_evento, categoria, descripcion, entradas_disponibles, localizacion, precio_entrada from eventos "
-QUERY_EVENTOS_POR_CATEGORIA = "SELECT id_evento, nombre_evento, categoria, descripcion, entradas_disponibles, localizacion, precio_entrada FROM eventos WHERE categoria = :categoria"
+QUERY_EVENTOS_POR_CATEGORIA = "SELECT id_evento, nombre_evento, categoria, descripcion, entradas_totales, entradas_disponibles, fecha_hora, localizacion, es_recomendacion, precio_entrada FROM eventos WHERE categoria = :categoria"
+QUERY_EVENTOS_POR_ID = "SELECT id_evento, nombre_evento, categoria, descripcion, entradas_totales, entradas_disponibles, fecha_hora, localizacion, es_recomendacion, precio_entrada FROM eventos WHERE id_evento = :id_evento"
 
-app = Flask(__name__)
+
+
+app = Flask(__name__, template_folder='../FRONT/templates', static_folder='../FRONT/static')
 app.config.from_object(Config)
 db.init_app(app)
+app.secret_key = 'coqui2529'
 # Recordar que los datos de la db en cuanto a nombre, usuario y contraseña varian.
 engine = create_engine("mysql+mysqlconnector://root:1234@localhost:3306/universe")
 
@@ -30,6 +40,18 @@ def run_query(query, parameters=None):
         conn.commit()
 
     return result
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/reserva')
+def reserva():
+    return render_template('reserva.html')  
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
 
 #------------------------------------------------------------------------------------- TABLA USUARIOS | LOGIN
 
@@ -144,6 +166,8 @@ def eliminar_reserva(id_reserva):
 
 #--------------------------------------------------------TABLA EVENTOS-----------------------------------#
 
+#----METODO GET, CONSULTAR EVENTO POR NOMBRE DE CATEGORIA -----#
+
 def eventos_por_categoria(categoria):
     return run_query(QUERY_EVENTOS_POR_CATEGORIA, {'categoria': categoria}).fetchall()
 
@@ -159,7 +183,44 @@ def consultar_eventos_por_categoria(categoria):
 
     response = []
     for row in result:
-        response.append({'id_evento': row[0], 'nombre_evento': row[1], 'categoria': row[2], 'descripcion': row[3], 'entradas_disponibles':row[4], 'localizacion':row[5], 'precio_entrada':row[6]})
+        response.append({'id_evento': row[0],
+                        'nombre_evento': row[1],
+                        'categoria': row[2],
+                        'descripcion': row[3], 
+                        'entradas_totales':row[4],
+                        'entradas_disponibles':row[5],
+                        'fecha_hora':row[6],
+                        'localizacion':row[7],
+                        'es_recomendacion':row[8],
+                        'precio_entrada':row[9]})
+    return jsonify(response), 200
+
+#----METODO GET, CONSULTAR EVENTO POR ID DE EVENTO -----#
+
+def eventos_por_id(id_evento):
+    return run_query(QUERY_EVENTOS_POR_ID, {'id_evento': id_evento}).fetchall()
+
+@app.route('/consultar-eventos/<int:id_evento>', methods=['GET'])
+def consultar_eventos_por_id(id_evento):
+    try:
+        result = eventos_por_id(id_evento)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+    if len(result) == 0:
+        return jsonify({'error': 'No se encontró evento'}), 404 # Not found
+
+    result=result[0]
+    response = ({'id_evento': result[0],
+                        'nombre_evento': result[1],
+                        'categoria': result[2],
+                        'descripcion': result[3], 
+                        'entradas_totales':result[4],
+                        'entradas_disponibles':result[5],
+                        'fecha_hora':result[6],
+                        'localizacion':result[7],
+                        'es_recomendacion':result[8],
+                        'precio_entrada':result[9]})
     return jsonify(response), 200
 
 
@@ -198,7 +259,41 @@ def eliminar_evento(id_evento):
     
     except SQLAlchemyError as e:
         return jsonify({'error': str(e)}), 500
+    
+#- --- - -- - -crear evento---
 
+
+@app.route('/crear_evento', methods=['GET'])
+def crear_evento_form():
+    return render_template('crear_evento.html')
+
+@app.route('/api/crear_evento', methods=['POST'])
+def api_crear_evento():
+    """
+    Maneja la creación de un nuevo evento desde el formulario HTML.
+    """
+    try:
+        data = request.form
+
+        campos_requeridos = ['nombre_evento', 'categoria', 'descripcion', 'entradas_disponibles', 'localizacion', 'precio_entrada']
+        if not all(campo in data for campo in campos_requeridos):
+            return jsonify({"error": "Faltan campos requeridos."}), 400
+
+        run_query(QUERY_CREAR_EVENTO, {
+            'nombre_evento': data['nombre_evento'],
+            'categoria': data['categoria'],
+            'descripcion': data['descripcion'],
+            'entradas_disponibles': data['entradas_disponibles'],
+            'localizacion': data['localizacion'],
+            'precio_entrada': data['precio_entrada']
+        })
+        
+        flash("Evento creado con éxito", "success")
+        return redirect(url_for('crear_evento_form'))
+
+    except SQLAlchemyError as e:
+        flash(f"Error al crear el evento: {str(e)}", "error")
+        return redirect(url_for('crear_evento_form'))
 
 if __name__ == '__main__':
     app.run(debug=True, port=PORT)

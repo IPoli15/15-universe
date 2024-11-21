@@ -1,0 +1,68 @@
+#:kivy 2.3.0
+
+<MyRoot>:
+
+    main_title: universe_label
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/Fondo.jpg'
+        Label:
+            id: universe_label
+            text: "Universe"
+            font_name:"Montserrat"
+            font_size: 50
+            color: (95, 100, 43, 19)
+      
+        GridLayout:
+            rows: 4
+            cols: 3
+            padding: 1
+            spacing: 1
+            Label:
+                
+            Label:
+                text: 'Consulta tu reserva'
+                font_name:"Montserrat"
+                font_size: 50
+                color: (34, 7, 82, 1)
+            Label:
+            Label:
+                                
+            Label:
+                text: 'Id de reserva'
+                font_size: 40
+                size_hint: 0.5, 0.1
+            Label:
+            Label:
+
+            TextInput:
+                id: idreserva
+                size_hint: 0.5, 0.1
+                font_size: 40
+            Label:
+            Label:
+                
+            Button:
+                text: 'Revisar'
+                font_size: 25
+                size_hint: 0.5, 0.1
+                on_press: root.change_color()
+
+            Label:
+                
+
+
+        Button:
+            text: "Change color!"
+            font_size: 24
+            # size: 100, 50
+            size_hint: 0.5, 0.1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            on_press: root.change_color()
+
