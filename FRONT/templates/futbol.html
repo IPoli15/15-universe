@@ -16,7 +16,6 @@
             {%for evento in eventos %}
                 <div class = "eventos">
                     <h2>{{evento.nombre_evento}}</h2>
-                    <p>{{evento.descripcion}}</p>
                     <a id="boton_mas_info" href="{{url_for('Descripcion_evento', id_evento=evento.id_evento)}}">Más Información</a>
                 </div>
             {% endfor %}           

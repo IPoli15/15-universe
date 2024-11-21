@@ -9,6 +9,9 @@ app.secret_key = 'coqui2529'
 # app.config es un diccionario especial de flask para almacenar configuraciones de la aplicación,
 # estas estan disponibles en toda la aplicacion y son accesibles desde cualquier parte de la misma
 app.config['ES_ADMIN'] = False
+app.config['SESION_INICIADA'] = False
+app.config['ID_USUARIO'] = 0
+app.config['NOMBRE_USUARIO'] = ''
 
 @app.route('/')
 def index():

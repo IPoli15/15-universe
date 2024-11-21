@@ -22,8 +22,8 @@ INNER JOIN usuarios U on U.id_usuario = R.id_usuario
 INNER JOIN eventos E on E.id_evento = R.id_evento
 WHERE id_reserva = :id_reserva"""
 QUERY_TODOS_LOS_EVENTOS = " SELECT id_evento, nombre_evento, categoria, descripcion, entradas_disponibles, localizacion, precio_entrada from eventos "
-QUERY_EVENTOS_POR_CATEGORIA = "SELECT id_evento, nombre_evento, categoria, descripcion, entradas_disponibles, localizacion, precio_entrada FROM eventos WHERE categoria = :categoria"
-QUERY_EVENTOS_POR_ID = "SELECT id_evento, nombre_evento, categoria, descripcion, entradas_disponibles, localizacion, precio_entrada FROM eventos WHERE id_evento = :id_evento"
+QUERY_EVENTOS_POR_CATEGORIA = "SELECT id_evento, nombre_evento, categoria, descripcion, entradas_totales, entradas_disponibles, fecha_hora, localizacion, es_recomendacion, precio_entrada FROM eventos WHERE categoria = :categoria"
+QUERY_EVENTOS_POR_ID = "SELECT id_evento, nombre_evento, categoria, descripcion, entradas_totales, entradas_disponibles, fecha_hora, localizacion, es_recomendacion, precio_entrada FROM eventos WHERE id_evento = :id_evento"
 
 
 
@@ -183,7 +183,16 @@ def consultar_eventos_por_categoria(categoria):
 
     response = []
     for row in result:
-        response.append({'id_evento': row[0], 'nombre_evento': row[1], 'categoria': row[2], 'descripcion': row[3], 'entradas_disponibles':row[4], 'localizacion':row[5], 'precio_entrada':row[6]})
+        response.append({'id_evento': row[0],
+                        'nombre_evento': row[1],
+                        'categoria': row[2],
+                        'descripcion': row[3], 
+                        'entradas_totales':row[4],
+                        'entradas_disponibles':row[5],
+                        'fecha_hora':row[6],
+                        'localizacion':row[7],
+                        'es_recomendacion':row[8],
+                        'precio_entrada':row[9]})
     return jsonify(response), 200
 
 #----METODO GET, CONSULTAR EVENTO POR ID DE EVENTO -----#
@@ -202,7 +211,16 @@ def consultar_eventos_por_id(id_evento):
         return jsonify({'error': 'No se encontró evento'}), 404 # Not found
 
     result=result[0]
-    response = ({'id_evento': result[0], 'nombre_evento': result[1], 'categoria': result[2], 'descripcion': result[3], 'entradas_disponibles':result[4], 'localizacion':result[5], 'precio_entrada':result[6]})
+    response = ({'id_evento': result[0],
+                        'nombre_evento': result[1],
+                        'categoria': result[2],
+                        'descripcion': result[3], 
+                        'entradas_totales':result[4],
+                        'entradas_disponibles':result[5],
+                        'fecha_hora':result[6],
+                        'localizacion':result[7],
+                        'es_recomendacion':result[8],
+                        'precio_entrada':result[9]})
     return jsonify(response), 200
 
 
