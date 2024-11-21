@@ -6,7 +6,7 @@ main {
         0deg,
         rgba(0, 0, 0, 0.7),
         rgba(0, 0, 0, 0.7)
-    ), url("/static/img/fondo-teatro.jpg");
+    ), url("/static/img/fondo-standup.jpg");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -107,4 +107,3 @@ button:hover {
     text-decoration: none;
     cursor: pointer;
 }
-
