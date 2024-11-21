@@ -11,7 +11,7 @@ main {
 
 #contenedor-principal {
 
-    border: 2px solid green;
+    /* border: 2px solid green; */
     display: grid;
     justify-content: center;
     align-items: center;
@@ -22,7 +22,7 @@ main {
 }
 
 #contenedor-secundario {
-    border: 2px solid green;
+    /* border: 2px solid green; */
     background-color: white;
     display: grid;
     justify-content: center;
@@ -50,7 +50,7 @@ main {
 
 
 #parte-izquierda {
-    border: solid red;
+    /* border: solid red; */
     display: grid;
     padding: 10px;
     height: auto;
@@ -80,7 +80,7 @@ h2 {
 /*TODO_______________________parte derecha____________________*/
 
 #parte-derecha {
-    border: solid yellow;
+    /* border: solid yellow; */
     display: grid;
     padding: 5%;
     width: auto;

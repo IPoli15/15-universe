@@ -8,20 +8,18 @@
 
 <link rel="stylesheet" href="{{ url_for('static', filename='/css/conciertos.css') }}">
 
-<section class = "seccion">
-    <div class = "contenedor">
-        <h1>Eventos de {{nombre_categoria}}</h1>
-        <p id = "texto-inicial">{{descripcion_categoria}}</p>
-        <div class = "pagina">
-            {%for evento in eventos %}
-                <div class = "eventos">
-                    <h2>{{evento.nombre_evento}}</h2>
-                    <p>{{evento.descripcion}}</p>
-                    <a id="boton_mas_info" href="{{url_for('Descripcion_evento', id_evento=evento.id_evento)}}">Más Información</a>
-                </div>
-            {% endfor %}           
-        </div>
+<div class = "contenedor">
+    <h1>Eventos de {{nombre_categoria}}</h1>
+    <p id = "texto-inicial">{{descripcion_categoria}}</p>
+    <div class = "pagina">
+        {%for evento in eventos %}
+            <div class = "eventos">
+                <h2>{{evento.nombre_evento}}</h2>
+                <p>{{evento.descripcion}}</p>
+                <a id="boton_mas_info" href="{{url_for('Descripcion_evento', id_evento=evento.id_evento)}}">Más Información</a>
+            </div>
+        {% endfor %}           
     </div>
-</section>
+</div>
 
 {% endblock %}
