@@ -6,28 +6,31 @@ main {
     background-image: url("/static/img/musica/fondo-concierto.jpeg");
     background-size: cover;
     background-repeat: no-repeat;
-    margin: auto;
+    margin: 0;
 }
 
 #contenedor-principal {
 
-    /* border: 2px solid green; */
+    border: 2px solid green;
     display: grid;
     justify-content: center;
     align-items: center;
     grid-template-rows: auto auto;
-    grid-template-columns: 60%;
+    grid-template-columns: auto;
+    max-width: 50%;
 
 }
 
 #contenedor-secundario {
-    /* border: 2px solid green; */
+    border: 2px solid green;
     background-color: white;
     display: grid;
     justify-content: center;
     align-items: start;
-    grid-template-columns: 40% auto;
+    grid-template-columns: auto auto;
     border-radius: 20px;
+    padding: 10px;
+    max-width: 100%;
 }
 
 /*TODO_______________________parte arriba_______________________*/
@@ -47,11 +50,12 @@ main {
 
 
 #parte-izquierda {
-    /* border: solid red; */
+    border: solid red;
     display: grid;
-    padding: 5%;
-    height: 500px;
-    width: 350px;
+    padding: 10px;
+    height: auto;
+    width: auto;
+    max-width: 100%;
 }
 
 #parte-izquierda .texto-izquierda {
@@ -76,10 +80,11 @@ h2 {
 /*TODO_______________________parte derecha____________________*/
 
 #parte-derecha {
-    /* border: solid yellow; */
+    border: solid yellow;
     display: grid;
     padding: 5%;
-    width: 500px;
+    width: auto;
+    height: auto;
 }
 
 #parte-derecha .texto-derecha {
