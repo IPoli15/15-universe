@@ -1,0 +1,108 @@
+# APP DOES NOT WORK!!! IT CRASHES!!
+
+
+# HOW TO DEBUG 
+
+
+(Instructions for Windows 11)
+
+
+1) Install USB drivers for your phone
+
+Example Samsung: https://developer.samsung.com/android-usb-driver
+
+The drivers are different for each phone brand: Samsung, Huawei, Xiaomi, etc.
+
+
+2) Install "Minimal ADB and Fastboot" --> latest version
+
+https://androidmtk.com/download-minimal-adb-and-fastboot-tool
+
+
+3) Enable USB debugging on your phone
+
+https://techysnoop.com/enable-usb-debugging-on-android-phone/
+
+
+4) Open program "Minimal ADB and Fastboot" on PowerShell console
+
+    * Start Menu --> type "powershell" --> enter
+    * in console:
+        cd "C:\Program Files (x86)\Minimal ADB and Fastboot"
+
+
+5) Connect phone to PC using USB cable
+
+    * In your phone, a message will appear: "Allow USB debugging?"
+        * Check option "Always allow from this computer"
+        * Tap "Allow"
+
+
+6) Check phone is detected by the PC
+
+    * In powershell console execute the command:
+        
+        adb devices
+    
+    * A message like this has to appear in the console:
+
+        List of devices attached
+        RF8R60HZ53J     device
+
+
+7) Open Android Logcat using a regex to detect specific logs from your phone
+
+    Examples:
+
+
+    // All logs
+
+    adb logcat
+
+
+    // All logs from time "11:21" for app "org.test.myapp"
+
+    adb logcat | Select-String -Pattern '^(.*)11\:21(.*)org.test.myapp(.*)$'
+
+
+    // "W"/"E"/"F" logs from time "11:21" for app "org.test.myapp"
+    // https://developer.android.com/tools/logcat#filteringOutput
+
+    adb logcat | Select-String -Pattern "^(.*)11\:21(.*)\s(W|E|F)\s(.*)org.test.myapp(.*)$"
+
+
+8) In your phone, open the app to see the logs on powershell console
+
+    Example of logcat output in PowerShell console (from your phone):
+
+    11-19 11:21:23.279  4998  4998 W MediaProvider: WorkProfileOwnerApps cache miss for package org.test.myapp
+    11-19 11:21:23.282  1480  2646 W WifiService: Couldn't get PackageInfo for package:org.test.myapp
+    11-19 11:21:23.349  1480  2646 W WifiService: Couldn't get PackageInfo for package:org.test.myapp
+    11-19 11:21:23.513  4150  4229 E WorkSourceUtil: Could not find package: org.test.myapp
+    11-19 11:21:23.682  4150 21497 W SQLiteLog: (28) double-quoted string literal: "org.test.myapp"
+    11-19 11:21:23.924 16879 16879 W Finsky  : [2] agsy.b(126): STU: Failed to get storage stats for package 'org.test.myapp' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+    11-19 11:21:24.066 21496 21496 W SQLiteLog: (28) double-quoted string literal: "org.test.myapp"
+    11-19 11:21:24.066 21496 21496 W SQLiteLog: (28) double-quoted string literal: "org.test.myapp"
+    11-19 11:21:24.067 21496 21496 W SQLiteLog: (28) double-quoted string literal: "org.test.myapp"
+    11-19 11:21:24.067 21496 21496 W SQLiteLog: (28) double-quoted string literal: "org.test.myapp"
+    11-19 11:21:24.067 21496 21496 W SQLiteLog: (28) double-quoted string literal: "org.test.myapp"
+    11-19 11:21:26.895 21439 21543 W System.err: android.content.pm.PackageManager$NameNotFoundException: org.test.myapp
+    11-19 11:21:28.985  4751  4792 W System.err: android.content.pm.PackageManager$NameNotFoundException: org.test.myapp
+    11-19 11:21:54.562 23892 23934 W GOS:PackageUtil: isPackageInstalledAsUser(). Exception: android.content.pm.PackageManager$NameNotFoundException: org.test.myapp
+    
+
+9) Common cause of errors:
+
+    // Probably some configuration missing in file 'buildozer.spec'
+
+    Common errors:
+
+    * Not sufficient permissions given to Android app
+    * Incompatible android version:
+        // https://apilevels.com/
+        * 'buildozer.spec' --> android.minapi
+        * 'buildozer.spec' --> android.ndk_api
+        * 'buildozer.spec' --> android.api
+    * File extensions not included in       'buildozer.spec' --> source.include_exts
+    * Folders not included in               'buildozer.spec' --> source.include_patterns
+    * Python requirements not included in   'buildozer.spec' --> requirements
