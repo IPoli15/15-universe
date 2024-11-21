@@ -343,6 +343,8 @@ def Descripcion_evento(id_evento):
             entradas_disponibles=datos_evento['entradas_disponibles']
             localizacion=datos_evento['localizacion']
             precio_entrada=datos_evento['precio_entrada']
+            fecha_hora=datos_evento['fecha_hora']
+            entradas_totales=datos_evento['entradas_totales']
 
             return render_template(
             'descripcion_evento.html', es_admin=app.config['ES_ADMIN'],  id_evento=id_evento,
@@ -351,7 +353,10 @@ def Descripcion_evento(id_evento):
                                 descripcion=descripcion, 
                                 entradas_disponibles=entradas_disponibles,
                                 localizacion=localizacion,
-                                precio_entrada=precio_entrada)
+                                precio_entrada=precio_entrada,
+                                fecha_hora=fecha_hora,
+                                entradas_totales=entradas_totales
+                                )
             
         else:
             return "No se encontraron reservas con ese numero de ID", 404
