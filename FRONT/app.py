@@ -79,7 +79,7 @@ def Pago():
 @app.route('/conciertos')
 def conciertos():
     nombre_categoria = 'Musica'
-    descripcion_categoria = '¡Disfruta de los mejores conciertos!'
+    descripcion_categoria = '¡Disfruta de la mejor musica en BA!'
     try:
         response = requests.get('http://127.0.0.1:5001/consultar-eventos/'+nombre_categoria)
         response.raise_for_status()
