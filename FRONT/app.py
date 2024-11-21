@@ -132,7 +132,7 @@ def cultura_jp():
 @app.route('/fiestas')
 def fiestas():
     nombre_categoria = 'Fiestas'
-    descripcion_categoria = '¡Las mejores fiestas estas aquí!'
+    descripcion_categoria = '¡Las mejores fiestas estan aquí!'
     try:
         response = requests.get('http://127.0.0.1:5001/consultar-eventos/'+nombre_categoria)
         response.raise_for_status()
