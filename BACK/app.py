@@ -8,6 +8,11 @@ from sqlalchemy.exc import SQLAlchemyError
 
 PORT = 5001
 
+QUERY_CREAR_EVENTO = """
+    INSERT INTO eventos (nombre_evento, categoria, descripcion, entradas_disponibles, localizacion, precio_entrada)
+    VALUES (:nombre_evento, :categoria, :descripcion, :entradas_disponibles, :localizacion, :precio_entrada)
+"""
+
 QUERY_INGRESAR_RESERVA = "INSERT INTO reservas (id_usuario, id_evento, id_reserva, cant_tickets) VALUES (:id_usuario, :id_evento,  :id_reserva, :cant_tickets)"
 QUERY_ELIMINAR_RESERVA = "DELETE FROM reservas WHERE id_reserva = :id_reserva"
 QUERY_RESERVAS_EVENTO = "SELECT COUNT(*) FROM eventos WHERE id_evento = :id_evento"
@@ -19,11 +24,12 @@ WHERE id_reserva = :id_reserva"""
 QUERY_TODOS_LOS_EVENTOS = " SELECT id_evento, nombre_evento, categoria, descripcion, entradas_disponibles, localizacion, precio_entrada from eventos "
 QUERY_EVENTOS_POR_CATEGORIA = "SELECT id_evento, nombre_evento, categoria, descripcion, entradas_disponibles, localizacion, precio_entrada FROM eventos WHERE categoria = :categoria"
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='../FRONT/templates', static_folder='../FRONT/static')
 app.config.from_object(Config)
 db.init_app(app)
+app.secret_key = 'coqui2529'
 # Recordar que los datos de la db en cuanto a nombre, usuario y contraseña varian.
-engine = create_engine("mysql+mysqlconnector://root:1234@localhost:3306/universe")
+engine = create_engine("mysql+mysqlconnector://root:coqui2529@localhost:3306/universe")
 
 def run_query(query, parameters=None):
     with engine.connect() as conn:
@@ -31,6 +37,18 @@ def run_query(query, parameters=None):
         conn.commit()
 
     return result
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/reserva')
+def reserva():
+    return render_template('reserva.html')  
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
 
 #------------------------------------------------------------------------------------- TABLA USUARIOS | LOGIN
 
@@ -199,7 +217,41 @@ def eliminar_evento(id_evento):
     
     except SQLAlchemyError as e:
         return jsonify({'error': str(e)}), 500
+    
+#- --- - -- - -crear evento---
 
+
+@app.route('/crear_evento', methods=['GET'])
+def crear_evento_form():
+    return render_template('crear_evento.html')
+
+@app.route('/api/crear_evento', methods=['POST'])
+def api_crear_evento():
+    """
+    Maneja la creación de un nuevo evento desde el formulario HTML.
+    """
+    try:
+        data = request.form
+
+        campos_requeridos = ['nombre_evento', 'categoria', 'descripcion', 'entradas_disponibles', 'localizacion', 'precio_entrada']
+        if not all(campo in data for campo in campos_requeridos):
+            return jsonify({"error": "Faltan campos requeridos."}), 400
+
+        run_query(QUERY_CREAR_EVENTO, {
+            'nombre_evento': data['nombre_evento'],
+            'categoria': data['categoria'],
+            'descripcion': data['descripcion'],
+            'entradas_disponibles': data['entradas_disponibles'],
+            'localizacion': data['localizacion'],
+            'precio_entrada': data['precio_entrada']
+        })
+        
+        flash("Evento creado con éxito", "success")
+        return redirect(url_for('crear_evento_form'))
+
+    except SQLAlchemyError as e:
+        flash(f"Error al crear el evento: {str(e)}", "error")
+        return redirect(url_for('crear_evento_form'))
 
 if __name__ == '__main__':
     app.run(debug=True, port=PORT)

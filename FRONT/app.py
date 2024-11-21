@@ -1,10 +1,10 @@
-from flask import Flask, render_template, request, current_app, redirect, url_for
+from flask import Flask, render_template, request, current_app, redirect, url_for, flash
 import requests
 
 PORT = 5000
-
+BACKEND_URL = "http://127.0.0.1:5001"
 app = Flask(__name__)
-
+app.secret_key = 'coqui2529'
 # Variable para validar si es admin o no,
 # app.config es un diccionario especial de flask para almacenar configuraciones de la aplicación,
 # estas estan disponibles en toda la aplicacion y son accesibles desde cualquier parte de la misma
@@ -170,6 +170,29 @@ def Stand_up():
 def Teatro():
     return render_template('Teatro.html', es_admin=app.config['ES_ADMIN'])
 
+# - -- - --crear evento----
+@app.route('/crear_evento', methods=['GET', 'POST'])
+def crear_evento():
+    if request.method == 'POST':
+       
+        data = {
+            'nombre_evento': request.form['nombre_evento'],
+            'categoria': request.form['categoria'],
+            'descripcion': request.form['descripcion'],
+            'entradas_disponibles': request.form['entradas_disponibles'],
+            'localizacion': request.form['localizacion'],
+            'precio_entrada': request.form['precio_entrada']
+        }
+        
+        response = requests.post(f"{BACKEND_URL}/api/crear_evento", json=data)
+
+        if response.status_code == 201:
+            flash('Evento creado con éxito.', 'success')
+            return redirect('/crear_evento')
+        else:
+            flash(response.json().get('error', 'Error desconocido al crear el evento.'), 'danger')
+
+    return render_template('crear_evento.html')
 
 if __name__ == '__main__':
     app.run(debug=True, port=PORT)
