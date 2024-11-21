@@ -75,23 +75,106 @@ def Pago():
 
 @app.route('/conciertos')
 def conciertos():
-    return render_template('conciertos.html', es_admin=app.config['ES_ADMIN'])
+    nombre_categoria = 'Musica'
+    descripcion_categoria = '¡Disfruta de los mejores conciertos!'
+    try:
+        response = requests.get('http://127.0.0.1:5001/consultar-eventos/'+nombre_categoria)
+        response.raise_for_status()
+        eventos = response.json()
+    except requests.exceptions.RequestException as e:
+        current_app.logger.error(f'Error: {e}')
+        return str(e), 500
+    
+    try:
+        lista_eventos=[]
+        if eventos:
+            for evento in eventos:
+                lista_eventos.append(evento)
+        else:
+            return "No se encontraron eventos para esta categoria"
+    except Exception as e:
+            current_app.logger.error(f'Unexpected error: {e}')
+            return str(e), 500
 
-@app.route('/musica')
-def musica():
-    return render_template('musica.html', es_admin=app.config['ES_ADMIN'])
+    return render_template('conciertos.html', es_admin=app.config['ES_ADMIN'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
+
+
+
 
 @app.route('/cultura_jp')
 def cultura_jp():
-    return render_template('cultura_jp.html', es_admin=app.config['ES_ADMIN'])
+    nombre_categoria = 'Cultura Japonesa'
+    descripcion_categoria = '¡Visita todos los eventos relacionados al mundo de la Cultura Japonesa!'
+    try:
+        response = requests.get('http://127.0.0.1:5001/consultar-eventos/'+nombre_categoria)
+        response.raise_for_status()
+        eventos = response.json()
+    except requests.exceptions.RequestException as e:
+        current_app.logger.error(f'Error: {e}')
+        return str(e), 500
+    
+    try:
+        lista_eventos=[]
+        if eventos:
+            for evento in eventos:
+                lista_eventos.append(evento)
+        else:
+            return "No se encontraron eventos para esta categoria"
+    except Exception as e:
+            current_app.logger.error(f'Unexpected error: {e}')
+            return str(e), 500
+
+    return render_template('cultura_jp.html', es_admin=app.config['ES_ADMIN'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
 
 @app.route('/fiestas')
 def fiestas():
-    return render_template('fiestas.html', es_admin=app.config['ES_ADMIN'])
+    nombre_categoria = 'Fiestas'
+    descripcion_categoria = '¡Las mejores fiestas estas aquí!'
+    try:
+        response = requests.get('http://127.0.0.1:5001/consultar-eventos/'+nombre_categoria)
+        response.raise_for_status()
+        eventos = response.json()
+    except requests.exceptions.RequestException as e:
+        current_app.logger.error(f'Error: {e}')
+        return str(e), 500
+    
+    try:
+        lista_eventos=[]
+        if eventos:
+            for evento in eventos:
+                lista_eventos.append(evento)
+        else:
+            return "No se encontraron eventos para esta categoria"
+    except Exception as e:
+            current_app.logger.error(f'Unexpected error: {e}')
+            return str(e), 500
+
+    return render_template('fiestas.html', es_admin=app.config['ES_ADMIN'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
 
 @app.route('/eSports')
 def esports():
-    return render_template('eSports.html', es_admin=app.config['ES_ADMIN'])
+    nombre_categoria = 'eSports'
+    descripcion_categoria = '¡Los Torneos de eSports mas relevantes el país!'
+    try:
+        response = requests.get('http://127.0.0.1:5001/consultar-eventos/'+nombre_categoria)
+        response.raise_for_status()
+        eventos = response.json()
+    except requests.exceptions.RequestException as e:
+        current_app.logger.error(f'Error: {e}')
+        return str(e), 500
+    
+    try:
+        lista_eventos=[]
+        if eventos:
+            for evento in eventos:
+                lista_eventos.append(evento)
+        else:
+            return "No se encontraron eventos para esta categoria"
+    except Exception as e:
+            current_app.logger.error(f'Unexpected error: {e}')
+            return str(e), 500
+
+    return render_template('eSports.html', es_admin=app.config['ES_ADMIN'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
 
 @app.route('/error')
 def error():
@@ -139,7 +222,7 @@ def reserva():
 
 @app.route('/futbol')
 def Futbol():
-    nombre_categoria = 'futbol'
+    nombre_categoria = 'Futbol'
     descripcion_categoria = '¡Disfruta de los mejores eventos del mundo del futbol!'
     try:
         response = requests.get('http://127.0.0.1:5001/consultar-eventos/'+nombre_categoria)
@@ -160,16 +243,57 @@ def Futbol():
             current_app.logger.error(f'Unexpected error: {e}')
             return str(e), 500
 
-    return render_template('futbol.html', eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
+    return render_template('futbol.html', es_admin=app.config['ES_ADMIN'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
 
 @app.route('/stand-up')
 def Stand_up():
-    return render_template('stand_up.html', es_admin=app.config['ES_ADMIN'])
+    nombre_categoria = 'Stand Up'
+    descripcion_categoria = '¡Disfruta de los MEJORES Shows de Stand Up!'
+    try:
+        response = requests.get('http://127.0.0.1:5001/consultar-eventos/'+nombre_categoria)
+        response.raise_for_status()
+        eventos = response.json()
+    except requests.exceptions.RequestException as e:
+        current_app.logger.error(f'Error: {e}')
+        return str(e), 500
+    
+    try:
+        lista_eventos=[]
+        if eventos:
+            for evento in eventos:
+                lista_eventos.append(evento)
+        else:
+            return "No se encontraron eventos para esta categoria"
+    except Exception as e:
+            current_app.logger.error(f'Unexpected error: {e}')
+            return str(e), 500
 
+    return render_template('stand_up.html', es_admin=app.config['ES_ADMIN'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
+    
 @app.route('/teatro')
 def Teatro():
-    return render_template('Teatro.html', es_admin=app.config['ES_ADMIN'])
+    nombre_categoria = 'Teatro'
+    descripcion_categoria = '¡Disfruta de las mejores obras de Teatro del pais!'
+    try:
+        response = requests.get('http://127.0.0.1:5001/consultar-eventos/'+nombre_categoria)
+        response.raise_for_status()
+        eventos = response.json()
+    except requests.exceptions.RequestException as e:
+        current_app.logger.error(f'Error: {e}')
+        return str(e), 500
+    
+    try:
+        lista_eventos=[]
+        if eventos:
+            for evento in eventos:
+                lista_eventos.append(evento)
+        else:
+            return "No se encontraron eventos para esta categoria"
+    except Exception as e:
+            current_app.logger.error(f'Unexpected error: {e}')
+            return str(e), 500
 
+<<<<<<< HEAD
 # - -- - --crear evento----
 @app.route('/crear_evento', methods=['GET', 'POST'])
 def crear_evento():
@@ -193,6 +317,46 @@ def crear_evento():
             flash(response.json().get('error', 'Error desconocido al crear el evento.'), 'danger')
 
     return render_template('crear_evento.html')
+
+
+@app.route('/descripcion-evento/<id_evento>')
+def Descripcion_evento(id_evento):
+    try:
+            response = requests.get('http://127.0.0.1:5001/consultar-eventos/'+id_evento)
+            response.raise_for_status()
+            datos_evento = response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data: {e}")
+        datos_evento = []
+        return str(e), 500
+    
+    try:
+        if datos_evento:
+                
+            id_evento=datos_evento['id_evento']
+            nombre_evento=datos_evento['nombre_evento']
+            categoria=datos_evento['categoria']
+            descripcion=datos_evento['descripcion']
+            entradas_disponibles=datos_evento['entradas_disponibles']
+            localizacion=datos_evento['localizacion']
+            precio_entrada=datos_evento['precio_entrada']
+
+            return render_template(
+            'descripcion_evento.html', es_admin=app.config['ES_ADMIN'],  id_evento=id_evento,
+                               nombre_evento=nombre_evento, 
+                               categoria=categoria, 
+                                descripcion=descripcion, 
+                                entradas_disponibles=entradas_disponibles,
+                                localizacion=localizacion,
+                                precio_entrada=precio_entrada)
+            
+        else:
+            return "No se encontraron reservas con ese numero de ID", 404
+
+    except Exception as e:
+        print(f'Unexpected error: {e}')
+        return str(e), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=PORT)
