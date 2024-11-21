@@ -79,3 +79,9 @@ VALUES
 
 
 SELECT * FROM reservas;
+
+
+-- DROP DATABASE universe;
+DROP TABLE reservas;
+DROP TABLE eventos;
+DROP TABLE usuarios;
