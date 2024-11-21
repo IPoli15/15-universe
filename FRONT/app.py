@@ -292,7 +292,7 @@ def Teatro():
     except Exception as e:
             current_app.logger.error(f'Unexpected error: {e}')
             return str(e), 500
-
+    return render_template('Teatro.html', es_admin=app.config['ES_ADMIN'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
 
 # - -- - --crear evento----
 @app.route('/crear_evento', methods=['GET', 'POST'])
