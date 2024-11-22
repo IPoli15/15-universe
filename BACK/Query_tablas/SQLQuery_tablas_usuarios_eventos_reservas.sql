@@ -80,3 +80,7 @@ VALUES
 
 
 SELECT * FROM reservas;
+
+DROP TABLE IF EXISTS reservas;
+DROP TABLE IF EXISTS eventos;
+DROP TABLE IF EXISTS usuarios;

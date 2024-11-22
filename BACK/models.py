@@ -8,6 +8,7 @@ class Usuario(db.Model):
     id_usuario = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50), nullable=False)
     password = db.Column(db.String(50), nullable=False)
+    es_admin = db.Column(db.Boolean, nullable=False)
 
 class Evento(db.Model):
     __tablename__ = 'eventos'
@@ -15,10 +16,14 @@ class Evento(db.Model):
     id_evento = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombre_evento = db.Column(db.String(100), nullable=False)
     categoria = db.Column(db.String(50), nullable=False)
-    descripcion = db.Column(db.String(200), nullable=False)
+    descripcion = db.Column(db.Text, nullable=False)
+    entradas_totales = db.Column(db.Integer, nullable=False)
     entradas_disponibles = db.Column(db.Integer, nullable=False)
-    localizacion = db.Column(db.String(50), nullable=False)
-    precio_entrada = db.Column(db.Numeric(5, 2), nullable=False)
+    fecha_hora = db.Column(db.String(50), nullable=False)
+    localizacion = db.Column(db.String(200), nullable=False)
+    es_recomendacion = db.Column(db.Boolean)
+    precio_entrada = db.Column(db.Integer, nullable=False)
+    imagen_url = db.Column(db.String(200))
 
 class Reserva(db.Model):
     __tablename__ = 'reservas'
