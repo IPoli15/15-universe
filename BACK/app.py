@@ -27,10 +27,10 @@ QUERY_RESERVA_POR_ID = """SELECT R.id_reserva, R.cant_tickets, U.nombre, E.nombr
 INNER JOIN usuarios U on U.id_usuario = R.id_usuario
 INNER JOIN eventos E on E.id_evento = R.id_evento
 WHERE id_reserva = :id_reserva"""
-QUERY_TODOS_LOS_EVENTOS = " SELECT id_evento, nombre_evento, categoria, descripcion, entradas_disponibles, localizacion, precio_entrada from eventos "
-QUERY_EVENTOS_POR_CATEGORIA = "SELECT id_evento, nombre_evento, categoria, descripcion, entradas_totales, entradas_disponibles, fecha_hora, localizacion, es_recomendacion, precio_entrada FROM eventos WHERE categoria = :categoria"
-QUERY_EVENTOS_POR_ID = "SELECT id_evento, nombre_evento, categoria, descripcion, entradas_totales, entradas_disponibles, fecha_hora, localizacion, es_recomendacion, precio_entrada,imagen_url  FROM eventos WHERE id_evento = :id_evento"
-
+QUERY_TODOS_LOS_EVENTOS = " SELECT id_evento, nombre_evento, categoria, descripcion, entradas_disponibles, localizacion, precio_entrada, imagen_url from eventos "
+QUERY_EVENTOS_POR_CATEGORIA = "SELECT id_evento, nombre_evento, categoria, descripcion, entradas_totales, entradas_disponibles, fecha_hora, localizacion, es_recomendacion, precio_entrada, imagen_url FROM eventos WHERE categoria = :categoria"
+QUERY_EVENTOS_POR_ID = "SELECT id_evento, nombre_evento, categoria, descripcion, entradas_totales, entradas_disponibles, fecha_hora, localizacion, es_recomendacion, precio_entrada, imagen_url  FROM eventos WHERE id_evento = :id_evento"
+QUERY_EVENTOS_RECOMENDADOS = "SELECT id_evento, nombre_evento, categoria, descripcion, entradas_totales, entradas_disponibles, fecha_hora, localizacion, es_recomendacion, precio_entrada, imagen_url FROM eventos WHERE es_recomendacion = 1"
 
 
 app = Flask(__name__, template_folder='../FRONT/templates', static_folder='../FRONT/static')
@@ -38,7 +38,7 @@ app.config.from_object(Config)
 db.init_app(app)
 app.secret_key = 'coqui2529'
 # Recordar que los datos de la db en cuanto a nombre, usuario y contraseña varian.
-engine = create_engine("mysql+mysqlconnector://root:coqui2529@localhost:3306/universe")
+engine = create_engine("mysql+mysqlconnector://root:1234@localhost:3306/universe")
 
 def run_query(query, parameters=None):
     with engine.connect() as conn:
@@ -198,7 +198,8 @@ def consultar_eventos_por_categoria(categoria):
                         'fecha_hora':row[6],
                         'localizacion':row[7],
                         'es_recomendacion':row[8],
-                        'precio_entrada':row[9]})
+                        'precio_entrada':row[9],
+                        'imagen_url': row[10]})
     return jsonify(response), 200
 
 #----METODO GET, CONSULTAR EVENTO POR ID DE EVENTO -----#
@@ -230,6 +231,31 @@ def consultar_eventos_por_id(id_evento):
                         'imagen_url': result[10]}
     return jsonify(response), 200
 
+def eventos_recomendados():
+    return run_query(QUERY_EVENTOS_RECOMENDADOS).fetchall()
+@app.route('/consultar-eventos-recomendados', methods=['GET'])
+def consultar_eventos_recomendados():
+    try:
+        result = eventos_recomendados()
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    if len(result) == 0:
+        return jsonify({'error': 'No se encontró eventos'}), 404 # Not found
+    response = []
+    for row in result:
+        if row[8] == 1:
+            response.append({'id_evento': row[0],
+                            'nombre_evento': row[1],
+                            'categoria': row[2],
+                            'descripcion': row[3], 
+                            'entradas_totales':row[4],
+                            'entradas_disponibles':row[5],
+                            'fecha_hora':row[6],
+                            'localizacion':row[7],
+                            'es_recomendacion':row[8],
+                            'precio_entrada':row[9],
+                            'imagen_url': row[10]})
+    return jsonify(response), 200
 
 def eventos():
     return run_query(QUERY_TODOS_LOS_EVENTOS).fetchall()
