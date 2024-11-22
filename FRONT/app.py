@@ -353,6 +353,38 @@ def Descripcion_evento(id_evento):
         print(f'Unexpected error: {e}')
         return str(e), 500
 
+@app.route('/busqueda-eventos')
+def busqueda_eventos():
+    nombre_evento = request.args.get('fname')
+    try:
+        response = requests.get('http://127.0.0.1:5001/consultar-eventos')
+        response.raise_for_status()
+        eventos = response.json()
+        print(eventos)
+    except requests.exceptions.RequestException as e:
+        current_app.logger.error(f'Error: {e}')
+        return str(e), 500    
+    try:
+        eventos_filtrados = []
+        if nombre_evento:
+            eventos_filtrados = [
+                evento for evento in eventos 
+                if nombre_evento.lower() in evento.get('nombre_evento', '').lower()
+            ]
+        else:
+            eventos_filtrados = eventos
+        
+        if not eventos_filtrados:
+            return "No se encontraron eventos que coincidan con la búsqueda."
+    except Exception as e:
+        current_app.logger.error(f'Unexpected error: {e}')
+        return str(e), 500
+
+    return render_template('eSports.html', 
+                           es_admin=app.config['ES_ADMIN'], 
+                           sesion_iniciada=app.config['SESION_INICIADA'], 
+                           eventos=eventos_filtrados)
+
 @app.errorhandler(404)
 def page_not_found():
     return render_template('404.html'), 404

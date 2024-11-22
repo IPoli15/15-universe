@@ -12,7 +12,9 @@
     <header>
         <div class="contenedor-header">
             <a href="{{ url_for('index') }}"> <img src="/static/img/logo-br.png" alt="Logo" class="logo"> </a>
-            <input type="text" placeholder="Buscar" class="barra-busqueda">
+            <form action="{{ url_for('busqueda_eventos') }}" id="form-busqueda" method="get">
+                <input type="text" placeholder="Buscar" class="barra-busqueda" name="fname">
+            </form>
             <a class="boton-reservar" href="{{url_for('reserva')}}">Consulta tu reserva</a>
             <a class="boton-cerrar-sesion" href="{{ url_for('logout') }}">Cerrar sesión</a>
             <img src="/static/img/icon-user.jpg" alt="admin"class="icono_user"></a>
