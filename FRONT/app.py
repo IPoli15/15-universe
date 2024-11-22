@@ -15,25 +15,7 @@ app.config['NOMBRE_USUARIO'] = ''
 
 @app.route('/')
 def index():
-    try:
-        response = requests.get('http://127.0.0.1:5001/consultar-eventos-recomendados')
-        response.raise_for_status()
-        eventos = response.json()
-    except requests.exceptions.RequestException as e:
-        current_app.logger.error(f'Error: {e}')
-        return str(e), 500
-    try:
-        lista_eventos=[]
-        if eventos:
-            for evento in eventos:
-                lista_eventos.append(evento)
-        else:
-            return "No se encontraron eventos recomendados"
-    except Exception as e:
-            current_app.logger.error(f'Unexpected error: {e}')
-            return str(e), 500
-
-    return render_template('index.html', es_admin=app.config['ES_ADMIN'], eventos=eventos)
+    return render_template('index.html', es_admin=app.config['ES_ADMIN'])
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -150,7 +132,7 @@ def cultura_jp():
 @app.route('/fiestas')
 def fiestas():
     nombre_categoria = 'Fiestas'
-    descripcion_categoria = '¡Las mejores fiestas estan aquí!'
+    descripcion_categoria = '¡Las mejores fiestas estas aquí!'
     try:
         response = requests.get('http://127.0.0.1:5001/consultar-eventos/'+nombre_categoria)
         response.raise_for_status()
@@ -324,9 +306,13 @@ def crear_evento():
             'nombre_evento': request.form['nombre_evento'],
             'categoria': request.form['categoria'],
             'descripcion': request.form['descripcion'],
+            'entradas_totales': request.form['entradas_totales'],
             'entradas_disponibles': request.form['entradas_disponibles'],
+            'fecha_hora': request.form['fecha_hora'],
             'localizacion': request.form['localizacion'],
-            'precio_entrada': request.form['precio_entrada']
+            'precio_entrada': request.form['precio_entrada'],
+            'imagen_url': request.form['imagen_url'],
+            'es_recomendacion': 0
         }
         
         response = requests.post(f"{BACKEND_URL}/api/crear_evento", json=data)
@@ -361,8 +347,7 @@ def Descripcion_evento(id_evento):
             entradas_disponibles=datos_evento['entradas_disponibles']
             localizacion=datos_evento['localizacion']
             precio_entrada=datos_evento['precio_entrada']
-            fecha_hora=datos_evento['fecha_hora']
-            entradas_totales=datos_evento['entradas_totales']
+            imagen_url = datos_evento['imagen_url']
 
             return render_template(
             'descripcion_evento.html', es_admin=app.config['ES_ADMIN'],  id_evento=id_evento,
@@ -372,9 +357,7 @@ def Descripcion_evento(id_evento):
                                 entradas_disponibles=entradas_disponibles,
                                 localizacion=localizacion,
                                 precio_entrada=precio_entrada,
-                                fecha_hora=fecha_hora,
-                                entradas_totales=entradas_totales
-                                )
+                                imagen_url=imagen_url )
             
         else:
             return "No se encontraron reservas con ese numero de ID", 404

@@ -19,13 +19,26 @@
             <option value="Fiesta">Fiesta</option>
             <option value="Teatro">Teatro</option>
             <option value="Esports">Esports</option>
+            <option value="Futbol">Futbol</option>
+            <option value="Conciertos">Conciertos</option>
+            <option value="Cultura Japonesa">Cultura Japonesa</option>
+            <option value="Stand-Up">Stand-Up</option>
         </select>
 
         <label for="descripcion">Descripción:</label>
         <textarea id="descripcion" name="descripcion" required></textarea>
 
+        <label for="imagen_url">URL de la Imagen:</label>
+        <input type="url" id="imagen_url" name="imagen_url" required>
+
+        <label for="entradas_totales">Entradas Totales:</label>
+        <input type="number" id="entradas_totales" name="entradas_totales" required>
+
         <label for="entradas_disponibles">Entradas Disponibles:</label>
         <input type="number" id="entradas_disponibles" name="entradas_disponibles" required>
+
+        <label for="fecha_hora">Fecha y Hora:</label>
+        <input type="datetime-local" id="fecha_hora" name="fecha_hora" required>
 
         <label for="localizacion">Localizacion:</label>
         <input type="text" id="localizacion" name="localizacion" required>
@@ -36,4 +49,7 @@
         <button type="submit">Crear Evento</button>
     </form>
 </div>
+
+<script src="{{ url_for('static', filename='js/crear_evento.js') }}"></script>
+
 {% endblock %}
