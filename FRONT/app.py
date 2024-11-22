@@ -33,7 +33,7 @@ def index():
             current_app.logger.error(f'Unexpected error: {e}')
             return str(e), 500
 
-    return render_template('index.html', es_admin=app.config['ES_ADMIN'], eventos=eventos)
+    return render_template('index.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -52,7 +52,10 @@ def login():
             
             if data['success']:
                 print('Login successful')
-                app.config['ES_ADMIN'] = True
+                if data['es_admin']:
+                    app.config['ES_ADMIN'] = True
+                else:
+                    app.config['SESION_INICIADA'] = True
                 return redirect(url_for('index'))
             else:
                 print('Invalid credentials')
@@ -61,7 +64,7 @@ def login():
             print(f'An error occurred: {str(e)}')
             return redirect(url_for('login'))
     
-    return render_template('login.html', es_admin=app.config['ES_ADMIN'])
+    return render_template('login.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config.get('SESION_INICIADA', False))
 
 @app.route('/pago', methods=['GET', 'POST'])
 def Pago():
@@ -319,7 +322,6 @@ def Teatro():
 @app.route('/crear_evento', methods=['GET', 'POST'])
 def crear_evento():
     if request.method == 'POST':
-       
         data = {
             'nombre_evento': request.form['nombre_evento'],
             'categoria': request.form['categoria'],
@@ -366,8 +368,8 @@ def Descripcion_evento(id_evento):
 
             return render_template(
             'descripcion_evento.html', es_admin=app.config['ES_ADMIN'],  id_evento=id_evento,
-                               nombre_evento=nombre_evento, 
-                               categoria=categoria, 
+                                nombre_evento=nombre_evento, 
+                                categoria=categoria, 
                                 descripcion=descripcion, 
                                 entradas_disponibles=entradas_disponibles,
                                 localizacion=localizacion,
