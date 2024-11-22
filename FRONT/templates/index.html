@@ -19,18 +19,15 @@
 
 <h2 id="texto">Nuestras recomendaciones</h2>
 <div id="recomendaciones">
-    <div class="recom">
-        <a href="{{url_for('index')}}" class="recomendacion"><img src="{{url_for('static', filename='img/recom_lib.png')}}" class="img_evento" alt="a"></a>
-        <a href="{{url_for('index')}}" class="recomendacion"><img src="{{url_for('static', filename='img/recom_sud.png')}}" class="img_evento" alt="b"></a>
-        <a href="{{url_for('index')}}" class="recomendacion"><img src="{{url_for('static', filename='img/recom_concierto.png')}}" class="img_evento" alt="c"></a>
-        <a href="{{url_for('index')}}" class="recomendacion"><img src="{{url_for('static', filename='img/recom_comic.png')}}" class="img_evento" alt="d"></a>
+    {%for evento in eventos %}
+     <div class="recom">
+        <div class = "eventos">
+            <h2>{{evento.nombre_evento}}</h2>
+            <p>{{evento.descripcion}}</p>
+            <a id="boton_mas_info" href="{{url_for('Descripcion_evento', id_evento=evento.id_evento)}}">Más Información</a>
+        </div>
     </div>
-    <div class="recom">
-        <a href="{{url_for('index')}}" class="recomendacion"><img src="{{url_for('static', filename='img/recom_ca.jpg')}}" class="img_evento" alt="e"></a>
-        <a href="{{url_for('index')}}" class="recomendacion"><img src="{{url_for('static', filename='img/recom_tenis.jpg')}}" class="img_evento" alt="f"></a>
-        <a href="{{url_for('index')}}" class="recomendacion"><img src="{{url_for('static', filename='img/recom_teatro.jpg')}}" class="img_evento" alt="g"></a>
-        <a href="{{url_for('index')}}" class="recomendacion"><img src="{{url_for('static', filename='img/recom_f1.jpg')}}" class="img_evento" alt="h"></a>
-    </div>
+    {% endfor %}  
 </div>
 
 {% endblock %}

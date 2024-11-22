@@ -24,7 +24,7 @@ WHERE id_reserva = :id_reserva"""
 QUERY_TODOS_LOS_EVENTOS = " SELECT id_evento, nombre_evento, categoria, descripcion, entradas_disponibles, localizacion, precio_entrada from eventos "
 QUERY_EVENTOS_POR_CATEGORIA = "SELECT id_evento, nombre_evento, categoria, descripcion, entradas_totales, entradas_disponibles, fecha_hora, localizacion, es_recomendacion, precio_entrada FROM eventos WHERE categoria = :categoria"
 QUERY_EVENTOS_POR_ID = "SELECT id_evento, nombre_evento, categoria, descripcion, entradas_totales, entradas_disponibles, fecha_hora, localizacion, es_recomendacion, precio_entrada FROM eventos WHERE id_evento = :id_evento"
-
+QUERY_EVENTOS_RECOMENDADOS = "SELECT id_evento, nombre_evento, categoria, descripcion, entradas_totales, entradas_disponibles, fecha_hora, localizacion, es_recomendacion, precio_entrada FROM eventos WHERE es_recomendacion = 1"
 
 
 app = Flask(__name__, template_folder='../FRONT/templates', static_folder='../FRONT/static')
@@ -223,6 +223,33 @@ def consultar_eventos_por_id(id_evento):
                         'precio_entrada':result[9]})
     return jsonify(response), 200
 
+def eventos_recomendados():
+    return run_query(QUERY_EVENTOS_RECOMENDADOS).fetchall()
+
+@app.route('/consultar-eventos-recomendados', methods=['GET'])
+def consultar_eventos_recomendados():
+    try:
+        result = eventos_recomendados()
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+    if len(result) == 0:
+        return jsonify({'error': 'No se encontró eventos'}), 404 # Not found
+
+    response = []
+    for row in result:
+        if row[8] == 1:
+            response.append({'id_evento': row[0],
+                            'nombre_evento': row[1],
+                            'categoria': row[2],
+                            'descripcion': row[3], 
+                            'entradas_totales':row[4],
+                            'entradas_disponibles':row[5],
+                            'fecha_hora':row[6],
+                            'localizacion':row[7],
+                            'es_recomendacion':row[8],
+                            'precio_entrada':row[9]})
+    return jsonify(response), 200
 
 def eventos():
     return run_query(QUERY_TODOS_LOS_EVENTOS).fetchall()

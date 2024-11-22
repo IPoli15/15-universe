@@ -15,7 +15,25 @@ app.config['NOMBRE_USUARIO'] = ''
 
 @app.route('/')
 def index():
-    return render_template('index.html', es_admin=app.config['ES_ADMIN'])
+    try:
+        response = requests.get('http://127.0.0.1:5001/consultar-eventos-recomendados')
+        response.raise_for_status()
+        eventos = response.json()
+    except requests.exceptions.RequestException as e:
+        current_app.logger.error(f'Error: {e}')
+        return str(e), 500
+    try:
+        lista_eventos=[]
+        if eventos:
+            for evento in eventos:
+                lista_eventos.append(evento)
+        else:
+            return "No se encontraron eventos recomendados"
+    except Exception as e:
+            current_app.logger.error(f'Unexpected error: {e}')
+            return str(e), 500
+
+    return render_template('index.html', es_admin=app.config['ES_ADMIN'], eventos=eventos)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
