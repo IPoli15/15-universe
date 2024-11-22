@@ -15,7 +15,7 @@
     <p id = "texto-inicial">{{descripcion_categoria}}</p>
     <div class = "pagina">
         {%for evento in eventos %}
-            <div class = "eventos" style="background-image: url('{{ evento.imagen_url }}'); background-size: cover; background-position: center;"></div>
+            <div class = "eventos" style="background-image: url('{{ evento.imagen_url }}'); background-size: cover; background-position: center;">
                 <h2>{{evento.nombre_evento}}</h2>
                 <p>{{evento.descripcion}}</p>
                 <a id="boton_mas_info" href="{{url_for('Descripcion_evento', id_evento=evento.id_evento)}}">Más Información</a>
