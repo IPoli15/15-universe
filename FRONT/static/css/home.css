@@ -80,6 +80,7 @@ h2 {
 }
 
 #boton_mas_info {
+    display: grid;
     padding: 10px; 
     background-color: #e74c3c;
     border: 2px solid #000000;
@@ -88,6 +89,7 @@ h2 {
     border-radius: 10px;
     text-decoration: none;
     cursor: pointer;
+    justify-content: center;
 }
 
 .eventos {
