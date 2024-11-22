@@ -23,17 +23,11 @@ def index():
         current_app.logger.error(f'Error: {e}')
         return str(e), 500
     try:
-        lista_eventos=[]
-        if eventos:
-            for evento in eventos:
-                lista_eventos.append(evento)
-        else:
-            return "No se encontraron eventos recomendados"
+        return render_template('index.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos)
+
     except Exception as e:
             current_app.logger.error(f'Unexpected error: {e}')
             return str(e), 500
-
-    return render_template('index.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -118,17 +112,12 @@ def conciertos():
         return str(e), 500
     
     try:
-        lista_eventos=[]
-        if eventos:
-            for evento in eventos:
-                lista_eventos.append(evento)
-        else:
-            return "No se encontraron eventos para esta categoria"
+        return render_template('conciertos.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
+
     except Exception as e:
             current_app.logger.error(f'Unexpected error: {e}')
             return str(e), 500
 
-    return render_template('conciertos.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
 
 
 
@@ -146,12 +135,8 @@ def cultura_jp():
         return str(e), 500
     
     try:
-        lista_eventos=[]
-        if eventos:
-            for evento in eventos:
-                lista_eventos.append(evento)
-        else:
-            return "No se encontraron eventos para esta categoria"
+        return render_template('cultura_jp.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
+
     except Exception as e:
             current_app.logger.error(f'Unexpected error: {e}')
             return str(e), 500
@@ -171,17 +156,11 @@ def fiestas():
         return str(e), 500
     
     try:
-        lista_eventos=[]
-        if eventos:
-            for evento in eventos:
-                lista_eventos.append(evento)
-        else:
-            return "No se encontraron eventos para esta categoria"
+        return render_template('fiestas.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
+
     except Exception as e:
             current_app.logger.error(f'Unexpected error: {e}')
             return str(e), 500
-
-    return render_template('fiestas.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
 
 @app.route('/eSports')
 def esports():
@@ -196,17 +175,11 @@ def esports():
         return str(e), 500
     
     try:
-        lista_eventos=[]
-        if eventos:
-            for evento in eventos:
-                lista_eventos.append(evento)
-        else:
-            return "No se encontraron eventos para esta categoria"
+        return render_template('eSports.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
+
     except Exception as e:
             current_app.logger.error(f'Unexpected error: {e}')
             return str(e), 500
-
-    return render_template('eSports.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
 
 @app.route('/error')
 def error():
@@ -265,17 +238,12 @@ def Futbol():
         return str(e), 500
     
     try:
-        lista_eventos=[]
-        if eventos:
-            for evento in eventos:
-                lista_eventos.append(evento)
-        else:
-            return "No se encontraron eventos para esta categoria"
+        return render_template('futbol.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
+
+        
     except Exception as e:
             current_app.logger.error(f'Unexpected error: {e}')
             return str(e), 500
-
-    return render_template('futbol.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
 
 @app.route('/stand-up')
 def Stand_up():
@@ -290,17 +258,12 @@ def Stand_up():
         return str(e), 500
     
     try:
-        lista_eventos=[]
-        if eventos:
-            for evento in eventos:
-                lista_eventos.append(evento)
-        else:
-            return "No se encontraron eventos para esta categoria"
+        return render_template('stand_up.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
+
+        
     except Exception as e:
             current_app.logger.error(f'Unexpected error: {e}')
             return str(e), 500
-
-    return render_template('stand_up.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
     
 @app.route('/teatro')
 def Teatro():
@@ -315,16 +278,11 @@ def Teatro():
         return str(e), 500
     
     try:
-        lista_eventos=[]
-        if eventos:
-            for evento in eventos:
-                lista_eventos.append(evento)
-        else:
-            return "No se encontraron eventos para esta categoria"
+        return render_template('Teatro.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
+   
     except Exception as e:
             current_app.logger.error(f'Unexpected error: {e}')
             return str(e), 500
-    return render_template('Teatro.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
 
 # - -- - --crear evento----
 @app.route('/crear_evento', methods=['GET', 'POST'])
@@ -389,7 +347,7 @@ def Descripcion_evento(id_evento):
                                 )
             
         else:
-            return "No se encontraron reservas con ese numero de ID", 404
+            return "No se encontraron eventos", 404
 
     except Exception as e:
         print(f'Unexpected error: {e}')
