@@ -66,6 +66,14 @@ def login():
     
     return render_template('login.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'])
 
+@app.route('/logout')
+def logout():
+    app.config['SESION_INICIADA'] = False
+    app.config['ES_ADMIN'] = False
+    app.config['ID_USUARIO'] = 0
+    app.config['NOMBRE_USUARIO'] = ''
+    return redirect(url_for('index'))
+
 @app.route('/pago', methods=['GET', 'POST'])
 def Pago():
     

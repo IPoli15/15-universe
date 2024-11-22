@@ -52,7 +52,7 @@ header {
     outline: none;
 }
 
-.boton-reservar, .boton-modificar {
+.boton-reservar, .boton-modificar, .boton-cerrar-sesion {
     padding: 12px 25px; 
     background-color: #9a4d9b;
     color: #fff;
@@ -63,7 +63,7 @@ header {
     transition: transform 0.3s ease;
 }
 
-.boton-reservar:hover, .boton-modificar:hover {
+.boton-reservar:hover, .boton-modificar:hover, .boton-cerrar-sesion:hover {
     transform: scale(1.02);
     background-color: #ae55af;
 }
