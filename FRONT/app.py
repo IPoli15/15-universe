@@ -64,7 +64,7 @@ def login():
             print(f'An error occurred: {str(e)}')
             return redirect(url_for('login'))
     
-    return render_template('login.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config.get('SESION_INICIADA', False))
+    return render_template('login.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'])
 
 @app.route('/pago', methods=['GET', 'POST'])
 def Pago():
@@ -94,7 +94,7 @@ def Pago():
             return redirect(url_for('error'))
     
     # Si el método es GET, renderizar la plantilla de pago
-    return render_template('pago.html', es_admin=app.config['ES_ADMIN'])
+    return render_template('pago.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'])
 
 
 @app.route('/conciertos')
@@ -120,7 +120,7 @@ def conciertos():
             current_app.logger.error(f'Unexpected error: {e}')
             return str(e), 500
 
-    return render_template('conciertos.html', es_admin=app.config['ES_ADMIN'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
+    return render_template('conciertos.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
 
 
 
@@ -148,7 +148,7 @@ def cultura_jp():
             current_app.logger.error(f'Unexpected error: {e}')
             return str(e), 500
 
-    return render_template('cultura_jp.html', es_admin=app.config['ES_ADMIN'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
+    return render_template('cultura_jp.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
 
 @app.route('/fiestas')
 def fiestas():
@@ -173,7 +173,7 @@ def fiestas():
             current_app.logger.error(f'Unexpected error: {e}')
             return str(e), 500
 
-    return render_template('fiestas.html', es_admin=app.config['ES_ADMIN'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
+    return render_template('fiestas.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
 
 @app.route('/eSports')
 def esports():
@@ -198,11 +198,11 @@ def esports():
             current_app.logger.error(f'Unexpected error: {e}')
             return str(e), 500
 
-    return render_template('eSports.html', es_admin=app.config['ES_ADMIN'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
+    return render_template('eSports.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
 
 @app.route('/error')
 def error():
-    return render_template('error.html', es_admin=app.config['ES_ADMIN'])
+    return render_template('error.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'])
 
 
 @app.route('/reserva', methods=["GET", "POST"])
@@ -242,7 +242,7 @@ def reserva():
         except Exception as e:
             print(f'Unexpected error: {e}')
             return str(e), 500
-    return render_template('reserva.html', es_admin=app.config['ES_ADMIN'])
+    return render_template('reserva.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'])
 
 @app.route('/futbol')
 def Futbol():
@@ -267,7 +267,7 @@ def Futbol():
             current_app.logger.error(f'Unexpected error: {e}')
             return str(e), 500
 
-    return render_template('futbol.html', es_admin=app.config['ES_ADMIN'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
+    return render_template('futbol.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
 
 @app.route('/stand-up')
 def Stand_up():
@@ -292,7 +292,7 @@ def Stand_up():
             current_app.logger.error(f'Unexpected error: {e}')
             return str(e), 500
 
-    return render_template('stand_up.html', es_admin=app.config['ES_ADMIN'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
+    return render_template('stand_up.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
     
 @app.route('/teatro')
 def Teatro():
@@ -316,7 +316,7 @@ def Teatro():
     except Exception as e:
             current_app.logger.error(f'Unexpected error: {e}')
             return str(e), 500
-    return render_template('Teatro.html', es_admin=app.config['ES_ADMIN'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
+    return render_template('Teatro.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
 
 # - -- - --crear evento----
 @app.route('/crear_evento', methods=['GET', 'POST'])
@@ -367,7 +367,7 @@ def Descripcion_evento(id_evento):
             entradas_totales=datos_evento['entradas_totales']
 
             return render_template(
-            'descripcion_evento.html', es_admin=app.config['ES_ADMIN'],  id_evento=id_evento,
+            'descripcion_evento.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'],  id_evento=id_evento,
                                 nombre_evento=nombre_evento, 
                                 categoria=categoria, 
                                 descripcion=descripcion, 
