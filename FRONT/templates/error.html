@@ -1,9 +1,10 @@
 {% if es_admin %}
     {% extends "admin-base.html" %}
+{% elif sesion_iniciada %}
+    {% extends "usuarios-base.html" %}
 {% else %}
     {% extends "base.html" %}
 {% endif %}
-
 
 {% block content %}
 
