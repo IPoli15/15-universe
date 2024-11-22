@@ -79,3 +79,7 @@ VALUES
 
 
 SELECT * FROM reservas;
+
+DROP TABLE reservas;
+DROP TABLE eventos;
+DROP TABLE usuarios;
