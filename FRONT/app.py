@@ -373,6 +373,7 @@ def Descripcion_evento(id_evento):
             precio_entrada=datos_evento['precio_entrada']
             fecha_hora=datos_evento['fecha_hora']
             entradas_totales=datos_evento['entradas_totales']
+            imagen_url=datos_evento['imagen_url']
 
             return render_template(
             'descripcion_evento.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'],  id_evento=id_evento,
@@ -383,7 +384,8 @@ def Descripcion_evento(id_evento):
                                 localizacion=localizacion,
                                 precio_entrada=precio_entrada,
                                 fecha_hora=fecha_hora,
-                                entradas_totales=entradas_totales
+                                entradas_totales=entradas_totales,
+                                imagen_url=imagen_url
                                 )
             
         else:
