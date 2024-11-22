@@ -28,12 +28,12 @@
         </div>
         <div id="parte-derecha">
             <div class="texto-derecha">
-                <h3>Localizacion:</h3><p>{{localizacion}}</p>
                 <h3>Fecha y hora:</h3><p>{{fecha_hora}}</p>
+                <h3>Localizacion:</h3>
             </div>
             <aside class="event-map">
                 <iframe 
-                    src="https://maps.google.com/maps?q=Movistar+Arena,+Humboldt+450,+Buenos+Aires&hl=es&t=&z=17&ie=UTF8&iwloc=&output=embed" 
+                    src={{localizacion}}
                     frameborder="0" 
                     allowfullscreen 
                     title="Mapa del Movistar Arena">

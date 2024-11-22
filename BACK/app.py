@@ -38,7 +38,7 @@ app.config.from_object(Config)
 db.init_app(app)
 app.secret_key = 'coqui2529'
 # Recordar que los datos de la db en cuanto a nombre, usuario y contraseña varian.
-engine = create_engine("mysql+mysqlconnector://root:Santi0403@localhost:3306/universe")
+engine = create_engine("mysql+mysqlconnector://root:1234@localhost:3306/universe")
 
 def run_query(query, parameters=None):
     with engine.connect() as conn:
