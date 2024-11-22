@@ -72,10 +72,9 @@ def tabla_usuarios():
     usuario = Usuario.query.filter_by(nombre=nombre_usuario).first()
 
     if usuario and usuario.password == password:
-        return jsonify({'success': True, 'message': 'Usuario autenticado'}), 200
+        return jsonify({'success': True, 'es_admin': usuario.es_admin, 'id_usuario': usuario.id_usuario}), 200
     else:
         return jsonify({'success': False, 'message': 'Usuario no autenticado'}), 401
-    
 
 #------------------------------------------------------------------------------------- TABLA RESERVAS | PAGO
 @app.route('/crear-reserva', methods=['POST'])
