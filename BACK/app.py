@@ -331,12 +331,10 @@ def api_crear_evento():
             'es_recomendacion': 0 
         })
         
-        flash("Evento creado con éxito", "success")
-        return redirect(url_for('crear_evento_form'))
+        return redirect('http://127.0.0.1:5000/')
 
     except SQLAlchemyError as e:
-        flash(f"Error al crear el evento: {str(e)}", "error")
-        return redirect(url_for('crear_evento_form'))
+        return jsonify({"error": f"Error al crear el evento: {str(e)}"}), 400
 
 if __name__ == '__main__':
     app.run(debug=True, port=PORT)
