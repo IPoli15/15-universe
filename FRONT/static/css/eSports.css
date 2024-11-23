@@ -107,3 +107,26 @@ button:hover {
     text-decoration: none;
     cursor: pointer;
 }
+
+@media (max-width:720px) {
+
+    .pagina {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+    
+    #texto-inicial {
+        font-size: 23px;
+        margin-bottom: 40px;
+    }
+    
+    .eventos p {
+        display: none;
+    }
+    
+    .eventos {
+        padding: 20px;
+    }
+}
