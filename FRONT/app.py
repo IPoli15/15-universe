@@ -46,6 +46,7 @@ def login():
             
             if data['success']:
                 print('Login successful')
+                app.config['NOMBRE_USUARIO'] = nombre
                 if data['es_admin']:
                     app.config['ES_ADMIN'] = True
                 else:
@@ -70,7 +71,7 @@ def logout():
 
 @app.route('/pago', methods=['GET', 'POST'])
 def Pago():
-    
+    nombre_usuario = app.config.get('NOMBRE_USUARIO', '')
     if request.method == 'POST':
         nombre = request.form['nombre']
         id_evento = request.form['id_evento']
@@ -96,7 +97,7 @@ def Pago():
             return redirect(url_for('error'))
     
     # Si el método es GET, renderizar la plantilla de pago
-    return render_template('pago.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'])
+    return render_template('pago.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'],nombre_usuario=nombre_usuario)
 
 
 @app.route('/conciertos')
