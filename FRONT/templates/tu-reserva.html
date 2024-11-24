@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <h2>Tu Reserva</h2>
+    <div class="informacion-reserva">
+        <section>
+            <label>Nombre: {{nombre}}</label>
+        </section>
+    </div>
+    <div class="informacion-reserva">
+        <section>
+            <label for="class">DNI: {{dni}}</label>
+        </section>
+    </div>
+    <div class="informacion-reserva">
+        <section>
+            <label for="class">Codigo de reserva: {{codigo_reserva}}</label>
+        </section>
+    </div>
+    <div class="informacion-reserva">
+        <section>
+            <label for="class">Sector: {{sector}}</label>
+        </section>
+    </div>
+    <div class="informacion-reserva">
+        <section>
+            <label for="class">Cantidad de tickets: {{cantidad_tickets}}</label>
+        </section>
+    </div>
+    <div class="informacion-reserva">
+        <section>
+            <label for="class">Total: {{precio_total}}</label>
+        </section>
+    </div>
+    <button type="button" class="boton-reservar">Cancelar Reserva</button>
+</div>
+
+{% endblock %}

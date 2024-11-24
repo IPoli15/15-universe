@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/cultura_jp.css') }}">
+
+<div class="main-content">
+    <section class="ticket-selection">
+        <h2>Eventos</h2>
+        <table class="ticket-table">
+            <thead>
+                <tr>
+                    <th>Eventos</th>
+                    <th>Disponibles</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr onclick="selectSector(this)"><td>Jardin japones</td><td>30 tickets</td></tr>
+                <tr onclick="selectSector(this)"><td>Placeholder</td><td>40 tickets</td></tr>
+                <tr onclick="selectSector(this)"><td>Placeholder1</td><td>20 tickets</td></tr>
+                <tr onclick="selectSector(this)"><td>Placeholder2</td><td>15 tickets</td></tr>
+            </tbody>
+        </table>
+        <button id="select-btn" class="select-btn" onclick="confirmSelection()" disabled>Seleccionar</button>
+        <p id="selected-sector"></p>
+    </section>
+
+    <section class="event-details">
+        <div class="event-media">
+            <img id="event-image" src="{{url_for('static', filename='img/jp/jardin_jap_3.jpg')}}" alt="Imagen del evento" class="event-image">
+            <p id="event-description"></p>
+        </div>
+    </section>
+</div>
+<script src="{{url_for('static', filename='js/cultura_jp.js')}}" defer></script> 
+
+    {% endblock %}
