@@ -1,10 +1,4 @@
-{% if es_admin %}
-    {% extends "admin-base.html" %}
-{% elif sesion_iniciada %}
-    {% extends "usuarios-base.html" %}
-{% else %}
-    {% extends "base.html" %}
-{% endif %}
+{% extends "base.html" %}
 
 {% block content %}
 
@@ -12,30 +6,45 @@
     <h2>Tu Reserva</h2>
     <div class="informacion-reserva">
         <section>
-            <label>Nombre del Evento: {{nombre_evento}}</label>
+            <label>Nombre: {{ nombre_usuario }}</label>
+        </section>
+    </div>
+    
+    <div class="informacion-reserva">
+        <section>
+            <label for="class">Codigo de reserva: {{ id_reserva }}</label>
         </section>
     </div>
     <div class="informacion-reserva">
         <section>
-            <label>Nombre del Comprador: {{nombre_usuario}}</label>
+            <label for="class">Sector: {{ sector if sector else "No disponible" }}</label>
         </section>
     </div>
     <div class="informacion-reserva">
         <section>
-            <label for="class">Codigo de reserva: {{id_reserva}}</label>
+            <label for="class">Cantidad de tickets: {{ cant_tickets }}</label>
         </section>
     </div>
     <div class="informacion-reserva">
         <section>
-            <label for="class">Cantidad de tickets: {{cant_tickets}}</label>
+            <label for="class">Total: {{ precio_entrada * cant_tickets }}</label>
         </section>
     </div>
-    <div class="informacion-reserva">
-        <section>
-            <label for="class">Total: {{total}}</label>
-        </section>
-    </div>
-    <button type="button" class="boton-reservar">Cancelar Reserva</button>
+
+    <button id="cancelarReserva" data-reserva-id="{{ id_reserva }}">Cancelar Reserva</button>
 </div>
+
+<div id="aviso" class="aviso" style="display: none;">
+    <div id="mensaje-exito" class="aviso-mensaje exito" style="display: none;">
+        <p>Reserva cancelada.</p>
+        <button onclick="cerrarAviso()">Cerrar</button>
+    </div>
+    <div id="mensaje-error" class="aviso-mensaje error" style="display: none;">
+        <p>Error al intentar cancelar la reserva.</p>
+        <button onclick="cerrarAviso()">Cerrar</button>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/tu_reserva.js') }}"></script>
 
 {% endblock %}
