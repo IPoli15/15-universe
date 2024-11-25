@@ -9,13 +9,20 @@
 {% block content %}
 <div class="container">
     <h2>Consulta de Reserva</h2>
-    <form action="{{url_for('reserva')}}" method="post"" id="reservaForm">
+    <form action="{{ url_for('reserva') }}" method="post" id="reservaForm">
         <div class="input-group">
             <label for="id_reserva">Número de Reserva</label>
             <input type="text" id="id_reserva" name="id_reserva" required>
         </div>
         <input type="submit" value="Buscar reserva">
     </form>
-    <div class="message" id="message"></div>
+    
+    <div class="message" id="message">
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+    </div>
 </div>
+
+<script src="{{ url_for('static', filename='reserva.js') }}"></script>
 {% endblock %}
