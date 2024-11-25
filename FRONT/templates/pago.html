@@ -10,14 +10,14 @@
 
 <div class="container">
     <h2>Pago Seguro</h2>
-    <form method="POST" action="/pago" id="paymentForm">
+    <form method="POST" action="{{ url_for('Pago') }}" id="paymentForm">
         <div class="input-group">
             <label for="nombre">Nombre de Usuario</label>
-            <input type="text" id="nombre" name="nombre" value="{{ nombre_usuario }}" required>
+            <input type="text" id="nombre" name="nombre" value="{{ nombre_usuario }}" readonly>
         </div>
         <div class="input-group">
-            <label for="id_evento">ID del Evento</label>
-            <input type="text" id="id_evento" name="id_evento" required>
+            <label for="id_evento">ID del Evento: </label>
+            <input type="text" id="id_evento" name="id_evento" value="{{ id_evento_deseado }}" readonly>
         </div>
         <div class="input-group">
             <label for="cant_tickets">Cantidad Tickets</label>
