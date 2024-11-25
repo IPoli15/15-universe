@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
+from flask_cors import CORS
 
 PORT = 5001
 
@@ -34,6 +35,7 @@ QUERY_EVENTOS_RECOMENDADOS = "SELECT id_evento, nombre_evento, categoria, descri
 
 
 app = Flask(__name__, template_folder='../FRONT/templates', static_folder='../FRONT/static')
+CORS(app)
 app.config.from_object(Config)
 db.init_app(app)
 app.secret_key = 'coqui2529'
@@ -109,22 +111,36 @@ def tabla_reservas():
 
 
 #----METODO GET, CONSULTAR RESERVA POR ID DE RESERVA -----#
-
 def reserva_by_id(id_reserva):
-    return run_query(QUERY_RESERVA_POR_ID, {'id_reserva': id_reserva}).fetchall()
+    return run_query(QUERY_RESERVA_POR_ID, {'id_reserva': id_reserva}).fetchone()
+
+
+
 
 @app.route('/consultar-reserva/<int:id_reserva>', methods=['GET'])
 def consultar_reserva(id_reserva):
     try:
         result = reserva_by_id(id_reserva)
+        
+        if result is None:
+            return jsonify({'error': 'No se encontró la reserva'}), 404  # Not found
+            
+        return jsonify({
+            'id_reserva': result[0],
+            'cant_tickets': result[1],
+            'nombre_usuario': result[2],
+            'nombre_evento': result[3],
+            'precio_entrada': float(result[4])  # Convertimos a float el precio
+        }), 200
+        
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-    if len(result) == 0:
-        return jsonify({'error': 'No se encontró la reserva'}), 404 # Not found
 
-    result = result[0]
-    return jsonify({'id_reserva': result[0], 'cant_tickets': result[1], 'nombre_usuario': result[2], 'nombre_evento': result[3], 'precio_entradda':result[4]}), 200
+
+
+
+
 #---METODO POST, INSERTAR RESERVAS ----#
 
 
@@ -158,16 +174,16 @@ def add_reserva():
 @app.route('/eliminar-reserva/<int:id_reserva>', methods=['DELETE'])
 def eliminar_reserva(id_reserva):
     try:
-    
         result = run_query(QUERY_ELIMINAR_RESERVA, {'id_reserva': id_reserva})
-
+        
         if result.rowcount == 0:
             return jsonify({'error': 'No se encontró una reserva con este ID'}), 404
 
         return jsonify({'mensaje': f'La reserva ID {id_reserva} fue eliminada'}), 200
-    
+
     except SQLAlchemyError as e:
         return jsonify({'error': str(e)}), 500
+
 
 #--------------------------------------------------------TABLA EVENTOS-----------------------------------#
 
@@ -273,7 +289,7 @@ def obtener_eventos():
     return jsonify(response), 200
 
 
-@app.route('/eliminar-evento/<int:id_evento>', methods=['DELETE'])
+@app.route('/eliminar-reserva/<int:id_reserva>', methods=['DELETE'])
 def eliminar_evento(id_evento):
     try:      
         result_reservas = run_query(QUERY_RESERVAS_EVENTO, {'id_evento': id_evento}).fetchone()
