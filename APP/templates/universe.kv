@@ -1,24 +1,28 @@
 #:kivy 2.3.0
 
+<RootScreen>:
+    MyRoot:
+
 <MyRoot>:
-    
     BoxLayout:
         orientation: "vertical"
-
         canvas.before:
             Color:
-                rgba: 34/255, 7/255, 82/255, 1
+                rgba: 1, 1, 1, 1
             Rectangle:
                 pos: self.pos
                 size: self.size
+                source: 'assets/images/Fondo.jpg'
 
+        # Top bar
         BoxLayout:
-            size_hint_y: 0.1
-            padding: [10, 10]
+            size_hint_y: None
+            height: "60dp"
+            padding: [20, 5]
             spacing: 10
             canvas.before:
                 Color:
-                    rgba: 0.15, 0.07, 0.25, 1
+                    rgba: 0, 0, 0, 0.5
                 Rectangle:
                     pos: self.pos
                     size: self.size
@@ -26,194 +30,310 @@
             TextInput:
                 hint_text: "Buscar"
                 size_hint_x: 0.7
+                background_color: 0.2, 0.2, 0.25, 1
+                foreground_color: 1, 1, 1, 1
+                hint_text_color: 0.5, 0.5, 0.5, 1
+                cursor_color: 1, 1, 1, 1
+                padding: [10, 10]
+                font_size: '16sp'
 
             Button:
                 text: "Login"
-                size_hint_x: 0.2
-                background_color: 0.5, 0.2, 0.7, 1
-                on_press: root.switch_log()
+                size_hint_x: 0.15
+                background_color: 0.3, 0.2, 0.5, 1
+                on_press: root.switch_screen('Log')
                 
             Button:
                 text: "Reserva"
-                size_hint_x: 0.2
-                background_color: 0.5, 0.2, 0.7, 1
-                on_press: root.switch_res()
+                size_hint_x: 0.15
+                background_color: 0.3, 0.2, 0.5, 1
+                on_press: root.switch_screen('Res')
 
+        # Categorias 
         GridLayout:
-            cols: 6
-            size_hint_y: 0.15
-            spacing: 10
-            padding: [10, 10]
+            cols: 3
+            padding: [20, 20]
+            spacing: 20
 
-            BoxLayout:
-                orientation: "vertical"
-                spacing: 5
-                Image:
-                    source: "assets/images/cat_futbol.png" 
-                    allow_stretch: True
-                    keep_ratio: True
-                Label:
-                    text: "Fútbol"
-                    halign: "center"
-                    color: 1, 1, 1, 1
+            # Futbol
+            Button:
+                background_color: 0, 0, 0, 0
+                on_press: root.access_category('Futbol')
+                BoxLayout:
+                    orientation: "vertical"
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    canvas.before:
+                        Color:
+                            rgba: 0.15, 0.15, 0.2, 0.8
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [15, 15, 15, 15]
+                    padding: 10
+                    spacing: 5
 
-            BoxLayout:
-                orientation: "vertical"
-                spacing: 5
-                Image:
-                    source: 'assets/images/cat_conciertos.png'
-                    allow_stretch: True
-                    keep_ratio: True
-                Label:
-                    text: "Conciertos"
-                    halign: "center"
-                    color: 1, 1, 1, 1
+                    Image:
+                        source: "assets/images/cat_futbol.png"
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint_y: 0.8
 
-            BoxLayout:
-                orientation: "vertical"
-                spacing: 5
-                Image:
-                    source: "assets/images/cat_fiestas.png"
-                    allow_stretch: True
-                    keep_ratio: True
-                Label:
-                    text: "Fiestas"
-                    halign: "center"
-                    color: 1, 1, 1, 1
+                    Label:
+                        text: "Fútbol"
+                        size_hint_y: 0.2
+                        color: 0.8, 0.8, 0.8, 1
 
-            BoxLayout:
-                orientation: "vertical"
-                spacing: 5
-                Image:
-                    source: "assets/images/cat_teatro.png"
-                    allow_stretch: True
-                    keep_ratio: True
-                Label:
-                    text: "Teatro"
-                    halign: "center"
-                    color: 1, 1, 1, 1
+            # Conciertos
+            Button:
+                background_color: 0, 0, 0, 0
+                on_press: root.access_category('Conciertos')
+                BoxLayout:
+                    orientation: "vertical"
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    canvas.before:
+                        Color:
+                            rgba: 0.15, 0.15, 0.2, 0.8
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [15, 15, 15, 15]
+                    padding: 10
+                    spacing: 5
 
-            BoxLayout:
-                orientation: "vertical"
-                spacing: 5
-                Image:
-                    source: "assets/images/cat_esport.png"
-                    allow_stretch: True
-                    keep_ratio: True
-                Label:
-                    text: "E-sports"
-                    halign: "center"
-                    color: 1, 1, 1, 1
+                    Image:
+                        source: "assets/images/cat_conciertos.png"
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint_y: 0.8
 
-            BoxLayout:
-                orientation: "vertical"
-                spacing: 5
-                Image:
-                    source: "assets/images/stand_up_icon.png"
-                    allow_stretch: True
-                    keep_ratio: True
-                Label:
-                    text: "Stand-Up"
-                    halign: "center"
-                    color: 1, 1, 1, 1
+                    Label:
+                        text: "Conciertos"
+                        size_hint_y: 0.2
+                        color: 0.8, 0.8, 0.8, 1
 
+            # Fiestas
+            Button:
+                background_color: 0, 0, 0, 0
+                on_press: root.access_category('Fiestas')
+                BoxLayout:
+                    orientation: "vertical"
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    canvas.before:
+                        Color:
+                            rgba: 0.15, 0.15, 0.2, 0.8
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [15, 15, 15, 15]
+                    padding: 10
+                    spacing: 5
+
+                    Image:
+                        source: "assets/images/cat_fiestas.png"
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint_y: 0.8
+
+                    Label:
+                        text: "Fiestas"
+                        size_hint_y: 0.2
+                        color: 0.8, 0.8, 0.8, 1
+
+            # Teatro
+            Button:
+                background_color: 0, 0, 0, 0
+                on_press: root.access_category('Teatro')
+                BoxLayout:
+                    orientation: "vertical"
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    canvas.before:
+                        Color:
+                            rgba: 0.15, 0.15, 0.2, 0.8
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [15, 15, 15, 15]
+                    padding: 10
+                    spacing: 5
+
+                    Image:
+                        source: "assets/images/cat_teatro.png"
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint_y: 0.8
+
+                    Label:
+                        text: "Teatro"
+                        size_hint_y: 0.2
+                        color: 0.8, 0.8, 0.8, 1
+
+            # eSports
+            Button:
+                background_color: 0, 0, 0, 0
+                on_press: root.access_category('eSports')
+                BoxLayout:
+                    orientation: "vertical"
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    canvas.before:
+                        Color:
+                            rgba: 0.15, 0.15, 0.2, 0.8
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [15, 15, 15, 15]
+                    padding: 10
+                    spacing: 5
+
+                    Image:
+                        source: "assets/images/cat_esport.png"
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint_y: 0.8
+
+                    Label:
+                        text: "E-sports"
+                        size_hint_y: 0.2
+                        color: 0.8, 0.8, 0.8, 1
+
+            # Stand-Up
+            Button:
+                background_color: 0, 0, 0, 0
+                on_press: root.access_category('Stand-Up')
+                BoxLayout:
+                    orientation: "vertical"
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    canvas.before:
+                        Color:
+                            rgba: 0.15, 0.15, 0.2, 0.8
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [15, 15, 15, 15]
+                    padding: 10
+                    spacing: 5
+
+                    Image:
+                        source: "assets/images/stand_up_icon.png"
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint_y: 0.8
+
+                    Label:
+                        text: "Stand-Up"
+                        size_hint_y: 0.2
+                        color: 0.8, 0.8, 0.8, 1
+
+<ReservaScreen>:
+    Reserva:
 
 <Reserva>:
-
-    main_title: universe_label
-
     BoxLayout:
         orientation: 'vertical'
+        padding: 20
+        spacing: 20
 
         canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
             Rectangle:
                 pos: self.pos
                 size: self.size
                 source: 'assets/images/Fondo.jpg'
-        Label:
-            id: universe_label
-            text: "Universe"
-            font_name:"Montserrat"
-            font_size: 50
-            color: (95, 100, 43, 19)
-            
-        GridLayout:
-            rows: 4
-            cols: 3
-            padding: 1
-            spacing: 1
-            Label:
-                
-            Label:
-                text: 'Consulta tu reserva'
-                font_name:"Montserrat"
-                font_size: 50
-                color: (34, 7, 82, 1)
-            Label:
-            Label:
-                                
-            Label:
-                text: 'Id de reserva'
-                font_size: 40
-                size_hint: 0.5, 0.1
-            Label:
-            Label:
-
-            TextInput:
-                id: idreserva
-                size_hint: 0.5, 0.1
-                font_size: 40
-            Label:
-            Label:
-                
-            Button:
-                text: 'Revisar'
-                font_size: 25
-                size_hint: 0.5, 0.1
-                on_press: root.change_color()
-
-            Label:
-                
-
 
         Label:
-            text: '-'
+            text: "Consulta tu reserva"
+            font_name: "Montserrat"
+            font_size: 30
+            size_hint_y: None
+            height: 50
+            color: 0.8, 0.8, 0.8, 1
+
+        TextInput:
+            id: idreserva
+            hint_text: 'Id de reserva'
+            size_hint_y: None
+            height: 40
+            multiline: False
+            background_color: 0.2, 0.2, 0.25, 1
+            foreground_color: 1, 1, 1, 1
+            hint_text_color: 0.5, 0.5, 0.5, 1
+
+        Button:
+            text: 'Revisar'
+            size_hint_y: None
+            height: 50
+            background_color: 0.3, 0.2, 0.5, 1
+            on_press: root.parent.check_reservation(idreserva.text)
 
         Button:
             text: "Volver"
-            font_size: 24
-            # size: 100, 50
-            size_hint: 0.5, 0.1
-            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            size_hint_y: None
+            height: 50
+            background_color: 0.3, 0.2, 0.5, 1
             on_press: root.switch_root()
 
-<Login>:
-    
-    orientation: "vertical"
-    padding: 10
-    spacing: 10
+<LoginScreen>:
+    Login:
 
-    GridLayout:
-        cols: 2
+<Login>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 20
+
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/Fondo.jpg'
+
         Label:
-            text: "Usuario:"
+            text: "Iniciar sesion"
+            font_name: "Montserrat"
+            font_size: 30
+            size_hint_y: None
+            height: 50
+            color: 0.8, 0.8, 0.8, 1
+
         TextInput:
             id: username
+            hint_text: "Usuario"
             multiline: False
-        Label:
-            text: "Contraseña:"
+            size_hint_y: None
+            height: 40
+            background_color: 0.2, 0.2, 0.25, 1
+            foreground_color: 1, 1, 1, 1
+            hint_text_color: 0.5, 0.5, 0.5, 1
+
         TextInput:
             id: password
+            hint_text: "Contraseña"
             multiline: False
             password: True
+            size_hint_y: None
+            height: 40
+            background_color: 0.2, 0.2, 0.25, 1
+            foreground_color: 1, 1, 1, 1
+            hint_text_color: 0.5, 0.5, 0.5, 1
 
-    Button:
-        text: "Iniciar sesión"
-        on_press: root.send_login(username.text, password.text)
-    Button:
-        text: "Regresar"
-        on_press: root.switch_root()
+        Button:
+            text: "Iniciar sesión"
+            size_hint_y: None
+            height: 50
+            background_color: 0.3, 0.2, 0.5, 1
+            on_press: root.send_login(username.text, password.text)
 
-
-
-            
+        Button:
+            text: "Volver"
+            size_hint_y: None
+            height: 50
+            background_color: 0.3, 0.2, 0.5, 1
+            on_press: root.switch_root()
