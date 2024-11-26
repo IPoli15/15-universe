@@ -24,9 +24,13 @@ class MyRoot(BoxLayout):
     def __init__(self):
         super(MyRoot, self).__init__()
     
-    def switch(self):
+    def switch_res(self):
         app.screen_manager.transition = SlideTransition(direction='down')
         app.screen_manager.current = 'Res'
+
+    def switch_log(self):
+        app.screen_manager.transition = SlideTransition(direction='down')
+        app.screen_manager.current = 'Log'
 
     def change_color(self):
         self.main_title.color = new_rgb_color()
@@ -34,9 +38,23 @@ class MyRoot(BoxLayout):
 class Reserva(BoxLayout):
     def __init__(self):
         super(Reserva, self).__init__()
+
+    def switch_root(self):
+        app.screen_manager.transition = SlideTransition(direction='down')
+        app.screen_manager.current = 'Root'
     
     def change_color(self):
         self.main_title.color = new_rgb_color()
+
+class Login(BoxLayout):
+    def __init__(self):
+        super(Login, self).__init__()
+    
+    def switch_root(self):
+        app.screen_manager.transition = SlideTransition(direction='down')
+        app.screen_manager.current = 'Root'
+
+
       
 
 
@@ -60,6 +78,12 @@ class Universe(App):
         screen = Screen(name='Res')
         screen.add_widget(self.reserva)
         self.screen_manager.add_widget(screen)
+
+        self.login = Login()
+        screen = Screen(name='Log')
+        screen.add_widget(self.login)
+        self.screen_manager.add_widget(screen)
+
 
         return self.screen_manager
 
