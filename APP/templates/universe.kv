@@ -188,27 +188,31 @@
             on_press: root.switch_root()
 
 <Login>:
-    BoxLayout:
-        GridLayout:
-            rows: 3
-            cols: 2
-            padding: 1
-            spacing: 1
-            Label:
-                font_size: 40
-                text: 'Usuario'
-            TextInput:
-                font_size: 40
-            Label:
-                font_size: 40
-                text: 'Contraseña'
-            TextInput:
-                font_size: 40
-            Button:
-                text: 'Log in'
-            Button:
-                text: 'Volver a inicio'
-                on_press: root.switch_root()
+    
+    orientation: "vertical"
+    padding: 10
+    spacing: 10
+
+    GridLayout:
+        cols: 2
+        Label:
+            text: "Usuario:"
+        TextInput:
+            id: username
+            multiline: False
+        Label:
+            text: "Contraseña:"
+        TextInput:
+            id: password
+            multiline: False
+            password: True
+
+    Button:
+        text: "Iniciar sesión"
+        on_press: root.send_login(username.text, password.text)
+    Button:
+        text: "Regresar"
+        on_press: root.switch_root()
 
 
 

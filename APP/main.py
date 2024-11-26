@@ -8,6 +8,9 @@ from kivy.core.text import LabelBase
 from kivy.uix.boxlayout import BoxLayout
 from utils.colors import new_rgb_color
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
+import requests
+from kivy.uix.popup import Popup
+from kivy.uix.label import Label
 
 
 kivy.require('2.3.0')
@@ -47,12 +50,40 @@ class Reserva(BoxLayout):
         self.main_title.color = new_rgb_color()
 
 class Login(BoxLayout):
-    def __init__(self):
-        super(Login, self).__init__()
+    def __init__(self, **kwargs):
+        super(Login, self).__init__(**kwargs)
+        self.backend_url = 'http://localhost:5001/usuarios-password' 
+
+    def send_login(self, username, password):
+        """
+        Enviar las credenciales al backend.
+        """
+        try:
+            response = requests.post(
+                self.backend_url,
+                json={"nombre": username, "password": password}
+            )
+            
+            if response.status_code == 200:
+                self.show_popup("Login Exitoso", "Bienvenido, " + username)
+                self.switch_root()
+            else:
+
+                self.show_popup("Error", "Credenciales incorrectas o problema con el servidor")
+        except requests.exceptions.RequestException as e:
+            self.show_popup("Error de conexión", str(e))
     
     def switch_root(self):
         app.screen_manager.transition = SlideTransition(direction='down')
         app.screen_manager.current = 'Root'
+    
+    def show_popup(self, title, message):
+        popup = Popup(
+            title=title,
+            content=Label(text=message),
+            size_hint=(0.8, 0.3),
+        )
+        popup.open()
 
 
       
