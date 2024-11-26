@@ -168,7 +168,7 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
  */
- body {
+body {
     height: 100vh;
 }
 
@@ -293,5 +293,11 @@ aside iframe {
     border-radius: 10px;
     text-decoration: none;
     cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+#enlace:hover {
+    transform: scale(1.02);
+    background-color: #fc5542;
 }
 
