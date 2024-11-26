@@ -116,3 +116,28 @@ h2 {
     padding: 5px;
     width: 100%;
 }
+
+@media (max-width: 1024px) {
+    #categorias {
+        flex-wrap: wrap;
+    }
+    .categoria {
+        width: 25%;
+    }
+    #recomendaciones {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+}
+
+@media(max-width: 580px){
+    .eventos p{
+        display:none
+    }
+    #recomendaciones{
+        display:block
+    }
+    .categoria{
+        width: 50%;
+    }
+}
