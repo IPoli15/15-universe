@@ -106,4 +106,10 @@ button:hover {
     border-radius: 10px;
     text-decoration: none;
     cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+#boton_mas_info:hover {
+    transform: scale(1.02);
+    background-color: #fc5542;
 }
