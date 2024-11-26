@@ -20,7 +20,7 @@ main {
     display: grid;
     justify-content: center;
     align-items: center;
-    grid-template-columns: 80%;
+    grid-template-columns: 900px;
     max-width: 50%;
 }
 
