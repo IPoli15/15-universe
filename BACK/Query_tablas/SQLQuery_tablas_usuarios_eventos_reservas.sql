@@ -68,6 +68,7 @@ CREATE TABLE reservas (
     id_evento INT,
     id_reserva INT AUTO_INCREMENT PRIMARY KEY,
     cant_tickets INT,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario),
     FOREIGN KEY (id_evento) REFERENCES eventos(id_evento)
 );
