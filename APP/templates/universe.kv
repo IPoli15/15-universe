@@ -1,6 +1,123 @@
 #:kivy 2.3.0
 
 <MyRoot>:
+    
+    BoxLayout:
+        orientation: "vertical"
+
+        canvas.before:
+            Color:
+                rgba: 34/255, 7/255, 82/255, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            size_hint_y: 0.1
+            padding: [10, 10]
+            spacing: 10
+            canvas.before:
+                Color:
+                    rgba: 0.15, 0.07, 0.25, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            TextInput:
+                hint_text: "Buscar"
+                size_hint_x: 0.7
+
+            Button:
+                text: "Login"
+                size_hint_x: 0.2
+                background_color: 0.5, 0.2, 0.7, 1
+                
+            Button:
+                text: "Reserva"
+                size_hint_x: 0.2
+                background_color: 0.5, 0.2, 0.7, 1
+                on_press: root.switch()
+
+        GridLayout:
+            cols: 6
+            size_hint_y: 0.15
+            spacing: 10
+            padding: [10, 10]
+
+            BoxLayout:
+                orientation: "vertical"
+                spacing: 5
+                Image:
+                    source: "assets/images/cat_futbol.png" 
+                    allow_stretch: True
+                    keep_ratio: True
+                Label:
+                    text: "Fútbol"
+                    halign: "center"
+                    color: 1, 1, 1, 1
+
+            BoxLayout:
+                orientation: "vertical"
+                spacing: 5
+                Image:
+                    source: 'assets/images/cat_conciertos.png'
+                    allow_stretch: True
+                    keep_ratio: True
+                Label:
+                    text: "Conciertos"
+                    halign: "center"
+                    color: 1, 1, 1, 1
+
+            BoxLayout:
+                orientation: "vertical"
+                spacing: 5
+                Image:
+                    source: "assets/images/cat_fiestas.png"
+                    allow_stretch: True
+                    keep_ratio: True
+                Label:
+                    text: "Fiestas"
+                    halign: "center"
+                    color: 1, 1, 1, 1
+
+            BoxLayout:
+                orientation: "vertical"
+                spacing: 5
+                Image:
+                    source: "assets/images/cat_teatro.png"
+                    allow_stretch: True
+                    keep_ratio: True
+                Label:
+                    text: "Teatro"
+                    halign: "center"
+                    color: 1, 1, 1, 1
+
+            BoxLayout:
+                orientation: "vertical"
+                spacing: 5
+                Image:
+                    source: "assets/images/cat_esport.png"
+                    allow_stretch: True
+                    keep_ratio: True
+                Label:
+                    text: "E-sports"
+                    halign: "center"
+                    color: 1, 1, 1, 1
+
+            BoxLayout:
+                orientation: "vertical"
+                spacing: 5
+                Image:
+                    source: "assets/images/stand_up_icon.png"
+                    allow_stretch: True
+                    keep_ratio: True
+                Label:
+                    text: "Stand-Up"
+                    halign: "center"
+                    color: 1, 1, 1, 1
+
+
+<Reserva>:
 
     main_title: universe_label
 
@@ -65,4 +182,5 @@
             size_hint: 0.5, 0.1
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
             on_press: root.change_color()
+
 
