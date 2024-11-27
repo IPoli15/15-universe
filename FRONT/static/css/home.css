@@ -130,7 +130,7 @@ h2 {
     }
 }
 
-@media(max-width: 580px){
+@media(max-width: 740px){
     .eventos p{
         display:none
     }
