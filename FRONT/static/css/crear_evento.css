@@ -1,5 +1,9 @@
 .container {
-    max-width: 600px;
+    /* border: 2px solid green; */
+    width: 40%;
+    display: grid;
+    grid-template-columns: 100%;
+    text-align: center;
     margin: 0 auto;
     padding: 2rem;
     background-color: #f9f9f9;

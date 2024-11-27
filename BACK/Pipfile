@@ -11,6 +11,7 @@ mysql-connector-python = "*"
 sqlalchemy = "*"
 pymysql = "*"
 flask-cors = "*"
+cryptography = "*"
 
 [dev-packages]
 
