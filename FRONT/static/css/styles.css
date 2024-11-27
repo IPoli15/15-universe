@@ -35,7 +35,12 @@ header {
 }
 
 .logo {
-    width: 80px; 
+    width: 80px;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
 }
 
 .barra-busqueda {
@@ -47,7 +52,7 @@ header {
     outline: none;
 }
 
-.boton-reservar {
+.boton-login {
     padding: 12px 25px; 
     background-color: #9a4d9b;
     color: #fff;
@@ -56,6 +61,11 @@ header {
     cursor: pointer;
     text-decoration: none;
     transition: transform 0.3s ease;
+}
+
+.boton-login:hover {
+    transform: scale(1.02);
+    background-color: #ae55af;
 }
 
 
