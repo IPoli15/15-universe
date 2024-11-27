@@ -34,13 +34,13 @@ QUERY_EVENTOS_POR_ID = "SELECT id_evento, nombre_evento, categoria, descripcion,
 QUERY_EVENTOS_RECOMENDADOS = "SELECT id_evento, nombre_evento, categoria, descripcion, entradas_totales, entradas_disponibles, fecha_hora, localizacion, es_recomendacion, precio_entrada, imagen_url FROM eventos WHERE es_recomendacion = 1"
 
 
-app = Flask(__name__, template_folder='../FRONT/templates', static_folder='../FRONT/static')
+app = Flask(__name__)
 CORS(app)
 app.config.from_object(Config)
 db.init_app(app)
 app.secret_key = 'coqui2529'
 # Recordar que los datos de la db en cuanto a nombre, usuario y contraseña varian.
-engine = create_engine("mysql+mysqlconnector://root:universe1234@Ruy.mysql.pythonanywhere-services.com/universe")
+engine = create_engine("mysql+mysqlconnector://Ruy$root:universe1234@Ruy.mysql.pythonanywhere-services.com/universe")
 
 def run_query(query, parameters=None):
     with engine.connect() as conn:
