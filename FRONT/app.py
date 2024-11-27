@@ -102,7 +102,7 @@ def Pago():
     return render_template('pago.html', es_admin=app.config['ES_ADMIN'],
                             sesion_iniciada=app.config['SESION_INICIADA'],
                             nombre_usuario=nombre_usuario ,
-                              id_evento_deseado=id_evento_deseado)
+                            id_evento_deseado=id_evento_deseado)
 
 
 @app.route('/conciertos')
@@ -274,7 +274,6 @@ def Teatro():
     
     try:
         return render_template('Teatro.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], eventos=eventos, nombre_categoria=nombre_categoria, descripcion_categoria=descripcion_categoria )
-   
     except Exception as e:
             current_app.logger.error(f'Unexpected error: {e}')
             return str(e), 500
@@ -300,7 +299,7 @@ def crear_evento():
         else:
             flash(response.json().get('error', 'Error desconocido al crear el evento.'), 'danger')
 
-    return render_template('crear_evento.html')
+    return render_template('crear_evento.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'])
 
 
 @app.route('/descripcion-evento/<id_evento>')
