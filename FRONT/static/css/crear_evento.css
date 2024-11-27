@@ -1,6 +1,6 @@
 .container {
     /* border: 2px solid green; */
-    width: 40%;
+    width: 30%;
     display: grid;
     grid-template-columns: 100%;
     text-align: center;
@@ -24,6 +24,7 @@ label {
     color: #555;
     margin-bottom: 0.5rem;
     display: block;
+    margin: 7px;
 }
 
 input[type="text"],
