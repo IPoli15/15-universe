@@ -351,6 +351,3 @@ def api_crear_evento():
 
     except SQLAlchemyError as e:
         return jsonify({"error": f"Error al crear el evento: {str(e)}"}), 400
-
-if __name__ == '__main__':
-    app.run(debug=True, port=PORT)

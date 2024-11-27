@@ -385,5 +385,3 @@ def page_not_found(e):
     return jsonify({"error": "Página no encontrada"}), 404
 
 
-if __name__ == '__main__':
-    app.run(debug=True, port=PORT)
