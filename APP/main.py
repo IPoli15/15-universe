@@ -74,7 +74,7 @@ class Login(BoxLayout):
         try:
             response = requests.post(
                 self.backend_url,
-                json={"nombre": username, "contraseña": password}
+                json={"nombre": username, "password": password}
             )
             if response.status_code == 200:
                 self.show_popup("Login exitoso", f"Bienvenido, {username}")
