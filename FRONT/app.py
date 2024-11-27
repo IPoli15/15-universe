@@ -382,6 +382,15 @@ def busqueda_eventos():
                            sesion_iniciada=app.config['SESION_INICIADA'], 
                            eventos=eventos_filtrados)
 
+from flask import redirect, url_for, flash, session
+
+@app.route('/verificar_sesion/<int:id_evento_deseado>')
+def verificar_sesion(id_evento_deseado):
+    if not app.config['SESION_INICIADA'] and not app.config["ES_ADMIN"]:
+        flash('Debes iniciar sesión antes de reservar una entrada.')
+        return redirect(url_for('login'))
+    return redirect(url_for('Pago', id_evento_deseado=id_evento_deseado))
+
 @app.errorhandler(404)
 def page_not_found(e):
     return jsonify({"error": "Página no encontrada"}), 404
