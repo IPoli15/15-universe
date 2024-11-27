@@ -2,6 +2,7 @@
 
 <RootScreen>:
     MyRoot:
+        id: my_root
 
 <MyRoot>:
     BoxLayout:
@@ -64,8 +65,7 @@
                 opacity: 1 if app.is_logged_in else 0
                 disabled: not app.is_logged_in
 
-
-        # Categories grid
+# Categories grid
         GridLayout:
             cols: 4
             padding: [20, 20]
@@ -451,7 +451,15 @@
                     height: "40dp"
                     background_color: 0.3, 0.2, 0.8, 1
                     color: 1, 1, 1, 1
-                    on_release: root.check_reservation(idreserva.text)
+                    on_release: root.check_reservation(idreserva.text) 
+
+                Button:
+                    text: "Eliminar Reserva"
+                    size_hint_y: None
+                    height: "40dp"
+                    background_color: 0.3, 0.2, 0.8, 1
+                    color: 1, 1, 1, 1
+                    on_release: root.delete_reservation(idreserva.text)
 
                 Button:
                     text: "Regresar"
