@@ -20,7 +20,31 @@ class RootScreen(Screen):
 
 class ReservaScreen(Screen):
     def check_reservation(self, id_reserva):
-        print(f"Verificando reserva con ID: {id_reserva}")
+        self.backend_url = 'http://localhost:5001/consultar-reserva'  
+        try:
+            response = requests.get(f"{self.backend_url}/{id_reserva}")
+            if response.status_code == 200:
+                data = response.json()
+                detalles = (
+                    f"ID de la Reserva: {data['id_reserva']}\n"
+                    f"Cantiadad de tickets: {data['cant_tickets']}\n"
+                    f"Nombre del evento: {data['nombre_evento']}\n"
+                    f"Precio entrada: {data['precio_entrada']}"
+                )
+                self.show_popup("Reserva encontrada", detalles)
+            else:
+                self.show_popup("No se encontró la reserva.", "Revisa tu numero de reserva")
+        except requests.exceptions.RequestException as e:
+            self.show_popup("Error de conexión", str(e))
+
+    def show_popup(self, title, message):
+        popup = Popup(
+            title=title,
+            content=Label(text=message),
+            size_hint=(0.9, 0.5),
+        )
+        popup.open()
+    
 
 class LoginScreen(Screen):
     pass
