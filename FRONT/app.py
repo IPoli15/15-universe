@@ -92,7 +92,8 @@ def Pago():
             if response.status_code == 201 and data['success']:
                 id_reserva = data.get("id_reserva")
                 flash(f'Pago exitoso. Id de la reserva: {id_reserva}', 'success')
-                return render_template('pago_confirmado.html', id_reserva=id_reserva)
+                return render_template('pago_confirmado.html', id_reserva=id_reserva, es_admin=app.config['ES_ADMIN'],
+                            sesion_iniciada=app.config['SESION_INICIADA'])
             else:
                 flash('Error en el pago: ' + data.get('message', 'Unknown error'))
                 return redirect(url_for('Pago'))
