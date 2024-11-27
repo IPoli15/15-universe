@@ -4,10 +4,13 @@ from kivy.lang import Builder
 from kivy.core.text import LabelBase
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
+from kivy.uix.textinput import TextInput
+from kivy.uix.scrollview import ScrollView
 from kivy.clock import Clock
-from kivy.properties import BooleanProperty
+from kivy.properties import BooleanProperty, StringProperty
 import requests
 
 kivy.require('2.3.0')
@@ -23,6 +26,7 @@ class RootScreen(Screen):
     def logout(self):
         app = App.get_running_app()
         app.is_logged_in = False
+        app.username = ''
         self.manager.transition = SlideTransition(direction='right')
         self.manager.current = 'Root'
         app.root.get_screen('Log').ids.username.text = ''
@@ -74,11 +78,85 @@ class MyRoot(BoxLayout):
             response = requests.get(f"{BACKEND_URL}/consultar-eventos/{category}")
             if response.status_code == 200:
                 events = response.json()
-                print(f"Eventos en la categoría {category}:", events)
+                self.show_events_popup(category, events)
             else:
-                print(f"Error al obtener eventos de la categoría {category}")
+                self.show_popup("Error", f"No se pudieron obtener los eventos de la categoría {category}")
         except requests.exceptions.RequestException as e:
-            print(f"Error de conexión: {str(e)}")
+            self.show_popup("Error de conexión", str(e))
+
+    def show_events_popup(self, category, events):
+        content = BoxLayout(orientation='vertical', spacing=10, padding=10)
+        scroll_view = ScrollView()
+        events_layout = BoxLayout(orientation='vertical', spacing=10, size_hint_y=None)
+        events_layout.bind(minimum_height=events_layout.setter('height'))
+
+        for event in events:
+            event_layout = BoxLayout(orientation='horizontal', size_hint_y=None, height=40)
+            event_label = Label(text=f"{event['nombre_evento']} - ${event['precio_entrada']}", size_hint_x=0.7)
+            buy_button = Button(text="Comprar", size_hint_x=0.3)
+            buy_button.bind(on_release=lambda x, e=event: self.purchase_tickets(e))
+            event_layout.add_widget(event_label)
+            event_layout.add_widget(buy_button)
+            events_layout.add_widget(event_layout)
+
+        scroll_view.add_widget(events_layout)
+        content.add_widget(Label(text=f"Eventos en {category}", size_hint_y=None, height=40))
+        content.add_widget(scroll_view)
+
+        back_button = Button(text="Volver", size_hint_y=None, height=40)
+        back_button.bind(on_release=lambda x: popup.dismiss())
+        content.add_widget(back_button)
+
+        popup = Popup(
+            title=f"Eventos en {category}",
+            content=content,
+            size_hint=(0.9, 0.9),
+            background_color=(0.1, 0.1, 0.15, 0.9),
+            title_color=(1, 1, 1, 1),
+            title_size='18sp',
+            separator_color=(0.3, 0.2, 0.8, 1)
+        )
+        popup.open()
+
+    def purchase_tickets(self, event):
+        app = App.get_running_app()
+        if not app.is_logged_in:
+            self.show_popup("Error", "Debes iniciar sesión para comprar entradas")
+            return
+
+        content = BoxLayout(orientation='vertical', spacing=10, padding=10)
+        content.add_widget(Label(text=f"Comprar entradas para {event['nombre_evento']}", size_hint_y=None, height=40))
+        quantity_input = TextInput(text='1', multiline=False, size_hint_y=None, height=40)
+        content.add_widget(quantity_input)
+        buy_button = Button(text="Confirmar compra", size_hint_y=None, height=40)
+        buy_button.bind(on_release=lambda x: self.confirm_purchase(event, int(quantity_input.text)))
+        content.add_widget(buy_button)
+
+        popup = Popup(
+            title="Comprar Entradas",
+            content=content,
+            size_hint=(0.8, 0.4),
+            background_color=(0.1, 0.1, 0.15, 0.9),
+            title_color=(1, 1, 1, 1),
+            title_size='18sp',
+            separator_color=(0.3, 0.2, 0.8, 1)
+        )
+        popup.open()
+
+    def confirm_purchase(self, event, quantity):
+        try:
+            response = requests.post(f"{BACKEND_URL}/crear-reserva", json={
+                "nombre": App.get_running_app().username,
+                "id_evento": event['id_evento'],
+                "cant_tickets": quantity
+            })
+            if response.status_code == 201:
+                data = response.json()
+                self.show_popup("Compra exitosa", f"Reserva creada con ID: {data['id_reserva']}")
+            else:
+                self.show_popup("Error", "No se pudo completar la compra")
+        except requests.exceptions.RequestException as e:
+            self.show_popup("Error de conexión", str(e))
 
     def update_buttons(self):
         app = App.get_running_app()
@@ -88,6 +166,19 @@ class MyRoot(BoxLayout):
         self.ids.reserva_button.disabled = not app.is_logged_in
         self.ids.logout_button.opacity = 1 if app.is_logged_in else 0
         self.ids.logout_button.disabled = not app.is_logged_in
+
+    def show_popup(self, title, message):
+        popup = Popup(
+            title=title,
+            content=Label(text=message),
+            size_hint=(0.8, 0.3),
+            background_color=(0.1, 0.1, 0.15, 0.9),
+            title_color=(1, 1, 1, 1),
+            title_size='18sp',
+            separator_color=(0.3, 0.2, 0.8, 1)
+        )
+        popup.content.color = (1, 1, 1, 1)
+        popup.open()
 
 class Reserva(BoxLayout):
     def switch_root(self):
@@ -142,6 +233,7 @@ class Login(BoxLayout):
                 self.show_login_popup("Login exitoso", f"Bienvenido, {username}")
                 app = App.get_running_app()
                 app.is_logged_in = True
+                app.username = username
                 self.switch_root()
                 app.root.get_screen('Root').ids.my_root.update_buttons()
             else:
@@ -168,6 +260,7 @@ class Login(BoxLayout):
 
 class UniverseApp(App):
     is_logged_in = BooleanProperty(False)
+    username = StringProperty('')
 
     def build(self):
         Builder.load_file('templates/universe.kv')
@@ -182,3 +275,4 @@ class UniverseApp(App):
 
 if __name__ == "__main__":
     UniverseApp().run()
+
