@@ -51,7 +51,7 @@
 
         # Categories grid
         GridLayout:
-            cols: 3
+            cols: 4
             padding: [20, 20]
             spacing: 20
 
@@ -226,6 +226,35 @@
 
                     Label:
                         text: "Stand-Up"
+                        size_hint_y: 0.2
+                        color: 0.8, 0.8, 0.8, 1
+
+            # Cultura Japonesa
+            Button:
+                background_color: 0, 0, 0, 0
+                on_press: root.access_category('Cultura-Japonesa')
+                BoxLayout:
+                    orientation: "vertical"
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    canvas.before:
+                        Color:
+                            rgba: 0.15, 0.15, 0.2, 0.8
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [15, 15, 15, 15]
+                    padding: 10
+                    spacing: 5
+
+                    Image:
+                        source: "assets/images/jp.png"
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint_y: 0.8
+
+                    Label:
+                        text: "Cultura Japonesa"
                         size_hint_y: 0.2
                         color: 0.8, 0.8, 0.8, 1
 
