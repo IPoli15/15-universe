@@ -6,6 +6,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
+from kivy.clock import Clock
 from kivy.properties import BooleanProperty
 import requests
 
@@ -20,10 +21,13 @@ BACKEND_URL = 'http://localhost:5001'
 
 class RootScreen(Screen):
     def logout(self):
-        App.get_running_app().is_logged_in = False
-        App.get_running_app().root.current = 'Log'
-        App.get_running_app().root.get_screen('Log').ids.username.text = ''
-        App.get_running_app().root.get_screen('Log').ids.password.text = ''
+        app = App.get_running_app()
+        app.is_logged_in = False
+        self.manager.transition = SlideTransition(direction='right')
+        self.manager.current = 'Root'
+        app.root.get_screen('Log').ids.username.text = ''
+        app.root.get_screen('Log').ids.password.text = ''
+        self.ids.my_root.update_buttons()
 
 class ReservaScreen(Screen):
     def check_reservation(self, id_reserva):
@@ -37,9 +41,9 @@ class ReservaScreen(Screen):
                     f"Nombre del evento: {data['nombre_evento']}\n"
                     f"Precio entrada: ${data['precio_entrada']:.2f}"
                 )
-                self.show_popup("Reserva encontrada", detalles)
+                self.show_popup("ID de la reserva encontrada", detalles)
             else:
-                self.show_popup("No se encontró la reserva.", "Revisa tu numero de reserva")
+                self.show_popup("No se encontró el ID de la reserva.", "Revisa el ID de la reserva")
         except requests.exceptions.RequestException as e:
             self.show_popup("Error de conexión", str(e))
 
@@ -76,6 +80,15 @@ class MyRoot(BoxLayout):
         except requests.exceptions.RequestException as e:
             print(f"Error de conexión: {str(e)}")
 
+    def update_buttons(self):
+        app = App.get_running_app()
+        self.ids.login_button.opacity = 1 if not app.is_logged_in else 0
+        self.ids.login_button.disabled = app.is_logged_in
+        self.ids.reserva_button.opacity = 1 if app.is_logged_in else 0
+        self.ids.reserva_button.disabled = not app.is_logged_in
+        self.ids.logout_button.opacity = 1 if app.is_logged_in else 0
+        self.ids.logout_button.disabled = not app.is_logged_in
+
 class Reserva(BoxLayout):
     def switch_root(self):
         self.parent.parent.transition = SlideTransition(direction='right')
@@ -84,6 +97,39 @@ class Reserva(BoxLayout):
     def check_reservation(self, id_reserva):
         App.get_running_app().root.get_screen('Res').check_reservation(id_reserva)
 
+    def delete_reservation(self, id_reserva):
+        if not id_reserva:
+            self.show_popup("Error", "No se proporcionó un ID de reserva")
+            return
+
+        try:
+            response = requests.delete(f"{BACKEND_URL}/eliminar-reserva/{id_reserva}")
+            if response.status_code == 200:
+                self.show_popup("Éxito", "La reserva ha sido eliminada correctamente")
+                Clock.schedule_once(lambda dt: self.clear_reservation_info(), 2)
+            elif response.status_code == 404:
+                self.show_popup("Error", "No se encontró una reserva con este ID")
+            else:
+                self.show_popup("Error", "Error al eliminar la reserva")
+        except requests.exceptions.RequestException as e:
+            self.show_popup("Error de conexión", str(e))
+
+    def clear_reservation_info(self):
+        self.ids.idreserva.text = ''
+    
+    def show_popup(self, title, message):
+        popup = Popup(
+            title=title,
+            content=Label(text=message),
+            size_hint=(0.8, 0.3),
+            background_color=(0.1, 0.1, 0.15, 0.9),
+            title_color=(1, 1, 1, 1),
+            title_size='18sp',
+            separator_color=(0.3, 0.2, 0.8, 1)
+        )
+        popup.content.color = (1, 1, 1, 1)
+        popup.open()
+        
 class Login(BoxLayout):
     def send_login(self, username, password):
         try:
@@ -94,8 +140,10 @@ class Login(BoxLayout):
             if response.status_code == 200:
                 data = response.json()
                 self.show_login_popup("Login exitoso", f"Bienvenido, {username}")
-                App.get_running_app().is_logged_in = True
+                app = App.get_running_app()
+                app.is_logged_in = True
                 self.switch_root()
+                app.root.get_screen('Root').ids.my_root.update_buttons()
             else:
                 self.show_login_popup("Error", "Credenciales inválidas")
         except requests.exceptions.RequestException as e:
