@@ -347,7 +347,7 @@ def api_crear_evento():
             'es_recomendacion': 0 
         })
         
-        return redirect('http://127.0.0.1:5000/')
+        return redirect('https://ruy.pythonanywhere.com/')
 
     except SQLAlchemyError as e:
         return jsonify({"error": f"Error al crear el evento: {str(e)}"}), 400
