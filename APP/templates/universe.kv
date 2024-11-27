@@ -49,7 +49,7 @@
                 background_color: 0.3, 0.2, 0.5, 1
                 on_press: root.switch_screen('Res')
 
-        # Categorias 
+        # Categories grid
         GridLayout:
             cols: 3
             padding: [20, 20]
@@ -229,111 +229,190 @@
                         size_hint_y: 0.2
                         color: 0.8, 0.8, 0.8, 1
 
-<ReservaScreen>:
-    Reserva:
-
-<Reserva>:
-    BoxLayout:
-        orientation: 'vertical'
-        padding: 20
-        spacing: 20
-
-        canvas.before:
-            Color:
-                rgba: 1, 1, 1, 1
-            Rectangle:
-                pos: self.pos
-                size: self.size
-                source: 'assets/images/Fondo.jpg'
-
-        Label:
-            text: "Consulta tu reserva"
-            font_name: "Montserrat"
-            font_size: 30
-            size_hint_y: None
-            height: 50
-            color: 0.8, 0.8, 0.8, 1
-
-        TextInput:
-            id: idreserva
-            hint_text: 'Id de reserva'
-            size_hint_y: None
-            height: 40
-            multiline: False
-            background_color: 0.2, 0.2, 0.25, 1
-            foreground_color: 1, 1, 1, 1
-            hint_text_color: 0.5, 0.5, 0.5, 1
-
-        Button:
-            text: 'Revisar'
-            size_hint_y: None
-            height: 50
-            background_color: 0.3, 0.2, 0.5, 1
-            on_press: root.parent.check_reservation(idreserva.text)
-
-        Button:
-            text: "Volver"
-            size_hint_y: None
-            height: 50
-            background_color: 0.3, 0.2, 0.5, 1
-            on_press: root.switch_root()
-
 <LoginScreen>:
     Login:
 
 <Login>:
     BoxLayout:
         orientation: "vertical"
-        padding: 20
-        spacing: 20
-
         canvas.before:
             Color:
-                rgba: 1, 1, 1, 1
+                rgba: 0.2, 0.1, 0.5, 0.8 
             Rectangle:
                 pos: self.pos
                 size: self.size
-                source: 'assets/images/Fondo.jpg'
+                source: 'assets/images/Fondo.jpg' 
 
-        Label:
-            text: "Iniciar sesion"
-            font_name: "Montserrat"
-            font_size: 30
-            size_hint_y: None
-            height: 50
-            color: 0.8, 0.8, 0.8, 1
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
 
-        TextInput:
-            id: username
-            hint_text: "Usuario"
-            multiline: False
-            size_hint_y: None
-            height: 40
-            background_color: 0.2, 0.2, 0.25, 1
-            foreground_color: 1, 1, 1, 1
-            hint_text_color: 0.5, 0.5, 0.5, 1
+            BoxLayout:
+                orientation: "vertical"
+                size_hint: None, None
+                size: "400dp", "300dp"
+                padding: 20
+                spacing: 20
 
-        TextInput:
-            id: password
-            hint_text: "Contraseña"
-            multiline: False
-            password: True
-            size_hint_y: None
-            height: 40
-            background_color: 0.2, 0.2, 0.25, 1
-            foreground_color: 1, 1, 1, 1
-            hint_text_color: 0.5, 0.5, 0.5, 1
+                canvas.before:
+                    Color:
+                        rgba: 0.1, 0.1, 0.15, 0.9  # Panel más opaco
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [15]
 
-        Button:
-            text: "Iniciar sesión"
-            size_hint_y: None
-            height: 50
-            background_color: 0.3, 0.2, 0.5, 1
-            on_press: root.send_login(username.text, password.text)
+                Label:
+                    text: "Iniciar sesión"
+                    font_name: "Montserrat"
+                    font_size: 30
+                    size_hint_y: None
+                    height: 50
+                    color: 1, 1, 1, 1
 
-        Button:
-            text: "Volver"
-            size_hint_y: None
-            height: 50
-            background_color: 0.3, 0.2, 0.5, 1
-            on_press: root.switch_root()
+                BoxLayout:
+                    orientation: "vertical"
+                    spacing: 5
+                    size_hint_y: None
+                    height: "70dp"
+
+                    Label:
+                        text: "Usuario:"
+                        size_hint_y: None
+                        height: "20dp"
+                        color: 1, 1, 1, 1
+                        halign: 'left'
+                        text_size: self.size
+
+                    TextInput:
+                        id: username
+                        multiline: False
+                        size_hint_y: None
+                        height: "40dp"
+                        background_color: 0.2, 0.2, 0.25, 1
+                        foreground_color: 1, 1, 1, 1
+                        cursor_color: 1, 1, 1, 1
+                        padding: [10, 10]
+
+                BoxLayout:
+                    orientation: "vertical"
+                    spacing: 5
+                    size_hint_y: None
+                    height: "70dp"
+
+                    Label:
+                        text: "Contraseña:"
+                        size_hint_y: None
+                        height: "20dp"
+                        color: 1, 1, 1, 1
+                        halign: 'left'
+                        text_size: self.size
+
+                    TextInput:
+                        id: password
+                        multiline: False
+                        password: True
+                        size_hint_y: None
+                        height: "40dp"
+                        background_color: 0.2, 0.2, 0.25, 1
+                        foreground_color: 1, 1, 1, 1
+                        cursor_color: 1, 1, 1, 1
+                        padding: [10, 10]
+
+                Button:
+                    text: "Iniciar sesión"
+                    size_hint_y: None
+                    height: "40dp"
+                    background_color: 0.3, 0.2, 0.8, 1
+                    color: 1, 1, 1, 1
+                    on_press: root.send_login(username.text, password.text)
+
+                Button:
+                    text: "Regresar"
+                    size_hint_y: None
+                    height: "40dp"
+                    background_color: 0.5, 0.5, 0.5, 1
+                    color: 1, 1, 1, 1
+                    on_press: root.switch_root()
+
+<ReservaScreen>:
+    Reserva:
+
+<Reserva>:
+    BoxLayout:
+        orientation: "vertical"
+        canvas.before:
+            Color:
+                rgba: 0.2, 0.1, 0.5, 0.8  # Fondo púrpura semi-transparente
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/Fondo.jpg'  # Mantén la imagen de fondo
+
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+
+            BoxLayout:
+                orientation: "vertical"
+                size_hint: None, None
+                size: "400dp", "300dp"
+                padding: 20
+                spacing: 20
+
+                canvas.before:
+                    Color:
+                        rgba: 0.1, 0.1, 0.15, 0.9  # Panel más opaco
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [15]
+
+                Label:
+                    text: "Consulta tu reserva"
+                    font_name: "Montserrat"
+                    font_size: 30
+                    size_hint_y: None
+                    height: 50
+                    color: 1, 1, 1, 1
+
+                BoxLayout:
+                    orientation: "vertical"
+                    spacing: 5
+                    size_hint_y: None
+                    height: "70dp"
+
+                    Label:
+                        text: "ID de reserva:"
+                        size_hint_y: None
+                        height: "20dp"
+                        color: 1, 1, 1, 1
+                        halign: 'left'
+                        text_size: self.size
+
+                    TextInput:
+                        id: idreserva
+                        multiline: False
+                        size_hint_y: None
+                        height: "40dp"
+                        background_color: 0.2, 0.2, 0.25, 1
+                        foreground_color: 1, 1, 1, 1
+                        cursor_color: 1, 1, 1, 1
+                        padding: [10, 10]
+
+                Button:
+                    text: "Revisar"
+                    size_hint_y: None
+                    height: "40dp"
+                    background_color: 0.3, 0.2, 0.8, 1
+                    color: 1, 1, 1, 1
+                    on_press: root.parent.check_reservation(idreserva.text)
+
+                Button:
+                    text: "Regresar"
+                    size_hint_y: None
+                    height: "40dp"
+                    background_color: 0.5, 0.5, 0.5, 1
+                    color: 1, 1, 1, 1
+                    on_press: root.switch_root()
+
