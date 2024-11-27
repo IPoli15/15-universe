@@ -1,0 +1,80 @@
+{% if es_admin %}
+    {% extends "admin-base.html" %}
+{% elif sesion_iniciada %}
+    {% extends "usuarios-base.html" %}
+{% else %}
+    {% extends "base.html" %}
+{% endif %}
+
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/cultura_jp.css') }}">
+
+    <div id="banner">
+        <h1 id="titulo">Jardin Japones</h1>
+    </div>
+        <div id="parte-izquierda">
+            <div class="texto-izquierda">
+                <h2>sobre el jardin japones</h2>
+                <div id="descripcion">
+                        <div class="texto">
+                                <p> "Me sentiré sumamente complacido si una visita nuestra, aunque sea de corta duración,
+                                    nos permite servir de puente [entre Japón y Argentina] para un más estrecho vínculo..."
+                                (Akihito- 15 de mayo de 1967)</p>
+                                
+                                <p>  Ese fue el deseo del entonces príncipe heredero al Trono Imperial del Japón, Akihito, al tocar por primera vez en la historia el suelo argentino junto a su esposa,
+                                    la princesa consorte Michiko.</p>
+                                
+                                <p>  Desde 1989 Akihito es el anterior Emperador de Japón, inaugurando la Era Heisei. Se dice que cuando un deseo nace desde lo más profundo del corazón,
+                                    se hace realidad. Más de medio siglo después de pronunciadas estas palabras, podemos decir que el deseo de Akihito se cumplió,
+                                    al ver hoy un jardín japonés en Buenos Aires que ha perdurado en el tiempo, como expresión viviente y material de la eterna amistad entre Argentina y Japón, 
+                                    un vínculo que jamás se romperá.</p>
+                                
+                                    <p>  Para muchos, el Jardín Japonés de la Ciudad Autónoma de Buenos Aires, es un lugar de ensueños, un lugar mágico donde la paz y la armonía abundan,
+                                    ofreciendo a sus visitantes una experiencia para atesorar en sus corazones. Su tranquilidad hipnotizante y riqueza natural, contrasta con el caos de la ciudad, 
+                                    haciendo que los visitantes se olviden de lo cotidiano y se detengan a realizar un camino interior.</p>
+                                
+                                    <p>  El Jardín Japonés fue inaugurado el 17 de mayo de 1967, proyectado y construido por la colectividad japonesa, para luego ser donado por intermedio de la Embajada del Japón,
+                                    a la Municipalidad de Buenos Aires, en agradecimiento al pueblo argentino por ser el país que le abrió sus brazos en tiempos de inmigración.</p>
+                                
+                                    <p>  La idea surgió con el propósito de crear un hermoso lugar perdurable de encuentro entre la colectividad japonesa y los príncipes herederos al trono imperial, Michiko y Akihito, 
+                                quienes pronto vendrían a la Argentina. Aquella visita, pactada para mayo de 1967, era un acontecimiento único sin precedente alguno, ya que por primera vez, 
+                                un miembro de la familia imperial visitaba el país. La colectividad japonesa y sus descendientes abrazaron la noticia con orgullo y alegría: "los príncipes nos visitarán".
+                                    Fue así que con esfuerzo y dedicación lograron, en tan sólo 50 días, juntar fondos suficientes y crear una belleza única e inigualable en la Ciudad de Buenos Aires.</p>
+                                
+                                    <p>  Los años pasaron y el jardín creció en admiración y prestigio, a tal punto de ser considerado un "pequeño Japón en Argentina" y
+                                    un "pulmón de armonía y tranquilidad en medio de la gran ciudad", 
+                                    siendo uno de los lugares más elegido por los viajeros de todo el mundo en busca de cultura japonesa y paz interior. Es así que en el año 2004,
+                                    la Secretaría de Turismo de la Ciudad de Buenos Aires declaró al Jardín Japonés "sitio de interés turístico" y,
+                                    en el año 2008, el Poder Ejecutivo Nacional lo declaró "bien de interés histórico y artístico de la Nación".</p>
+                                
+                                    <p>  Podemos considerarlo un museo viviente, donde los caprichos de la naturaleza se mezclan con la mano del hombre, 
+                                deleitándonos en cada momento del día a medida que la luz se hace más clara o más tenue. Desde delicadas flores de cerezos en julio, 
+                                violetas nenúfares en verano, brillantes hojas amarillas del ginkgo biloba en otoño, hasta caminos de gigantescas azaleas en septiembre hacen que cada estación del año, 
+                                posea su encanto y muestren el transcurrir del tiempo, el transcurrir, de la vida misma. Algunos pueden recorrerlo media hora, 
+                                otros, en cambio, pueden pasar horas y horas contemplando y saboreando esa síntesis de la naturaleza, ese microcosmos de paraíso. Dependerá de cada uno, experimentar el silencio,
+                                    permitirse sentir y respirar ese aire puro que nos regala, el Jardín Japonés de Buenos Aires.</p>
+                            
+                                <h2>Horarios:</h2><p>Toda la semana de 10:00 a 18:30</p>
+
+                                <a id="enlace" href="{{url_for('Pago')}}">Comprar Entrada</a>
+
+                        </div>
+                        <div id="parte-derecha">
+                            <img src="{{url_for('static', filename='/img/jardin_jp_mapa_2.jpg')}}" alt="mapa" id="mapa_jj">
+                            <div class="texto-derecha">
+                                <h3>Ubicacion:</h3><p>Av. Casares 3450</p>
+                            </div>
+                            <img src="{{ url_for('static', filename='/img/jardin_jp_mapa.png') }}" alt="foto" id="imagen-derecha">
+                        </div>
+                </div>
+                
+                    
+            
+                
+            </div>
+        </div>
+       
+
+{% endblock %}

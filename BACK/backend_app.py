@@ -65,7 +65,6 @@ def login():
 
 @app.route('/usuarios-password', methods=['POST'])
 def tabla_usuarios():
-
     data = request.json
     nombre_usuario = data['nombre']
     password = data['password']
@@ -106,7 +105,6 @@ def tabla_reservas():
 
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
-
 #-------------------------------------------------------------------------------------
 
 
@@ -132,7 +130,6 @@ def consultar_reserva(id_reserva):
             'nombre_evento': result[3],
             'precio_entrada': float(result[4])  # Convertimos a float el precio
         }), 200
-
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -175,7 +172,6 @@ def add_reserva():
 def eliminar_reserva(id_reserva):
     try:
         result = run_query(QUERY_ELIMINAR_RESERVA, {'id_reserva': id_reserva})
-
         if result.rowcount == 0:
             return jsonify({'error': 'No se encontró una reserva con este ID'}), 404
 
@@ -291,6 +287,7 @@ def obtener_eventos():
 
 @app.route('/eliminar-reserva/<int:id_reserva>', methods=['DELETE'])
 def eliminar_evento(id_evento):
+
     try:
         result_reservas = run_query(QUERY_RESERVAS_EVENTO, {'id_evento': id_evento}).fetchone()
 
@@ -298,12 +295,14 @@ def eliminar_evento(id_evento):
 
             run_query(QUERY_ELIMINAR_RESERVA, {'id_evento': id_evento})
 
+
         result = run_query(QUERY_ELIMINAR_EVENTO, {'id_evento': id_evento})
 
         if result.rowcount == 0:
             return jsonify({'error': 'No se encontró un evento con este ID'}), 404
 
         return jsonify({'mensaje': f'El evento ID {id_evento} fue eliminado junto con sus reservas'}), 200
+
 
     except SQLAlchemyError as e:
         return jsonify({'error': str(e)}), 500
@@ -344,6 +343,7 @@ def api_crear_evento():
             'fecha_hora': data['fecha_hora'],
             'localizacion': data['localizacion'],
             'precio_entrada': data['precio_entrada'],'imagen_url': data['imagen_url'],
+
             'es_recomendacion': 0
         })
 
