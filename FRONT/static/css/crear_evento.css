@@ -84,4 +84,5 @@ button[type="submit"]:hover {
     margin-top: 10px;
     text-align: center;
     border-radius: 5px;
+    display: none;
 }
