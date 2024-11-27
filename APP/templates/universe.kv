@@ -29,7 +29,7 @@
 
             TextInput:
                 hint_text: "Buscar"
-                size_hint_x: 0.7
+                size_hint_x: 0.55
                 background_color: 0.2, 0.2, 0.25, 1
                 foreground_color: 1, 1, 1, 1
                 hint_text_color: 0.5, 0.5, 0.5, 1
@@ -38,16 +38,32 @@
                 font_size: '16sp'
 
             Button:
+                id: login_button
                 text: "Login"
                 size_hint_x: 0.15
                 background_color: 0.3, 0.2, 0.5, 1
-                on_press: root.switch_screen('Log')
+                on_release: root.switch_screen('Log')
+                opacity: 1 if not app.is_logged_in else 0
+                disabled: app.is_logged_in
                 
             Button:
+                id: reserva_button
                 text: "Reserva"
                 size_hint_x: 0.15
                 background_color: 0.3, 0.2, 0.5, 1
-                on_press: root.switch_screen('Res')
+                on_release: root.switch_screen('Res')
+                opacity: 1 if app.is_logged_in else 0
+                disabled: not app.is_logged_in
+
+            Button:
+                id: logout_button
+                text: "Logout"
+                size_hint_x: 0.15
+                background_color:  0.3, 0.2, 0.5, 1
+                on_release: root.logout()
+                opacity: 1 if app.is_logged_in else 0
+                disabled: not app.is_logged_in
+
 
         # Categories grid
         GridLayout:
@@ -293,7 +309,7 @@
 
                 Label:
                     text: "Iniciar sesión"
-                    font_name: "Montserrat"
+                    font_name: "Roboto"
                     font_size: 30
                     size_hint_y: None
                     height: 50
@@ -354,7 +370,7 @@
                     height: "40dp"
                     background_color: 0.3, 0.2, 0.8, 1
                     color: 1, 1, 1, 1
-                    on_press: root.send_login(username.text, password.text)
+                    on_release: root.send_login(username.text, password.text)
 
                 Button:
                     text: "Regresar"
@@ -362,7 +378,7 @@
                     height: "40dp"
                     background_color: 0.5, 0.5, 0.5, 1
                     color: 1, 1, 1, 1
-                    on_press: root.switch_root()
+                    on_release: root.switch_root()
 
 <ReservaScreen>:
     Reserva:
@@ -399,7 +415,7 @@
 
                 Label:
                     text: "Consulta tu reserva"
-                    font_name: "Montserrat"
+                    font_name: "Roboto"
                     font_size: 30
                     size_hint_y: None
                     height: 50
@@ -435,7 +451,7 @@
                     height: "40dp"
                     background_color: 0.3, 0.2, 0.8, 1
                     color: 1, 1, 1, 1
-                    on_press: root.parent.check_reservation(idreserva.text)
+                    on_release: root.check_reservation(idreserva.text)
 
                 Button:
                     text: "Regresar"
@@ -443,4 +459,4 @@
                     height: "40dp"
                     background_color: 0.5, 0.5, 0.5, 1
                     color: 1, 1, 1, 1
-                    on_press: root.switch_root()
+                    on_release: root.switch_root()
