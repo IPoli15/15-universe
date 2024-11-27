@@ -87,12 +87,14 @@ def Pago():
                 'cant_tickets': cant_tickets
             })
             data = response.json()
+            print(data)
             
             if response.status_code == 201 and data['success']:
-                print('Pago successful')
-                return redirect(url_for('index'))
+                id_reserva = data.get("id_reserva")
+                flash(f'Pago exitoso. Id de la reserva: {id_reserva}', 'success')
+                return render_template('pago_confirmado.html', id_reserva=id_reserva)
             else:
-                print('Error en el pago: ' + data.get('message', 'Unknown error'))
+                flash('Error en el pago: ' + data.get('message', 'Unknown error'))
                 return redirect(url_for('Pago'))
         except Exception as e:
             print(f'An error occurred: {str(e)}')

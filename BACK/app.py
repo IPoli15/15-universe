@@ -102,7 +102,8 @@ def tabla_reservas():
         nueva_reserva = Reserva(id_usuario=usuario.id_usuario, id_evento=evento.id_evento, cant_tickets=cant_tickets)
         db.session.add(nueva_reserva)
         db.session.commit()
-        return jsonify({'success': True, 'message': 'Reserva creada'}), 201
+        id_reserva = nueva_reserva.id_reserva
+        return jsonify({'success': True, 'message': 'Reserva creada', 'id_reserva': id_reserva}), 201
 
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
