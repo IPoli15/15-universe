@@ -25,7 +25,7 @@ LabelBase.register(
     fn_regular='assets/fonts/Montserrat-Bold.ttf'
 )
 
-BACKEND_URL = 'Ruy.pythonanywhere.com'
+BACKEND_URL = 'https://Ruy.pythonanywhere.com'
 
 class PaymentPopup(Popup):
     def __init__(self, event, **kwargs):
