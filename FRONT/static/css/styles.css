@@ -161,14 +161,14 @@ footer {
 .logo svg {
     width: 70px; 
     height: 70px;
-    fill: #FBE5D8;
+    fill: #faf9f8;
     transition: transform 0.3s ease;
 }
 
 
 .logo:hover svg {
     transform: scale(1.1);
-    fill: #FFDAB9; 
+    fill: #efcef0; 
 }
 
 .st0 {
