@@ -2,6 +2,7 @@
 
 {% block content %}
 
+<<<<<<< HEAD
 {% with messages = get_flashed_messages(category_filter=["login_incorrecto"]) %}
     {% if messages %}
         <div class="flash-messages">
@@ -10,10 +11,20 @@
             {% endfor %}
         </div>
     {% endif %}
+=======
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <div class="flash-messages">
+        {% for message in messages %}
+            <p class="alert">{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+>>>>>>> 054d0fe28be7708357612c253ae488ddb09793d4
 {% endwith %}
 
-<main class="login-main">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 <div class="contenedor-login">
     <h2>Iniciar sesión</h2>
     <form method="POST" action="/login"> <!-- ! agrego el metodo POST para que se envie la informacion -->
@@ -29,7 +40,6 @@
         <button type="submit">Iniciar sesión</button>
     </form>
 </div>
-</main>   
 <script src="{{ url_for('static', filename='js/login.js') }}"></script>
 {% endblock %}
 

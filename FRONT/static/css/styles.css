@@ -138,20 +138,6 @@ footer {
 .contacto, .creadores {
     text-align: center;
 }
-/* esta seria la otra opcion
-.creadores {
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    gap: 40px; 
-}
-
-.columna-creadores{
-    display: flex;
-    flex-direction: column;
-    gap: 10px; 
-}
- */
 
 .contactos {
     display: flex;
