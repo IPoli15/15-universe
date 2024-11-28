@@ -21,6 +21,12 @@
             height: "60dp"
             padding: [20, 5]
             spacing: 10
+            canvas.before:
+                Color:
+                    rgba: 0.133, 0.027, 0.322, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
 
             Image:
                 source: 'assets/images/logo-br.png'
@@ -66,7 +72,7 @@
                     text: "Login"
                     size_hint_x: 0.15
                     background_normal: ''
-                    background_color: 0.604, 0.302, 0.608, 1  
+                    background_color: 0.604, 0.302, 0.608, 1 
                     on_release: root.switch_screen('Log')
                     opacity: 1 if not app.is_logged_in else 0
                     disabled: app.is_logged_in
