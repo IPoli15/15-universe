@@ -299,7 +299,7 @@ def api_crear_evento():
         # Assuming run_query returns the last inserted id
         id_evento = result.lastrowid
 
-        return jsonify({"message": "Evento creado exitosamente", "id_evento": id_evento}), 201
+        return redirect('http://127.0.0.1:5000/crear_evento?evento_creado=1')
 
     except SQLAlchemyError as e:
         return jsonify({"error": f"Error al crear el evento: {str(e)}"}), 500

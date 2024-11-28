@@ -25,7 +25,8 @@ LabelBase.register(
     fn_regular='assets/fonts/Montserrat-Bold.ttf'
 )
 
-BACKEND_URL = 'https://Ruy.pythonanywhere.com'
+BACKEND_URL = "https://Ruy.pythonanywhere.com"
+
 
 class PaymentPopup(Popup):
     def __init__(self, event, **kwargs):
@@ -189,7 +190,7 @@ class ReservaScreen(Screen):
 class LoginScreen(Screen):
     pass
 
-class CrearEventoScreen(Screen):
+"""class CrearEventoScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         
@@ -265,7 +266,7 @@ class CrearEventoScreen(Screen):
 
     def go_back(self):
         self.manager.transition = SlideTransition(direction='right')
-        self.manager.current = 'Root'
+        self.manager.current = 'Root'"""
 
 class BusquedaEventosPopup(Popup):
     events_layout = ObjectProperty(None)
@@ -452,8 +453,8 @@ class MyRoot(BoxLayout):
         self.ids.reserva_button.disabled = not app.is_logged_in
         self.ids.logout_button.opacity = 1 if app.is_logged_in else 0
         self.ids.logout_button.disabled = not app.is_logged_in
-        self.ids.crear_evento_button.opacity = 1 if app.is_logged_in and app.is_admin else 0
-        self.ids.crear_evento_button.disabled = not (app.is_logged_in and app.is_admin)
+#        self.ids.crear_evento_button.opacity = 1 if app.is_logged_in and app.is_admin else 0
+#        self.ids.crear_evento_button.disabled = not (app.is_logged_in and app.is_admin)
 
     def show_popup(self, title, message):
         popup = Popup(
@@ -599,7 +600,7 @@ class UniverseApp(App):
         self.screen_manager.add_widget(RootScreen(name='Root'))
         self.screen_manager.add_widget(ReservaScreen(name='Res'))
         self.screen_manager.add_widget(LoginScreen(name='Log'))
-        self.screen_manager.add_widget(CrearEventoScreen(name='CrearEvento'))
+        #self.screen_manager.add_widget(CrearEventoScreen(name='CrearEvento'))
 
         return self.screen_manager
 

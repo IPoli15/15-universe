@@ -101,22 +101,22 @@
                             size: self.size
                             radius: [10]
 
-                Button:
-                    id: crear_evento_button
-                    text: "Crear Evento"
-                    size_hint_x: 0.25
-                    background_normal: ''
-                    background_color: 0.604, 0.302, 0.608, 1  
-                    on_release: root.switch_screen('CrearEvento')
-                    opacity: 1 if app.is_logged_in and app.is_admin else 0
-                    disabled: not (app.is_logged_in and app.is_admin)
-                    canvas.before:
-                        Color:
-                            rgba: self.background_color
-                        RoundedRectangle:
-                            pos: self.pos
-                            size: self.size
-                            radius: [10]
+#                Button:
+#                    id: crear_evento_button
+#                    text: "Crear Evento"
+#                    size_hint_x: 0.25
+#                    background_normal: ''
+#                    background_color: 0.604, 0.302, 0.608, 1  
+#                    on_release: root.switch_screen('CrearEvento')
+#                    opacity: 1 if app.is_logged_in and app.is_admin else 0
+#                    disabled: not (app.is_logged_in and app.is_admin)
+#                    canvas.before:
+#                        Color:
+#                            rgba: self.background_color
+#                        RoundedRectangle:
+#                            pos: self.pos
+#                            size: self.size
+#                            radius: [10]
 
                 Button:
                     id: logout_button
@@ -509,163 +509,163 @@
                     color: 1, 1, 1, 1
                     on_release: root.switch_root()
 
-<CrearEventoScreen>:
-    BoxLayout:
-        orientation: "vertical"
-        canvas.before:
-            Color:
-                rgba: 0.2, 0.1, 0.5, 0.8 
-            Rectangle:
-                pos: self.pos
-                size: self.size
-                source: 'assets/images/Fondo.jpg'
+# <CrearEventoScreen>:
+#     BoxLayout:
+#         orientation: "vertical"
+#         canvas.before:
+#             Color:
+#                 rgba: 0.2, 0.1, 0.5, 0.8  # Color de fondo con opacidad
+#             Rectangle:
+#                 pos: self.pos  # Posición del fondo
+#                 size: self.size  # Tamaño del fondo
+#                 source: 'assets/images/Fondo.jpg'  # Imagen de fondo
 
-        ScrollView:
-            BoxLayout:
-                orientation: "vertical"
-                size_hint_y: None
-                height: self.minimum_height
-                padding: 20
-                spacing: 10
+#         ScrollView:
+#             BoxLayout:
+#                 orientation: "vertical"  # Organiza los elementos verticalmente
+#                 size_hint_y: None  # Tamaño vertical no dependiente del contenedor
+#                 height: self.minimum_height  # Ajusta la altura al contenido
+#                 padding: 20  # Espaciado interior
+#                 spacing: 10  # Espaciado entre elementos
 
-                Label:
-                    text: "Crear Nuevo Evento"
-                    font_size: '24sp'
-                    size_hint_y: None
-                    height: '40dp'
-                    color: 1, 1, 1, 1
+#                 Label:
+#                     text: "Crear Nuevo Evento"  # Título de la pantalla
+#                     font_size: '24sp'  # Tamaño de fuente
+#                     size_hint_y: None
+#                     height: '40dp'
+#                     color: 1, 1, 1, 1  # Color del texto (blanco)
 
-                Label:
-                    text: "Nombre del Evento:"
-                    size_hint_y: None
-                    height: '30dp'
-                    color: 1, 1, 1, 1
+#                 Label:
+#                     text: "Nombre del Evento:"  # Etiqueta para el nombre
+#                     size_hint_y: None
+#                     height: '30dp'
+#                     color: 1, 1, 1, 1
 
-                TextInput:
-                    id: nombre_evento
-                    multiline: False
-                    size_hint_y: None
-                    height: '30dp'
+#                 TextInput:
+#                     id: nombre_evento  # Campo de entrada para el nombre del evento
+#                     multiline: False  # Entrada de una sola línea
+#                     size_hint_y: None
+#                     height: '30dp'
 
-                Label:
-                    text: "Categoría:"
-                    size_hint_y: None
-                    height: '30dp'
-                    color: 1, 1, 1, 1
+#                 Label:
+#                     text: "Categoría:"  # Etiqueta para la categoría
+#                     size_hint_y: None
+#                     height: '30dp'
+#                     color: 1, 1, 1, 1
 
-                Spinner:
-                    id: categoria
-                    text: 'Fiesta'
-                    values: 'Fiesta', 'Musica', 'Teatro', 'Futbol', 'eSports', 'Stand Up', 'Cultura Japonesa'
-                    size_hint_y: None
-                    height: '40dp'
-                    color: 0.604, 0.302, 0.608, 1
+#                 Spinner:
+#                     id: categoria  # Selector de categoría
+#                     text: 'Fiesta'  # Valor por defecto
+#                     values: 'Fiesta', 'Musica', 'Teatro', 'Futbol', 'eSports', 'Stand Up', 'Cultura Japonesa'  # Opciones
+#                     size_hint_y: None
+#                     height: '40dp'
+#                     color: 0.604, 0.302, 0.608, 1  # Color del texto
 
-                Label:
-                    text: "Descripción:"
-                    size_hint_y: None
-                    height: '30dp'
-                    color: 1, 1, 1, 1
+#                 Label:
+#                     text: "Descripción:"  # Etiqueta para la descripción
+#                     size_hint_y: None
+#                     height: '30dp'
+#                     color: 1, 1, 1, 1
 
-                TextInput:
-                    id: descripcion
-                    multiline: True
-                    size_hint_y: None
-                    height: '70dp'
+#                 TextInput:
+#                     id: descripcion  # Campo de entrada para la descripción
+#                     multiline: True  # Entrada de varias líneas
+#                     size_hint_y: None
+#                     height: '70dp'
 
-                Label:
-                    text: "URL de la Imagen:"
-                    size_hint_y: None
-                    height: '30dp'
-                    color: 1, 1, 1, 1
+#                 Label:
+#                     text: "URL de la Imagen:"  # Etiqueta para la URL de la imagen
+#                     size_hint_y: None
+#                     height: '30dp'
+#                     color: 1, 1, 1, 1
 
-                TextInput:
-                    id: imagen_url
-                    multiline: False
-                    size_hint_y: None
-                    height: '30dp'
+#                 TextInput:
+#                     id: imagen_url  # Campo de entrada para la URL de la imagen
+#                     multiline: False
+#                     size_hint_y: None
+#                     height: '30dp'
 
-                Label:
-                    text: "Entradas Totales:"
-                    size_hint_y: None
-                    height: '30dp'
-                    color: 1, 1, 1, 1
+#                 Label:
+#                     text: "Entradas Totales:"  # Etiqueta para las entradas totales
+#                     size_hint_y: None
+#                     height: '30dp'
+#                     color: 1, 1, 1, 1
 
-                TextInput:
-                    id: entradas_totales
-                    multiline: False
-                    input_filter: 'int'
-                    size_hint_y: None
-                    height: '30dp'
+#                 TextInput:
+#                     id: entradas_totales  # Campo de entrada para el total de entradas
+#                     multiline: False
+#                     input_filter: 'int'  # Solo números enteros
+#                     size_hint_y: None
+#                     height: '30dp'
 
-                Label:
-                    text: "Entradas Disponibles:"
-                    size_hint_y: None
-                    height: '30dp'
-                    color: 1, 1, 1, 1
+#                 Label:
+#                     text: "Entradas Disponibles:"  # Etiqueta para las entradas disponibles
+#                     size_hint_y: None
+#                     height: '30dp'
+#                     color: 1, 1, 1, 1
 
-                TextInput:
-                    id: entradas_disponibles
-                    multiline: False
-                    input_filter: 'int'
-                    size_hint_y: None
-                    width: '300dp'
-                    height: '30dp'
+#                 TextInput:
+#                     id: entradas_disponibles  # Campo de entrada para entradas disponibles
+#                     multiline: False
+#                     input_filter: 'int'
+#                     size_hint_y: None
+#                     width: '300dp'
+#                     height: '30dp'
 
-                Label:
-                    text: "Fecha y Hora:"
-                    size_hint_y: None
-                    height: '30dp'
-                    color: 1, 1, 1, 1
+#                 Label:
+#                     text: "Fecha y Hora:"  # Etiqueta para la fecha y hora
+#                     size_hint_y: None
+#                     height: '30dp'
+#                     color: 1, 1, 1, 1
 
-                TextInput:
-                    id: fecha_hora
-                    multiline: False
-                    size_hint_y: None
-                    height: '30dp'
+#                 TextInput:
+#                     id: fecha_hora  # Campo de entrada para la fecha y hora
+#                     multiline: False
+#                     size_hint_y: None
+#                     height: '30dp'
 
-                Label:
-                    text: "Localización:"
-                    size_hint_y: None
-                    height: '30dp'
-                    color: 1, 1, 1, 1
+#                 Label:
+#                     text: "Localización:"  # Etiqueta para la localización
+#                     size_hint_y: None
+#                     height: '30dp'
+#                     color: 1, 1, 1, 1
 
-                TextInput:
-                    id: localizacion
-                    multiline: False
-                    size_hint_y: None
-                    height: '30dp'
+#                 TextInput:
+#                     id: localizacion  # Campo de entrada para la localización
+#                     multiline: False
+#                     size_hint_y: None
+#                     height: '30dp'
 
-                Label:
-                    text: "Precio de Entrada:"
-                    size_hint_y: None
-                    height: '30dp'
-                    color: 1, 1, 1, 1
+#                 Label:
+#                     text: "Precio de Entrada:"  # Etiqueta para el precio de entrada
+#                     size_hint_y: None
+#                     height: '30dp'
+#                     color: 1, 1, 1, 1
 
-                TextInput:
-                    id: precio_entrada
-                    multiline: False
-                    input_filter: 'int'
-                    size_hint_y: None
-                    height: '30dp'
+#                 TextInput:
+#                     id: precio_entrada  # Campo de entrada para el precio
+#                     multiline: False
+#                     input_filter: 'int'
+#                     size_hint_y: None
+#                     height: '30dp'
 
-                BoxLayout:
-                    orientation: 'horizontal'
-                    size_hint_y: None
-                    height: '50dp'
-                    spacing: 10
+#                 BoxLayout:
+#                     orientation: 'horizontal'  # Botones en fila
+#                     size_hint_y: None
+#                     height: '50dp'
+#                     spacing: 10
 
-                    Button:
-                        text: "Crear Evento"
-                        size_hint_x: 0.5
-                        background_color: 0.3, 0.2, 0.8, 1
-                        on_release: root.create_event()
+#                     Button:
+#                         text: "Crear Evento"  # Botón para crear evento
+#                         size_hint_x: 0.5
+#                         background_color: 0.3, 0.2, 0.8, 1
+#                         on_release: root.create_event()  # Acción al presionar
 
-                    Button:
-                        text: "Cancelar"
-                        size_hint_x: 0.5
-                        background_color: 0.5, 0.5, 0.5, 1
-                        on_release: root.go_back()
+#                     Button:
+#                         text: "Cancelar"  # Botón para cancelar
+#                         size_hint_x: 0.5
+#                         background_color: 0.5, 0.5, 0.5, 1
+#                         on_release: root.go_back()  # Acción al presionar
 
 <ReservaScreen>:
     Reserva:
