@@ -73,6 +73,15 @@
                 disabled: not app.is_logged_in
 
             Button:
+                id: crear_evento_button
+                text: "Crear Evento"
+                size_hint_x: 0.15
+                background_color: 0.3, 0.2, 0.5, 1
+                on_release: root.switch_screen('CrearEvento')
+                opacity: 1 if app.is_logged_in and app.is_admin else 0
+                disabled: not (app.is_logged_in and app.is_admin)
+
+            Button:
                 id: logout_button
                 text: "Logout"
                 size_hint_x: 0.15
@@ -403,6 +412,164 @@
                     color: 1, 1, 1, 1
                     on_release: root.switch_root()
 
+<CrearEventoScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        canvas.before:
+            Color:
+                rgba: 0.2, 0.1, 0.5, 0.8 
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/Fondo.jpg'
+
+        ScrollView:
+            BoxLayout:
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                padding: 20
+                spacing: 10
+
+                Label:
+                    text: "Crear Nuevo Evento"
+                    font_size: '24sp'
+                    size_hint_y: None
+                    height: '40dp'
+                    color: 1, 1, 1, 1
+
+                Label:
+                    text: "Nombre del Evento:"
+                    size_hint_y: None
+                    height: '30dp'
+                    color: 1, 1, 1, 1
+
+                TextInput:
+                    id: nombre_evento
+                    multiline: False
+                    size_hint_y: None
+                    height: '30dp'
+
+                Label:
+                    text: "Categoría:"
+                    size_hint_y: None
+                    height: '30dp'
+                    color: 1, 1, 1, 1
+
+                Spinner:
+                    id: categoria
+                    text: 'Fiesta'
+                    values: 'Fiesta', 'Musica', 'Teatro', 'Futbol', 'eSports', 'Stand Up', 'Cultura Japonesa'
+                    size_hint_y: None
+                    height: '40dp'
+                    color: 0.604, 0.302, 0.608, 1
+
+                Label:
+                    text: "Descripción:"
+                    size_hint_y: None
+                    height: '30dp'
+                    color: 1, 1, 1, 1
+
+                TextInput:
+                    id: descripcion
+                    multiline: True
+                    size_hint_y: None
+                    height: '70dp'
+
+                Label:
+                    text: "URL de la Imagen:"
+                    size_hint_y: None
+                    height: '30dp'
+                    color: 1, 1, 1, 1
+
+                TextInput:
+                    id: imagen_url
+                    multiline: False
+                    size_hint_y: None
+                    height: '30dp'
+
+                Label:
+                    text: "Entradas Totales:"
+                    size_hint_y: None
+                    height: '30dp'
+                    color: 1, 1, 1, 1
+
+                TextInput:
+                    id: entradas_totales
+                    multiline: False
+                    input_filter: 'int'
+                    size_hint_y: None
+                    height: '30dp'
+
+                Label:
+                    text: "Entradas Disponibles:"
+                    size_hint_y: None
+                    height: '30dp'
+                    color: 1, 1, 1, 1
+
+                TextInput:
+                    id: entradas_disponibles
+                    multiline: False
+                    input_filter: 'int'
+                    size_hint_y: None
+                    width: '300dp'
+                    height: '30dp'
+
+                Label:
+                    text: "Fecha y Hora:"
+                    size_hint_y: None
+                    height: '30dp'
+                    color: 1, 1, 1, 1
+
+                TextInput:
+                    id: fecha_hora
+                    multiline: False
+                    size_hint_y: None
+                    height: '30dp'
+
+                Label:
+                    text: "Localización:"
+                    size_hint_y: None
+                    height: '30dp'
+                    color: 1, 1, 1, 1
+
+                TextInput:
+                    id: localizacion
+                    multiline: False
+                    size_hint_y: None
+                    height: '30dp'
+
+                Label:
+                    text: "Precio de Entrada:"
+                    size_hint_y: None
+                    height: '30dp'
+                    color: 1, 1, 1, 1
+
+                TextInput:
+                    id: precio_entrada
+                    multiline: False
+                    input_filter: 'int'
+                    size_hint_y: None
+                    height: '30dp'
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: None
+                    height: '50dp'
+                    spacing: 10
+
+                    Button:
+                        text: "Crear Evento"
+                        size_hint_x: 0.5
+                        background_color: 0.3, 0.2, 0.8, 1
+                        on_release: root.create_event()
+
+                    Button:
+                        text: "Cancelar"
+                        size_hint_x: 0.5
+                        background_color: 0.5, 0.5, 0.5, 1
+                        on_release: root.go_back()
+                        
 <ReservaScreen>:
     Reserva:
 
