@@ -2,7 +2,8 @@
 
 {% block content %}
 
-<<<<<<< HEAD
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+
 {% with messages = get_flashed_messages(category_filter=["login_incorrecto"]) %}
     {% if messages %}
         <div class="flash-messages">
@@ -11,19 +12,6 @@
             {% endfor %}
         </div>
     {% endif %}
-=======
-<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-    <div class="flash-messages">
-        {% for message in messages %}
-            <p class="alert">{{ message }}</p>
-        {% endfor %}
-    </div>
-{% endif %}
->>>>>>> 054d0fe28be7708357612c253ae488ddb09793d4
-{% endwith %}
 
 <div class="contenedor-login">
     <h2>Iniciar sesión</h2>

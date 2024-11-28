@@ -387,11 +387,7 @@ from flask import redirect, url_for, flash, session
 @app.route('/verificar_sesion/<int:id_evento_deseado>')
 def verificar_sesion(id_evento_deseado):
     if not app.config['SESION_INICIADA'] and not app.config["ES_ADMIN"]:
-<<<<<<< HEAD
         flash('Debes iniciar sesión antes de reservar una entrada.',"login_incorrecto")
-=======
-        flash('⚠ Debes iniciar sesión antes de reservar una entrada')
->>>>>>> 054d0fe28be7708357612c253ae488ddb09793d4
         return redirect(url_for('login'))
     return redirect(url_for('Pago', id_evento_deseado=id_evento_deseado))
 
