@@ -44,17 +44,6 @@ p {
     margin: auto;
 }
 
-#boton_mas_info {
-    padding: 10px; 
-    background-color: #e74c3c;
-    border: 2px solid #000000;
-    color: #fff;
-    font-size: 15px;
-    border-radius: 10px;
-    text-decoration: none;
-    cursor: pointer;
-}
-
 button {
     margin:13px;
     font-size: 1.5em;
@@ -100,7 +89,6 @@ button:hover {
 #boton_mas_info {
     padding: 10px; 
     background-color: #e74c3c;
-    border: 2px solid #000000;
     color: #fff;
     font-size: 15px;
     border-radius: 10px;
@@ -110,7 +98,7 @@ button:hover {
 }
 
 #boton_mas_info:hover {
-    transform: scale(1.02);
+    transform: scale(1.01);
     background-color: #fc5542;
 }
 

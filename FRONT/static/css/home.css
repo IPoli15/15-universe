@@ -95,7 +95,7 @@ h2 {
 }
 
 #boton_mas_info:hover {
-    transform: scale(1.02);
+    transform: scale(1.01);
     background-color: #fc5542;
 }
 
