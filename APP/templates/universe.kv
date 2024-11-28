@@ -44,6 +44,8 @@
                 text: 'Buscar'
                 size_hint_x: 0.15
                 on_release: root.busqueda_eventos(Mensaje_busqueda.text)
+                opacity: 1 if app.is_logged_in else 0
+                disabled: not app.is_logged_in
             
             Button:
                 id: login_button
