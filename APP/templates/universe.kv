@@ -29,7 +29,7 @@
                     size: self.size
 
             TextInput:
-                id: search_input
+                id: Mensaje_busqueda
                 hint_text: "Buscar"
                 size_hint_x: 0.55
                 background_color: 0.2, 0.2, 0.25, 1
@@ -43,7 +43,7 @@
             Button:
                 text: 'Buscar'
                 size_hint_x: 0.15
-                on_release: root.busqueda_eventos(search_input.text)
+                on_release: root.busqueda_eventos(Mensaje_busqueda.text)
             
             Button:
                 id: login_button

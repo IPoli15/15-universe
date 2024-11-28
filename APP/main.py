@@ -322,8 +322,8 @@ class MyRoot(BoxLayout):
         popup.content.color = (1, 1, 1, 1)
         popup.open()
 
-    def busqueda_eventos(self, search_text):
-        if not search_text.strip():
+    def busqueda_eventos(self, texto_ingresado):
+        if not texto_ingresado.strip():
             self.show_popup("Error", "Por favor, ingresa un término de búsqueda")
             return
 
@@ -334,11 +334,11 @@ class MyRoot(BoxLayout):
 
             eventos_filtrados = []
             for evento in eventos: 
-                if search_text.lower() in evento.get('nombre_evento', '').lower():
+                if texto_ingresado.lower() in evento.get('nombre_evento', '').lower():
                     eventos_filtrados.append(evento)
 
             if eventos_filtrados:
-                popup = BusquedaEventosPopup(busqueda=search_text, events=eventos_filtrados)
+                popup = BusquedaEventosPopup(busqueda=texto_ingresado, events=eventos_filtrados)
                 popup.open()
             else:
                 self.show_popup("Sin resultados", "No se encontraron eventos que coincidan con la búsqueda.")
