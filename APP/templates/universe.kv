@@ -21,12 +21,6 @@
             height: "60dp"
             padding: [20, 5]
             spacing: 10
-            canvas.before:
-                Color:
-                    rgba: 0.29, 0, 0.51, 1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
 
             Image:
                 source: 'assets/images/logo-br.png'
@@ -72,7 +66,7 @@
                     text: "Login"
                     size_hint_x: 0.15
                     background_normal: ''
-                    background_color: 0.604, 0.302, 0.608, 1
+                    background_color: 0.604, 0.302, 0.608, 1  
                     on_release: root.switch_screen('Log')
                     opacity: 1 if not app.is_logged_in else 0
                     disabled: app.is_logged_in
@@ -135,7 +129,6 @@
                             size: self.size
                             radius: [10]
 
-        # Main content
         BoxLayout:
             orientation: "vertical"
 
@@ -363,16 +356,16 @@
             padding: [20, 5]
             spacing: 10
             orientation: "horizontal"
-            pos_hint: {'center_x': 0.5}  # Centra horizontalmente
+            pos_hint: {'center_x': 0.5}  
 
             Widget:
-                size_hint_x: 1  # Espacio flexible a la izquierda
+                size_hint_x: 1  
 
             BoxLayout:
                 orientation: "horizontal"
                 size_hint_x: None
                 width: self.minimum_width
-                spacing: 20  # Aumenta el espacio entre las imágenes
+                spacing: 20 
 
                 Image:
                     source: 'assets/images/Facebook.png'
