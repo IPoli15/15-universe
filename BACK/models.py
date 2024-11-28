@@ -32,6 +32,7 @@ class Reserva(db.Model):
     id_usuario = db.Column(db.Integer, db.ForeignKey('usuarios.id_usuario'), nullable=False)
     id_evento = db.Column(db.Integer, db.ForeignKey('eventos.id_evento'), nullable=False)
     cant_tickets = db.Column(db.Integer, nullable=False)
+    fecha_creacion = db.Column(db.DateTime, default=db.func.current_timestamp(), nullable=False)
     
     # Relación con el modelo Usuario
     usuario = db.relationship('Usuario', backref=db.backref('reservas', lazy=True))
