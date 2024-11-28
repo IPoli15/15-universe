@@ -29,6 +29,7 @@
                     size: self.size
 
             TextInput:
+                id: search_input
                 hint_text: "Buscar"
                 size_hint_x: 0.55
                 background_color: 0.2, 0.2, 0.25, 1
@@ -37,7 +38,13 @@
                 cursor_color: 1, 1, 1, 1
                 padding: [10, 10]
                 font_size: '16sp'
-
+                on_text_validate: root.busqueda_eventos(self.text)
+            
+            Button:
+                text: 'Buscar'
+                size_hint_x: 0.15
+                on_release: root.busqueda_eventos(search_input.text)
+            
             Button:
                 id: login_button
                 text: "Login"

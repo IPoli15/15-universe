@@ -364,10 +364,10 @@ def busqueda_eventos():
     try:
         eventos_filtrados = []
         if nombre_evento:
-            eventos_filtrados = [
-                evento for evento in eventos 
-                if nombre_evento.lower() in evento.get('nombre_evento', '').lower()
-            ]
+            eventos_filtrados = []
+            for evento in eventos: 
+                if nombre_evento.lower() in evento.get('nombre_evento', '').lower():
+                    eventos_filtrados.append(evento)
         else:
             eventos_filtrados = eventos
         

@@ -75,6 +75,78 @@ class ReservaScreen(Screen):
 class LoginScreen(Screen):
     pass
 
+class BusquedaEventosPopup(Popup):
+    events_layout = ObjectProperty(None)
+
+    def __init__(self, busqueda, events, **kwargs):
+        super().__init__(**kwargs)
+        self.title = f"Resultados para: {busqueda}"
+        self.size_hint = (0.9, 0.9)
+
+        content = BoxLayout(orientation='vertical', spacing=10, padding=10)
+        scroll_view = ScrollView(size_hint=(1, 1))
+
+        self.events_layout = BoxLayout(orientation='vertical', size_hint_y=None)
+        self.events_layout.bind(minimum_height=self.events_layout.setter('height'))
+
+        for event in events:
+            event_layout = BoxLayout(orientation='horizontal', size_hint_y=None, height=40)
+            event_label = Label(text=f"{event['nombre_evento']} - ${event['precio_entrada']}", size_hint_x=0.7)
+            buy_button = Button(text="Comprar", size_hint_x=0.3)
+            buy_button.bind(on_release=lambda x, e=event: self.purchase_tickets(e))
+            event_layout.add_widget(event_label)
+            event_layout.add_widget(buy_button)
+            self.events_layout.add_widget(event_layout)
+
+        scroll_view.add_widget(self.events_layout)
+        content.add_widget(scroll_view)
+
+        back_button = Button(text="Volver", size_hint_y=None, height=40)
+        back_button.bind(on_release=self.dismiss)
+        content.add_widget(back_button)
+
+        self.content = content
+
+    def purchase_tickets(self, event):
+        app = App.get_running_app()
+        if not app.is_logged_in:
+            self.show_popup("Error", "Debes iniciar sesión para comprar entradas")
+            return
+
+        content = BoxLayout(orientation='vertical', spacing=10, padding=10)
+        content.add_widget(Label(text=f"Comprar entradas para {event['nombre_evento']}", size_hint_y=None, height=40))
+        quantity_input = TextInput(text='1', multiline=False, size_hint_y=None, height=40)
+        content.add_widget(quantity_input)
+        buy_button = Button(text="Confirmar compra", size_hint_y=None, height=40)
+        buy_button.bind(on_release=lambda x: self.confirm_purchase(event, int(quantity_input.text)))
+        content.add_widget(buy_button)
+
+        purchase_popup = Popup(
+            title="Comprar Entradas",
+            content=content,
+            size_hint=(0.8, 0.4),
+            background_color=(0.1, 0.1, 0.15, 0.9),
+            title_color=(1, 1, 1, 1),
+            title_size='18sp',
+            separator_color=(0.3, 0.2, 0.8, 1)
+        )
+        purchase_popup.open()
+
+    def confirm_purchase(self, event, quantity):
+        try:
+            response = requests.post(f"{BACKEND_URL}/crear-reserva", json={
+                "nombre": App.get_running_app().username,
+                "id_evento": event['id_evento'],
+                "cant_tickets": quantity
+            })
+            if response.status_code == 201:
+                data = response.json()
+                self.show_popup("Compra exitosa", f"Reserva creada con ID: {data['id_reserva']}")
+            else:
+                self.show_popup("Error", "No se pudo completar la compra")
+        except requests.exceptions.RequestException as e:
+            self.show_popup("Error de conexión", str(e))
+
 class EventsPopup(Popup):
     events_layout = ObjectProperty(None)
 
@@ -250,6 +322,30 @@ class MyRoot(BoxLayout):
         popup.content.color = (1, 1, 1, 1)
         popup.open()
 
+    def busqueda_eventos(self, search_text):
+        if not search_text.strip():
+            self.show_popup("Error", "Por favor, ingresa un término de búsqueda")
+            return
+
+        try:
+            response = requests.get(f"{BACKEND_URL}/consultar-eventos")
+            response.raise_for_status()
+            eventos = response.json()
+
+            eventos_filtrados = []
+            for evento in eventos: 
+                if search_text.lower() in evento.get('nombre_evento', '').lower():
+                    eventos_filtrados.append(evento)
+
+            if eventos_filtrados:
+                popup = BusquedaEventosPopup(busqueda=search_text, events=eventos_filtrados)
+                popup.open()
+            else:
+                self.show_popup("Sin resultados", "No se encontraron eventos que coincidan con la búsqueda.")
+
+        except requests.exceptions.RequestException as e:
+            self.show_popup("Error de conexión", str(e))
+
 class Reserva(BoxLayout):
     def switch_root(self):
         self.parent.parent.transition = SlideTransition(direction='right')
@@ -345,4 +441,3 @@ class UniverseApp(App):
 
 if __name__ == "__main__":
     UniverseApp().run()
-
