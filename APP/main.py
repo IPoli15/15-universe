@@ -26,6 +26,118 @@ LabelBase.register(
 )
 
 BACKEND_URL = 'http://localhost:5001'
+
+class PaymentPopup(Popup):
+    def __init__(self, event, **kwargs):
+        super().__init__(**kwargs)
+        self.event = event
+        self.title = "Pago seguro"
+        self.size_hint = (0.9, 0.9)
+        self.background_color = (0.1, 0.1, 0.15, 0.9)
+        self.title_color = (1, 1, 1, 1)
+        self.title_size = '18sp'
+        self.separator_color = (0.3, 0.2, 0.8, 1)
+
+        content = BoxLayout(orientation='vertical', spacing=10, padding=10)
+        
+        event_info = BoxLayout(orientation='vertical', spacing=5, size_hint_y=None, height=100)
+        event_info.add_widget(Label(text="Información del Evento", size_hint_y=None, height=30, color=(1, 1, 1, 1), bold=True))
+        event_info.add_widget(Label(text=f"Nombre: {event['nombre_evento']}", size_hint_y=None, height=30, color=(1, 1, 1, 1)))
+        event_info.add_widget(Label(text=f"Precio: ${event['precio_entrada']}", size_hint_y=None, height=30, color=(1, 1, 1, 1)))
+        content.add_widget(event_info)
+
+        buyer_info = BoxLayout(orientation='vertical', spacing=5, size_hint_y=None, height=100)
+        buyer_info.add_widget(Label(text="Detalles del Comprador", size_hint_y=None, height=30, color=(1, 1, 1, 1), bold=True))
+        self.username_input = TextInput(text=App.get_running_app().username, readonly=True, size_hint_y=None, height=40,
+                                        background_color=(0.2, 0.2, 0.25, 1), foreground_color=(1, 1, 1, 1), cursor_color=(1, 1, 1, 1))
+        buyer_info.add_widget(self.username_input)
+        content.add_widget(buyer_info)
+
+        purchase_info = BoxLayout(orientation='vertical', spacing=5, size_hint_y=None, height=100)
+        purchase_info.add_widget(Label(text="Detalles de la Compra", size_hint_y=None, height=30, color=(1, 1, 1, 1), bold=True))
+        self.quantity_input = TextInput(hint_text="Cantidad de Tickets", input_filter='int', size_hint_y=None, height=40,
+                                        background_color=(0.2, 0.2, 0.25, 1), foreground_color=(1, 1, 1, 1), cursor_color=(1, 1, 1, 1))
+        purchase_info.add_widget(self.quantity_input)
+        content.add_widget(purchase_info)
+
+        payment_info = BoxLayout(orientation='vertical', spacing=5, size_hint_y=None, height=250)
+        payment_info.add_widget(Label(text="Información de Pago", size_hint_y=None, height=30, color=(1, 1, 1, 1), bold=True))
+        
+        self.card_number = TextInput(hint_text="Número de Tarjeta", size_hint_y=None, height=40,
+                                    background_color=(0.2, 0.2, 0.25, 1), foreground_color=(1, 1, 1, 1), cursor_color=(1, 1, 1, 1))
+        self.card_name = TextInput(hint_text="Nombre en la Tarjeta", size_hint_y=None, height=40,
+                                background_color=(0.2, 0.2, 0.25, 1), foreground_color=(1, 1, 1, 1), cursor_color=(1, 1, 1, 1))
+        self.expiry_date = TextInput(hint_text="Fecha de Vencimiento (MM/AA)", size_hint_y=None, height=40,
+                                    background_color=(0.2, 0.2, 0.25, 1), foreground_color=(1, 1, 1, 1), cursor_color=(1, 1, 1, 1))
+        self.cvv = TextInput(hint_text="CVV", password=True, size_hint_y=None, height=40,
+                            background_color=(0.2, 0.2, 0.25, 1), foreground_color=(1, 1, 1, 1), cursor_color=(1, 1, 1, 1))
+        
+        payment_info.add_widget(self.card_number)
+        payment_info.add_widget(self.card_name)
+        payment_info.add_widget(self.expiry_date)
+        payment_info.add_widget(self.cvv)
+        
+        content.add_widget(payment_info)
+
+        buttons = BoxLayout(size_hint_y=None, height=50, spacing=10)
+        confirm_button = Button(text="Confirmar Compra", size_hint_x=0.5, background_color=(0.604, 0.302, 0.608, 1))
+        confirm_button.bind(on_release=self.confirm_purchase)
+        buttons.add_widget(confirm_button)
+
+        cancel_button = Button(text="Cancelar", size_hint_x=0.5, background_color=(0.5, 0.5, 0.5, 1))
+        cancel_button.bind(on_release=self.dismiss)
+        buttons.add_widget(cancel_button)
+
+        content.add_widget(buttons)
+        self.content = content
+
+    def confirm_purchase(self, instance):
+        quantity = self.quantity_input.text
+        if not quantity or not quantity.isdigit() or int(quantity) <= 0:
+            self.show_error_popup("Por favor, ingrese una cantidad válida de tickets")
+            return
+        
+        if not all([self.card_number.text, self.card_name.text, self.expiry_date.text, self.cvv.text]):
+            self.show_error_popup("Por favor, complete todos los campos de pago")
+            return
+
+        try:
+            response = requests.post(f"{BACKEND_URL}/crear-reserva", json={
+                "nombre": App.get_running_app().username,
+                "id_evento": self.event['id_evento'],
+                "cant_tickets": int(quantity)
+            })
+            if response.status_code == 201:
+                data = response.json()
+                self.show_success_popup(f"Reserva creada con ID: {data['id_reserva']}")
+                self.dismiss()
+            else:
+                self.show_error_popup("No se pudo completar la compra")
+        except requests.exceptions.RequestException as e:
+            self.show_error_popup(f"Error de conexión: {str(e)}")
+
+    def show_error_popup(self, message):
+        error_popup = Popup(title='Error',
+                            content=Label(text=message),
+                            size_hint=(0.8, 0.3),
+                            background_color=(0.1, 0.1, 0.15, 0.9),
+                            title_color=(1, 1, 1, 1),
+                            title_size='18sp',
+                            separator_color=(0.3, 0.2, 0.8, 1))
+        error_popup.content.color = (1, 1, 1, 1)
+        error_popup.open()
+
+    def show_success_popup(self, message):
+        success_popup = Popup(title='Compra exitosa',
+                            content=Label(text=message),
+                            size_hint=(0.8, 0.3),
+                            background_color=(0.1, 0.1, 0.15, 0.9),
+                            title_color=(1, 1, 1, 1),
+                            title_size='18sp',
+                            separator_color=(0.3, 0.2, 0.8, 1))
+        success_popup.content.color = (1, 1, 1, 1)
+        success_popup.open()
+
 class RootScreen(Screen):
     def logout(self):
         app = App.get_running_app()
@@ -36,6 +148,7 @@ class RootScreen(Screen):
         app.root.get_screen('Log').ids.username.text = ''
         app.root.get_screen('Log').ids.password.text = ''
         self.ids.my_root.update_buttons()
+
 class ReservaScreen(Screen):
     def check_reservation(self, id_reserva):
         if not id_reserva:
@@ -72,6 +185,7 @@ class ReservaScreen(Screen):
         )
         popup.content.color = (1, 1, 1, 1)
         popup.open()
+
 class LoginScreen(Screen):
     pass
 
@@ -80,7 +194,6 @@ class CrearEventoScreen(Screen):
         super().__init__(**kwargs)
         
     def create_event(self):
-        # Obtener los valores de los campos
         nombre_evento = self.ids.nombre_evento.text
         categoria = self.ids.categoria.text
         descripcion = self.ids.descripcion.text
@@ -90,13 +203,12 @@ class CrearEventoScreen(Screen):
             entradas_disponibles = int(self.ids.entradas_disponibles.text)
             precio_entrada = int(self.ids.precio_entrada.text)
         except ValueError:
-            self.show_popup("Error", "Los campos numéricos deben contener números válidos")
+            self.show_popup("Error", "Ingresar un numero valido")
             return
 
         fecha_hora = self.ids.fecha_hora.text
         localizacion = self.ids.localizacion.text
 
-        # Validar campos requeridos
         if not all([nombre_evento, categoria, descripcion, imagen_url, 
                 self.ids.entradas_totales.text, self.ids.entradas_disponibles.text,
                 fecha_hora, localizacion, self.ids.precio_entrada.text]):
@@ -118,7 +230,7 @@ class CrearEventoScreen(Screen):
 
         try:
             response = requests.post(f"{BACKEND_URL}/api/crear_evento", data=event_data)
-            if response.status_code == 201:  # Assuming 201 is the status code for successful creation
+            if response.status_code == 201:
                 data = response.json()
                 id_evento = data.get('id_evento', 'No disponible')
                 self.show_popup("Éxito", f"Evento creado correctamente. ID del evento: {id_evento}")
@@ -162,85 +274,14 @@ class BusquedaEventosPopup(Popup):
         super().__init__(**kwargs)
         self.title = f"Resultados para: {busqueda}"
         self.size_hint = (0.9, 0.9)
-
-        content = BoxLayout(orientation='vertical', spacing=10, padding=10)
-        scroll_view = ScrollView(size_hint=(1, 1))
-
-        self.events_layout = BoxLayout(orientation='vertical', size_hint_y=None)
-        self.events_layout.bind(minimum_height=self.events_layout.setter('height'))
-
-        for event in events:
-            event_layout = BoxLayout(orientation='horizontal', size_hint_y=None, height=40)
-            event_label = Label(text=f"{event['nombre_evento']} - ${event['precio_entrada']}", size_hint_x=0.7)
-            buy_button = Button(text="Comprar", size_hint_x=0.3)
-            buy_button.bind(on_release=lambda x, e=event: self.purchase_tickets(e))
-            event_layout.add_widget(event_label)
-            event_layout.add_widget(buy_button)
-            self.events_layout.add_widget(event_layout)
-
-        scroll_view.add_widget(self.events_layout)
-        content.add_widget(scroll_view)
-
-        back_button = Button(text="Volver", size_hint_y=None, height=40)
-        back_button.bind(on_release=self.dismiss)
-        content.add_widget(back_button)
-
-        self.content = content
-
-    def purchase_tickets(self, event):
-        app = App.get_running_app()
-        if not app.is_logged_in:
-            self.show_popup("Error", "Debes iniciar sesión para comprar entradas")
-            return
-
-        content = BoxLayout(orientation='vertical', spacing=10, padding=10)
-        content.add_widget(Label(text=f"Comprar entradas para {event['nombre_evento']}", size_hint_y=None, height=40))
-        quantity_input = TextInput(text='1', multiline=False, size_hint_y=None, height=40)
-        content.add_widget(quantity_input)
-        buy_button = Button(text="Confirmar compra", size_hint_y=None, height=40)
-        buy_button.bind(on_release=lambda x: self.confirm_purchase(event, int(quantity_input.text)))
-        content.add_widget(buy_button)
-
-        purchase_popup = Popup(
-            title="Comprar Entradas",
-            content=content,
-            size_hint=(0.8, 0.4),
-            background_color=(0.1, 0.1, 0.15, 0.9),
-            title_color=(1, 1, 1, 1),
-            title_size='18sp',
-            separator_color=(0.3, 0.2, 0.8, 1)
-        )
-        purchase_popup.open()
-
-    def confirm_purchase(self, event, quantity):
-        try:
-            response = requests.post(f"{BACKEND_URL}/crear-reserva", json={
-                "nombre": App.get_running_app().username,
-                "id_evento": event['id_evento'],
-                "cant_tickets": quantity
-            })
-            if response.status_code == 201:
-                data = response.json()
-                self.show_popup("Compra exitosa", f"Reserva creada con ID: {data['id_reserva']}")
-            else:
-                self.show_popup("Error", "No se pudo completar la compra")
-        except requests.exceptions.RequestException as e:
-            self.show_popup("Error de conexión", str(e))
-
-class EventsPopup(Popup):
-    events_layout = ObjectProperty(None)
-
-    def __init__(self, category, events, **kwargs):
-        super(EventsPopup, self).__init__(**kwargs)
-        self.title = f"Eventos en {category}"
-        self.size_hint = (0.9, 0.9)
         self.background_color = (0.1, 0.1, 0.15, 0.9)
         self.title_color = (1, 1, 1, 1)
         self.title_size = '18sp'
         self.separator_color = (0.3, 0.2, 0.8, 1)
 
         content = BoxLayout(orientation='vertical', spacing=10, padding=10)
-        scroll_view = ScrollView()
+        scroll_view = ScrollView(size_hint=(1, 1))
+
         self.events_layout = GridLayout(cols=1, spacing=10, size_hint_y=None)
         self.events_layout.bind(minimum_height=self.events_layout.setter('height'))
 
@@ -254,7 +295,6 @@ class EventsPopup(Popup):
             self.events_layout.add_widget(event_layout)
 
         scroll_view.add_widget(self.events_layout)
-        content.add_widget(Label(text=f"Eventos en {category}", size_hint_y=None, height=40))
         content.add_widget(scroll_view)
 
         back_button = Button(text="Volver", size_hint_y=None, height=40)
@@ -269,39 +309,63 @@ class EventsPopup(Popup):
             self.show_popup("Error", "Debes iniciar sesión para comprar entradas")
             return
 
-        content = BoxLayout(orientation='vertical', spacing=10, padding=10)
-        content.add_widget(Label(text=f"Comprar entradas para {event['nombre_evento']}", size_hint_y=None, height=40))
-        quantity_input = TextInput(text='1', multiline=False, size_hint_y=None, height=40)
-        content.add_widget(quantity_input)
-        buy_button = Button(text="Confirmar compra", size_hint_y=None, height=40)
-        buy_button.bind(on_release=lambda x: self.confirm_purchase(event, int(quantity_input.text)))
-        content.add_widget(buy_button)
+        payment_popup = PaymentPopup(event)
+        payment_popup.open()
 
-        purchase_popup = Popup(
-            title="Comprar Entradas",
-            content=content,
-            size_hint=(0.8, 0.4),
+    def show_popup(self, title, message):
+        popup = Popup(
+            title=title,
+            content=Label(text=message),
+            size_hint=(0.8, 0.3),
             background_color=(0.1, 0.1, 0.15, 0.9),
             title_color=(1, 1, 1, 1),
             title_size='18sp',
             separator_color=(0.3, 0.2, 0.8, 1)
         )
-        purchase_popup.open()
+        popup.content.color = (1, 1, 1, 1)
+        popup.open()
 
-    def confirm_purchase(self, event, quantity):
-        try:
-            response = requests.post(f"{BACKEND_URL}/crear-reserva", json={
-                "nombre": App.get_running_app().username,
-                "id_evento": event['id_evento'],
-                "cant_tickets": quantity
-            })
-            if response.status_code == 201:
-                data = response.json()
-                self.show_popup("Compra exitosa", f"Reserva creada con ID: {data['id_reserva']}")
-            else:
-                self.show_popup("Error", "No se pudo completar la compra")
-        except requests.exceptions.RequestException as e:
-            self.show_popup("Error de conexión", str(e))
+class EventsPopup(Popup):
+    def __init__(self, category, events, **kwargs):
+        super().__init__(**kwargs)
+        self.title = f"Eventos de {category}"
+        self.size_hint = (0.9, 0.9)
+        self.background_color = (0.1, 0.1, 0.15, 0.9)
+        self.title_color = (1, 1, 1, 1)
+        self.title_size = '18sp'
+        self.separator_color = (0.3, 0.2, 0.8, 1)
+
+        content = BoxLayout(orientation='vertical', spacing=10, padding=10)
+        scroll_view = ScrollView(size_hint=(1, 1))
+        events_layout = GridLayout(cols=1, spacing=10, size_hint_y=None)
+        events_layout.bind(minimum_height=events_layout.setter('height'))
+
+        for event in events:
+            event_layout = BoxLayout(orientation='horizontal', size_hint_y=None, height=40)
+            event_label = Label(text=f"{event['nombre_evento']} - ${event['precio_entrada']}", size_hint_x=0.7)
+            buy_button = Button(text="Comprar", size_hint_x=0.3)
+            buy_button.bind(on_release=lambda x, e=event: self.purchase_tickets(e))
+            event_layout.add_widget(event_label)
+            event_layout.add_widget(buy_button)
+            events_layout.add_widget(event_layout)
+
+        scroll_view.add_widget(events_layout)
+        content.add_widget(scroll_view)
+
+        back_button = Button(text="Volver", size_hint_y=None, height=40)
+        back_button.bind(on_release=self.dismiss)
+        content.add_widget(back_button)
+
+        self.content = content
+
+    def purchase_tickets(self, event):
+        app = App.get_running_app()
+        if not app.is_logged_in:
+            self.show_popup("Error", "Debes iniciar sesión para comprar entradas")
+            return
+
+        payment_popup = PaymentPopup(event)
+        payment_popup.open()
 
     def show_popup(self, title, message):
         popup = Popup(
@@ -404,14 +468,12 @@ class MyRoot(BoxLayout):
         popup.content.color = (1, 1, 1, 1)
         popup.open()
 
-
     def logout(self):
         app = App.get_running_app()
         app.is_logged_in = False
         app.username = ''
         self.parent.parent.transition = SlideTransition(direction='right')
         self.parent.parent.current = 'Root'
-        
         
         login_screen = app.root.get_screen('Log')
         if hasattr(login_screen, 'ids') and 'username' in login_screen.ids:
@@ -420,7 +482,6 @@ class MyRoot(BoxLayout):
             login_screen.ids.password.text = ''
         
         self.update_buttons()
-
 
     def busqueda_eventos(self, texto_ingresado):
         if not texto_ingresado.strip():
