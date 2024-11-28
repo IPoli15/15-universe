@@ -378,16 +378,16 @@ def busqueda_eventos():
         return str(e), 500
 
     return render_template('eSports.html', 
-                           es_admin=app.config['ES_ADMIN'], 
-                           sesion_iniciada=app.config['SESION_INICIADA'], 
-                           eventos=eventos_filtrados)
+                        es_admin=app.config['ES_ADMIN'], 
+                        sesion_iniciada=app.config['SESION_INICIADA'], 
+                        eventos=eventos_filtrados)
 
 from flask import redirect, url_for, flash, session
 
 @app.route('/verificar_sesion/<int:id_evento_deseado>')
 def verificar_sesion(id_evento_deseado):
     if not app.config['SESION_INICIADA'] and not app.config["ES_ADMIN"]:
-        flash('Debes iniciar sesión antes de reservar una entrada.')
+        flash('⚠ Debes iniciar sesión antes de reservar una entrada')
         return redirect(url_for('login'))
     return redirect(url_for('Pago', id_evento_deseado=id_evento_deseado))
 
