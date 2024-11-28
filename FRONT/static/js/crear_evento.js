@@ -3,8 +3,8 @@ const urlParams = new URLSearchParams(window.location.search);
             const successMessage = document.getElementById('successMessage');
             successMessage.style.display = 'block';
 
-            // Ocultar el mensaje despues de 4 segundos
+            // Ocultar el mensaje despues de 6 segundos
             setTimeout(() => {
                 successMessage.style.display = 'none';
-            }, 4000); 
+            }, 6000); 
         }
