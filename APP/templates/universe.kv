@@ -15,296 +15,382 @@
                 size: self.size
                 source: 'assets/images/fondohome.jpg'
 
-        # Top bar
+        # Header
         BoxLayout:
             size_hint_y: None
             height: "60dp"
             padding: [20, 5]
             spacing: 10
-            canvas.before:
-                Color:
-                    rgba: 0, 0, 0, 0.5
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
 
             Image:
                 source: 'assets/images/logo-br.png'
                 size_hint: None, None
-                height: "65dp" 
+                height: "50dp" 
                 width: self.height
                 allow_stretch: True
 
-            TextInput:
-                id: Mensaje_busqueda
-                hint_text: "Buscar"
-                size_hint_x: 0.55
-                background_color: 0.2, 0.2, 0.25, 1
-                foreground_color: 1, 1, 1, 1
-                hint_text_color: 0.5, 0.5, 0.5, 1
-                cursor_color: 1, 1, 1, 1
-                padding: [10, 10]
-                font_size: '16sp'
-                on_text_validate: root.busqueda_eventos(self.text)
-            
-            Button:
-                text: 'Buscar'
-                size_hint_x: 0.15
-                on_release: root.busqueda_eventos(Mensaje_busqueda.text)
-                opacity: 1 if app.is_logged_in else 0
-                disabled: not app.is_logged_in
-            
-            Button:
-                id: login_button
-                text: "Login"
-                size_hint_x: 0.15
-                background_color: 0.3, 0.2, 0.5, 1
-                on_release: root.switch_screen('Log')
-                opacity: 1 if not app.is_logged_in else 0
-                disabled: app.is_logged_in
+            BoxLayout:
+                orientation: "horizontal"
+                spacing: 10
+
+                TextInput:
+                    id: Mensaje_busqueda
+                    hint_text: "Buscar"
+                    size_hint_x: 0.4
+                    background_color: 0.2, 0.2, 0.25, 1
+                    foreground_color: 1, 1, 1, 1
+                    hint_text_color: 0.5, 0.5, 0.5, 1
+                    cursor_color: 1, 1, 1, 1
+                    padding: [10, 10]
+                    font_size: '16sp'
+                    on_text_validate: root.busqueda_eventos(self.text)
                 
-            Button:
-                id: reserva_button
-                text: "Consultar tu reserva"
-                size_hint_x: 0.15
-                background_color: 0.3, 0.2, 0.5, 1
-                on_release: root.switch_screen('Res')
-                opacity: 1 if app.is_logged_in else 0
-                disabled: not app.is_logged_in
+                Button:
+                    text: 'Buscar'
+                    size_hint_x: 0.15
+                    on_release: root.busqueda_eventos(Mensaje_busqueda.text)
+                    opacity: 1 if app.is_logged_in else 0
+                    disabled: not app.is_logged_in
+                    background_normal: ''
+                    background_color: 0.604, 0.302, 0.608, 1 
+                    canvas.before:
+                        Color:
+                            rgba: self.background_color
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [10]
+                
+                Button:
+                    id: login_button
+                    text: "Login"
+                    size_hint_x: 0.15
+                    background_normal: ''
+                    background_color: 0.604, 0.302, 0.608, 1  
+                    on_release: root.switch_screen('Log')
+                    opacity: 1 if not app.is_logged_in else 0
+                    disabled: app.is_logged_in
+                    canvas.before:
+                        Color:
+                            rgba: self.background_color
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [10]
+                    
+                Button:
+                    id: reserva_button
+                    text: "Consultar tu reserva"
+                    size_hint_x: 0.35
+                    background_normal: ''
+                    background_color: 0.604, 0.302, 0.608, 1 
+                    on_release: root.switch_screen('Res')
+                    opacity: 1 if app.is_logged_in else 0
+                    disabled: not app.is_logged_in
+                    canvas.before:
+                        Color:
+                            rgba: self.background_color
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [10]
 
-            Button:
-                id: crear_evento_button
-                text: "Crear Evento"
-                size_hint_x: 0.15
-                background_color: 0.3, 0.2, 0.5, 1
-                on_release: root.switch_screen('CrearEvento')
-                opacity: 1 if app.is_logged_in and app.is_admin else 0
-                disabled: not (app.is_logged_in and app.is_admin)
+                Button:
+                    id: crear_evento_button
+                    text: "Crear Evento"
+                    size_hint_x: 0.25
+                    background_normal: ''
+                    background_color: 0.604, 0.302, 0.608, 1  
+                    on_release: root.switch_screen('CrearEvento')
+                    opacity: 1 if app.is_logged_in and app.is_admin else 0
+                    disabled: not (app.is_logged_in and app.is_admin)
+                    canvas.before:
+                        Color:
+                            rgba: self.background_color
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [10]
 
-            Button:
-                id: logout_button
-                text: "Cerrar sesion"
-                size_hint_x: 0.15
-                background_color: 0.3, 0.2, 0.5, 1
-                on_release: root.logout()
-                opacity: 1 if app.is_logged_in else 0
-                disabled: not app.is_logged_in
+                Button:
+                    id: logout_button
+                    text: "Cerrar sesion"
+                    size_hint_x: 0.25
+                    background_normal: ''
+                    background_color: 0.604, 0.302, 0.608, 1 
+                    on_release: root.logout()
+                    opacity: 1 if app.is_logged_in else 0
+                    disabled: not app.is_logged_in
+                    canvas.before:
+                        Color:
+                            rgba: self.background_color
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [10]
 
-        # Categories grid
-        GridLayout:
-            cols: 4
-            padding: [20, 20]
-            spacing: 20
+        # Main content
+        BoxLayout:
+            orientation: "vertical"
 
-            # Futbol
-            Button:
-                id: futbol_button
-                background_color: 0, 0, 0, 0
-                on_release: root.access_category('Futbol')
-                BoxLayout:
-                    orientation: "vertical"
-                    pos: self.parent.pos
-                    size: self.parent.size
+            # Categories grid
+            GridLayout:
+                cols: 4
+                padding: [20, 20]
+                spacing: 20
+
+                # Futbol
+                Button:
+                    id: futbol_button
+                    background_color: 0, 0, 0, 0
+                    on_release: root.access_category('Futbol')
                     canvas.before:
                         Color:
                             rgba: 0.15, 0.15, 0.2, 0.8
                         RoundedRectangle:
                             pos: self.pos
                             size: self.size
-                            radius: [15, 15, 15, 15]
-                    padding: 10
-                    spacing: 5
+                            radius: [15]
+                    BoxLayout:
+                        orientation: "vertical"
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        padding: 10
+                        spacing: 5
 
-                    Image:
-                        source: "assets/images/cat_futbol.png"
-                        allow_stretch: True
-                        keep_ratio: True
-                        size_hint_y: 0.8
+                        Image:
+                            source: "assets/images/cat_futbol.png"
+                            allow_stretch: True
+                            keep_ratio: True
+                            size_hint_y: 0.8
 
-                    Label:
-                        text: "Fútbol"
-                        size_hint_y: 0.2
-                        color: 0.8, 0.8, 0.8, 1
+                        Label:
+                            text: "Fútbol"
+                            size_hint_y: 0.2
+                            color: 0.8, 0.8, 0.8, 1
 
-            # Musica
-            Button:
-                id: musica_button
-                background_color: 0, 0, 0, 0
-                on_release: root.access_category('Musica')
-                BoxLayout:
-                    orientation: "vertical"
-                    pos: self.parent.pos
-                    size: self.parent.size
+                # Musica
+                Button:
+                    id: musica_button
+                    background_color: 0, 0, 0, 0
+                    on_release: root.access_category('Musica')
                     canvas.before:
                         Color:
                             rgba: 0.15, 0.15, 0.2, 0.8
                         RoundedRectangle:
                             pos: self.pos
                             size: self.size
-                            radius: [15, 15, 15, 15]
-                    padding: 10
-                    spacing: 5
+                            radius: [15]
+                    BoxLayout:
+                        orientation: "vertical"
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        padding: 10
+                        spacing: 5
 
-                    Image:
-                        source: "assets/images/cat_conciertos.png"
-                        allow_stretch: True
-                        keep_ratio: True
-                        size_hint_y: 0.8
+                        Image:
+                            source: "assets/images/cat_conciertos.png"
+                            allow_stretch: True
+                            keep_ratio: True
+                            size_hint_y: 0.8
 
-                    Label:
-                        text: "Conciertos"
-                        size_hint_y: 0.2
-                        color: 0.8, 0.8, 0.8, 1
+                        Label:
+                            text: "Conciertos"
+                            size_hint_y: 0.2
+                            color: 0.8, 0.8, 0.8, 1
 
-            # Fiestas
-            Button:
-                id: fiestas_button
-                background_color: 0, 0, 0, 0
-                on_release: root.access_category('Fiestas')
-                BoxLayout:
-                    orientation: "vertical"
-                    pos: self.parent.pos
-                    size: self.parent.size
+                # Fiestas
+                Button:
+                    id: fiestas_button
+                    background_color: 0, 0, 0, 0
+                    on_release: root.access_category('Fiestas')
                     canvas.before:
                         Color:
                             rgba: 0.15, 0.15, 0.2, 0.8
                         RoundedRectangle:
                             pos: self.pos
                             size: self.size
-                            radius: [15, 15, 15, 15]
-                    padding: 10
-                    spacing: 5
+                            radius: [15]
+                    BoxLayout:
+                        orientation: "vertical"
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        padding: 10
+                        spacing: 5
 
-                    Image:
-                        source: "assets/images/cat_fiestas.png"
-                        allow_stretch: True
-                        keep_ratio: True
-                        size_hint_y: 0.8
+                        Image:
+                            source: "assets/images/cat_fiestas.png"
+                            allow_stretch: True
+                            keep_ratio: True
+                            size_hint_y: 0.8
 
-                    Label:
-                        text: "Fiestas"
-                        size_hint_y: 0.2
-                        color: 0.8, 0.8, 0.8, 1
+                        Label:
+                            text: "Fiestas"
+                            size_hint_y: 0.2
+                            color: 0.8, 0.8, 0.8, 1
 
-            # Teatro
-            Button:
-                id: teatro_button
-                background_color: 0, 0, 0, 0
-                on_release: root.access_category('Teatro')
-                BoxLayout:
-                    orientation: "vertical"
-                    pos: self.parent.pos
-                    size: self.parent.size
+                # Teatro
+                Button:
+                    id: teatro_button
+                    background_color: 0, 0, 0, 0
+                    on_release: root.access_category('Teatro')
                     canvas.before:
                         Color:
                             rgba: 0.15, 0.15, 0.2, 0.8
                         RoundedRectangle:
                             pos: self.pos
                             size: self.size
-                            radius: [15, 15, 15, 15]
-                    padding: 10
-                    spacing: 5
+                            radius: [15]
+                    BoxLayout:
+                        orientation: "vertical"
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        padding: 10
+                        spacing: 5
 
-                    Image:
-                        source: "assets/images/cat_teatro.png"
-                        allow_stretch: True
-                        keep_ratio: True
-                        size_hint_y: 0.8
+                        Image:
+                            source: "assets/images/cat_teatro.png"
+                            allow_stretch: True
+                            keep_ratio: True
+                            size_hint_y: 0.8
 
-                    Label:
-                        text: "Teatro"
-                        size_hint_y: 0.2
-                        color: 0.8, 0.8, 0.8, 1
+                        Label:
+                            text: "Teatro"
+                            size_hint_y: 0.2
+                            color: 0.8, 0.8, 0.8, 1
 
-            # eSports
-            Button:
-                id: esports_button
-                background_color: 0, 0, 0, 0
-                on_release: root.access_category('eSports')
-                BoxLayout:
-                    orientation: "vertical"
-                    pos: self.parent.pos
-                    size: self.parent.size
+                # eSports
+                Button:
+                    id: esports_button
+                    background_color: 0, 0, 0, 0
+                    on_release: root.access_category('eSports')
                     canvas.before:
                         Color:
                             rgba: 0.15, 0.15, 0.2, 0.8
                         RoundedRectangle:
                             pos: self.pos
                             size: self.size
-                            radius: [15, 15, 15, 15]
-                    padding: 10
-                    spacing: 5
+                            radius: [15]
+                    BoxLayout:
+                        orientation: "vertical"
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        padding: 10
+                        spacing: 5
 
-                    Image:
-                        source: "assets/images/cat_esport.png"
-                        allow_stretch: True
-                        keep_ratio: True
-                        size_hint_y: 0.8
+                        Image:
+                            source: "assets/images/cat_esport.png"
+                            allow_stretch: True
+                            keep_ratio: True
+                            size_hint_y: 0.8
 
-                    Label:
-                        text: "E-sports"
-                        size_hint_y: 0.2
-                        color: 0.8, 0.8, 0.8, 1
+                        Label:
+                            text: "E-sports"
+                            size_hint_y: 0.2
+                            color: 0.8, 0.8, 0.8, 1
 
-            # Stand-Up
-            Button:
-                id: stand_up_button
-                background_color: 0, 0, 0, 0
-                on_release: root.access_category('Stand Up')
-                BoxLayout:
-                    orientation: "vertical"
-                    pos: self.parent.pos
-                    size: self.parent.size
+                # Stand-Up
+                Button:
+                    id: stand_up_button
+                    background_color: 0, 0, 0, 0
+                    on_release: root.access_category('Stand Up')
                     canvas.before:
                         Color:
                             rgba: 0.15, 0.15, 0.2, 0.8
                         RoundedRectangle:
                             pos: self.pos
                             size: self.size
-                            radius: [15, 15, 15, 15]
-                    padding: 10
-                    spacing: 5
+                            radius: [15]
+                    BoxLayout:
+                        orientation: "vertical"
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        padding: 10
+                        spacing: 5
 
-                    Image:
-                        source: "assets/images/stand_up_icon.png"
-                        allow_stretch: True
-                        keep_ratio: True
-                        size_hint_y: 0.8
+                        Image:
+                            source: "assets/images/stand_up_icon.png"
+                            allow_stretch: True
+                            keep_ratio: True
+                            size_hint_y: 0.8
 
-                    Label:
-                        text: "Stand-Up"
-                        size_hint_y: 0.2
-                        color: 0.8, 0.8, 0.8, 1
+                        Label:
+                            text: "Stand-Up"
+                            size_hint_y: 0.2
+                            color: 0.8, 0.8, 0.8, 1
 
-            # Cultura Japonesa
-            Button:
-                id: cultura_japonesa_button
-                background_color: 0, 0, 0, 0
-                on_release: root.access_category('Cultura Japonesa')
-                BoxLayout:
-                    orientation: "vertical"
-                    pos: self.parent.pos
-                    size: self.parent.size
+                # Cultura Japonesa
+                Button:
+                    id: cultura_japonesa_button
+                    background_color: 0, 0, 0, 0
+                    on_release: root.access_category('Cultura Japonesa')
                     canvas.before:
                         Color:
                             rgba: 0.15, 0.15, 0.2, 0.8
                         RoundedRectangle:
                             pos: self.pos
                             size: self.size
-                            radius: [15, 15, 15, 15]
-                    padding: 10
-                    spacing: 5
+                            radius: [15]
+                    BoxLayout:
+                        orientation: "vertical"
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        padding: 10
+                        spacing: 5
 
-                    Image:
-                        source: "assets/images/jp.png"
-                        allow_stretch: True
-                        keep_ratio: True
-                        size_hint_y: 0.8
+                        Image:
+                            source: "assets/images/jp.png"
+                            allow_stretch: True
+                            keep_ratio: True
+                            size_hint_y: 0.8
 
-                    Label:
-                        text: "Cultura Japonesa"
-                        size_hint_y: 0.2
-                        color: 0.8, 0.8, 0.8, 1
+                        Label:
+                            text: "Cultura Japonesa"
+                            size_hint_y: 0.2
+                            color: 0.8, 0.8, 0.8, 1
+
+
+        # Footer
+        BoxLayout:
+            size_hint_y: None
+            height: "60dp"
+            padding: [20, 5]
+            spacing: 10
+            orientation: "horizontal"
+            pos_hint: {'center_x': 0.5}  # Centra horizontalmente
+
+            Widget:
+                size_hint_x: 1  # Espacio flexible a la izquierda
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_x: None
+                width: self.minimum_width
+                spacing: 20  # Aumenta el espacio entre las imágenes
+
+                Image:
+                    source: 'assets/images/Facebook.png'
+                    size_hint: None, None
+                    height: "40dp" 
+                    width: self.height
+                    allow_stretch: True
+
+                Image:
+                    source: 'assets/images/Instagram.png'
+                    size_hint: None, None
+                    height: "40dp" 
+                    width: self.height
+                    allow_stretch: True
+
+                Image:
+                    source: 'assets/images/Whatsapp.png'
+                    size_hint: None, None
+                    height: "40dp" 
+                    width: self.height
+                    allow_stretch: True
+
+            Widget:
+                size_hint_x: 1
 
 <LoginScreen>:
     Login:
