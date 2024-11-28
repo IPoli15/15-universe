@@ -275,25 +275,15 @@ def crear_evento_form():
 
 @app.route('/api/crear_evento', methods=['POST'])
 def api_crear_evento():
-    """
-    Maneja la creación de un nuevo evento desde el formulario HTML.
-    """
     try:
         data = request.form
 
-        campos_requeridos = ['nombre_evento', 
-            'categoria', 
-            'descripcion', 
-            'entradas_totales',
-            'entradas_disponibles', 
-            'fecha_hora', 
-            'localizacion', 
-            'precio_entrada',
-            'imagen_url']
+        campos_requeridos = ['nombre_evento', 'categoria', 'descripcion', 'entradas_totales',
+                            'entradas_disponibles', 'fecha_hora', 'localizacion', 'precio_entrada', 'imagen_url']
         if not all(campo in data for campo in campos_requeridos):
             return jsonify({"error": "Faltan campos requeridos."}), 400
 
-        run_query(QUERY_CREAR_EVENTO, {
+        result = run_query(QUERY_CREAR_EVENTO, {
             'nombre_evento': data['nombre_evento'],
             'categoria': data['categoria'],
             'descripcion': data['descripcion'],
@@ -301,15 +291,18 @@ def api_crear_evento():
             'entradas_disponibles': data['entradas_disponibles'],
             'fecha_hora': data['fecha_hora'],
             'localizacion': data['localizacion'],
-            'precio_entrada': data['precio_entrada'],'imagen_url': data['imagen_url'],
+            'precio_entrada': data['precio_entrada'],
+            'imagen_url': data['imagen_url'],
             'es_recomendacion': 0 
         })
         
-        """ return redirect('http://127.0.0.1:5000/') """
-        return redirect('http://127.0.0.1:5000/crear_evento?evento_creado=1')
+        # Assuming run_query returns the last inserted id
+        id_evento = result.lastrowid
+
+        return jsonify({"message": "Evento creado exitosamente", "id_evento": id_evento}), 201
 
     except SQLAlchemyError as e:
-        return jsonify({"error": f"Error al crear el evento: {str(e)}"}), 400
+        return jsonify({"error": f"Error al crear el evento: {str(e)}"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, port=PORT)
