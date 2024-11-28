@@ -38,9 +38,8 @@ app = Flask(__name__, template_folder='../FRONT/templates', static_folder='../FR
 CORS(app)
 app.config.from_object(Config)
 db.init_app(app)
-app.secret_key = 'coqui2529'
-# Recordar que los datos de la db en cuanto a nombre, usuario y contraseña varian.
-engine = create_engine("mysql+mysqlconnector://root:Santi0403@localhost:3306/universe")
+
+engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
 
 def run_query(query, parameters=None):
     with engine.connect() as conn:
@@ -49,17 +48,6 @@ def run_query(query, parameters=None):
 
     return result
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/reserva')
-def reserva():
-    return render_template('reserva.html')  
-
-@app.route('/login')
-def login():
-    return render_template('login.html')
 
 #------------------------------------------------------------------------------------- TABLA USUARIOS | LOGIN
 
@@ -137,37 +125,6 @@ def consultar_reserva(id_reserva):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-
-
-
-
-
-#---METODO POST, INSERTAR RESERVAS ----#
-
-
-def insertar_reserva(data):
-    run_query(QUERY_INGRESAR_RESERVA, data)
-
-@app.route('/crear-reserva', methods=['POST'])
-def add_reserva():
-    data = request.get_json()
-
-    keys = ('id_usuarios', 'id_evento', 'id_reserva', 'cant_tickets')
-    for key in keys:
-        if key not in data:
-            return jsonify({'error': f'Falta el dato {key}'}), 400
-
-    try:
-        result = reserva_by_id(data['id_reserva'])
-        if len(result) > 0:
-            return jsonify({'error': 'La reserva ya existe'}), 400
-
-        insertar_reserva(data)
-
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-    return jsonify(data), 201
 
 #---METODO DELETE, ELIMINAR RESERVA ----#
 
@@ -309,7 +266,7 @@ def eliminar_evento(id_evento):
     except SQLAlchemyError as e:
         return jsonify({'error': str(e)}), 500
     
-#- --- - -- - -crear evento---
+#-------------- METODO POST, CREAR EVENTO----------#
 
 
 @app.route('/crear_evento', methods=['GET'])
