@@ -76,7 +76,7 @@
                 id: logout_button
                 text: "Logout"
                 size_hint_x: 0.15
-                background_color:  0.3, 0.2, 0.5, 1
+                background_color: 0.3, 0.2, 0.5, 1
                 on_release: root.logout()
                 opacity: 1 if app.is_logged_in else 0
                 disabled: not app.is_logged_in
