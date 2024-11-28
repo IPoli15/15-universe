@@ -58,7 +58,7 @@
                     opacity: 1 if app.is_logged_in else 0
                     disabled: not app.is_logged_in
                     background_normal: ''
-                    background_color: 0.604, 0.302, 0.608, 1 
+                    background_color: 0.604, 0.302, 0.608, 1
                     canvas.before:
                         Color:
                             rgba: self.background_color
@@ -70,7 +70,7 @@
                 Button:
                     id: login_button
                     text: "Login"
-                    size_hint_x: 0.15
+                    size_hint_x: 0.20
                     background_normal: ''
                     background_color: 0.604, 0.302, 0.608, 1 
                     on_release: root.switch_screen('Log')
@@ -151,7 +151,7 @@
                     on_release: root.access_category('Futbol')
                     canvas.before:
                         Color:
-                            rgba: 0.15, 0.15, 0.2, 0.8
+                            rgba: 0.8, 0.8, 0.8, 1
                         RoundedRectangle:
                             pos: self.pos
                             size: self.size
@@ -172,7 +172,7 @@
                         Label:
                             text: "Fútbol"
                             size_hint_y: 0.2
-                            color: 0.8, 0.8, 0.8, 1
+                            color: 0, 0, 0, 1
 
                 # Musica
                 Button:
@@ -181,7 +181,7 @@
                     on_release: root.access_category('Musica')
                     canvas.before:
                         Color:
-                            rgba: 0.15, 0.15, 0.2, 0.8
+                            rgba: 0.8, 0.8, 0.8, 1
                         RoundedRectangle:
                             pos: self.pos
                             size: self.size
@@ -202,7 +202,7 @@
                         Label:
                             text: "Conciertos"
                             size_hint_y: 0.2
-                            color: 0.8, 0.8, 0.8, 1
+                            color: 0, 0, 0, 1
 
                 # Fiestas
                 Button:
@@ -211,7 +211,7 @@
                     on_release: root.access_category('Fiestas')
                     canvas.before:
                         Color:
-                            rgba: 0.15, 0.15, 0.2, 0.8
+                            rgba: 0.8, 0.8, 0.8, 1
                         RoundedRectangle:
                             pos: self.pos
                             size: self.size
@@ -232,7 +232,7 @@
                         Label:
                             text: "Fiestas"
                             size_hint_y: 0.2
-                            color: 0.8, 0.8, 0.8, 1
+                            color: 0, 0, 0, 1
 
                 # Teatro
                 Button:
@@ -241,7 +241,7 @@
                     on_release: root.access_category('Teatro')
                     canvas.before:
                         Color:
-                            rgba: 0.15, 0.15, 0.2, 0.8
+                            rgba: 0.8, 0.8, 0.8, 1
                         RoundedRectangle:
                             pos: self.pos
                             size: self.size
@@ -262,7 +262,7 @@
                         Label:
                             text: "Teatro"
                             size_hint_y: 0.2
-                            color: 0.8, 0.8, 0.8, 1
+                            color: 0, 0, 0, 1
 
                 # eSports
                 Button:
@@ -271,7 +271,7 @@
                     on_release: root.access_category('eSports')
                     canvas.before:
                         Color:
-                            rgba: 0.15, 0.15, 0.2, 0.8
+                            rgba: 0.8, 0.8, 0.8, 1
                         RoundedRectangle:
                             pos: self.pos
                             size: self.size
@@ -292,7 +292,7 @@
                         Label:
                             text: "E-sports"
                             size_hint_y: 0.2
-                            color: 0.8, 0.8, 0.8, 1
+                            color: 0, 0, 0, 1
 
                 # Stand-Up
                 Button:
@@ -301,7 +301,7 @@
                     on_release: root.access_category('Stand Up')
                     canvas.before:
                         Color:
-                            rgba: 0.15, 0.15, 0.2, 0.8
+                            rgba: 0.8, 0.8, 0.8, 1
                         RoundedRectangle:
                             pos: self.pos
                             size: self.size
@@ -322,7 +322,7 @@
                         Label:
                             text: "Stand-Up"
                             size_hint_y: 0.2
-                            color: 0.8, 0.8, 0.8, 1
+                            color: 0, 0, 0, 1
 
                 # Cultura Japonesa
                 Button:
@@ -331,7 +331,7 @@
                     on_release: root.access_category('Cultura Japonesa')
                     canvas.before:
                         Color:
-                            rgba: 0.15, 0.15, 0.2, 0.8
+                            rgba: 0.8, 0.8, 0.8, 1
                         RoundedRectangle:
                             pos: self.pos
                             size: self.size
@@ -352,7 +352,7 @@
                         Label:
                             text: "Cultura Japonesa"
                             size_hint_y: 0.2
-                            color: 0.8, 0.8, 0.8, 1
+                            color: 0, 0, 0, 1
 
 
         # Footer
@@ -363,6 +363,12 @@
             spacing: 10
             orientation: "horizontal"
             pos_hint: {'center_x': 0.5}  
+            canvas.before:
+                Color:
+                    rgba: 0.133, 0.027, 0.322, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
 
             Widget:
                 size_hint_x: 1  
