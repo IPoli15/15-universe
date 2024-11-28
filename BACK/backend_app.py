@@ -10,11 +10,11 @@ from flask_cors import CORS
 PORT = 5001
 
 QUERY_CREAR_EVENTO = """
-    INSERT INTO eventos (nombre_evento, categoria, descripcion, entradas_totales, entradas_disponibles,
+    INSERT INTO eventos (nombre_evento, categoria, descripcion, entradas_totales, entradas_disponibles, 
         fecha_hora, localizacion, es_recomendacion, precio_entrada, imagen_url
     )
     VALUES (
-        :nombre_evento, :categoria, :descripcion, :entradas_totales, :entradas_disponibles,
+        :nombre_evento, :categoria, :descripcion, :entradas_totales, :entradas_disponibles, 
         :fecha_hora, :localizacion, :es_recomendacion, :precio_entrada, :imagen_url
         )
 """
@@ -40,31 +40,28 @@ app.config.from_object(Config)
 db.init_app(app)
 app.secret_key = 'coqui2529'
 # Recordar que los datos de la db en cuanto a nombre, usuario y contraseña varian.
-engine = create_engine("mysql+mysqlconnector://Ruy$root:universe1234@Ruy.mysql.pythonanywhere-services.com/universe")
+engine = create_engine("mysql+mysqlconnector://Ruy:universe1234@Ruy.mysql.pythonanywhere-services.com/Ruy$universe")
+
 
 def run_query(query, parameters=None):
-    with engine.connect() as conn:
-        result = conn.execute(text(query), parameters)
-        conn.commit()
-
-    return result
+    try:
+        with engine.connect() as conn:
+            with conn.begin():
+                result = conn.execute(text(query), parameters)
+                return result
+    except Exception as e:
+        print(f"Error ejecutando la consulta: {e}")
+        return None
 
 @app.route('/')
 def index():
-    return render_template('index.html')
-
-@app.route('/reserva')
-def reserva():
-    return render_template('reserva.html')
-
-@app.route('/login')
-def login():
-    return render_template('login.html')
+    return jsonify({"message": "Bienvenido al backend"})
 
 #------------------------------------------------------------------------------------- TABLA USUARIOS | LOGIN
 
 @app.route('/usuarios-password', methods=['POST'])
 def tabla_usuarios():
+    
     data = request.json
     nombre_usuario = data['nombre']
     password = data['password']
@@ -105,6 +102,7 @@ def tabla_reservas():
 
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
+    
 #-------------------------------------------------------------------------------------
 
 
@@ -119,10 +117,10 @@ def reserva_by_id(id_reserva):
 def consultar_reserva(id_reserva):
     try:
         result = reserva_by_id(id_reserva)
-
+        
         if result is None:
             return jsonify({'error': 'No se encontró la reserva'}), 404  # Not found
-
+            
         return jsonify({
             'id_reserva': result[0],
             'cant_tickets': result[1],
@@ -130,6 +128,7 @@ def consultar_reserva(id_reserva):
             'nombre_evento': result[3],
             'precio_entrada': float(result[4])  # Convertimos a float el precio
         }), 200
+        
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -172,6 +171,7 @@ def add_reserva():
 def eliminar_reserva(id_reserva):
     try:
         result = run_query(QUERY_ELIMINAR_RESERVA, {'id_reserva': id_reserva})
+        
         if result.rowcount == 0:
             return jsonify({'error': 'No se encontró una reserva con este ID'}), 404
 
@@ -203,7 +203,7 @@ def consultar_eventos_por_categoria(categoria):
         response.append({'id_evento': row[0],
                         'nombre_evento': row[1],
                         'categoria': row[2],
-                        'descripcion': row[3],
+                        'descripcion': row[3], 
                         'entradas_totales':row[4],
                         'entradas_disponibles':row[5],
                         'fecha_hora':row[6],
@@ -232,7 +232,7 @@ def consultar_eventos_por_id(id_evento):
     response = {'id_evento': result[0],
                         'nombre_evento': result[1],
                         'categoria': result[2],
-                        'descripcion': result[3],
+                        'descripcion': result[3], 
                         'entradas_totales':result[4],
                         'entradas_disponibles':result[5],
                         'fecha_hora':result[6],
@@ -258,7 +258,7 @@ def consultar_eventos_recomendados():
             response.append({'id_evento': row[0],
                             'nombre_evento': row[1],
                             'categoria': row[2],
-                            'descripcion': row[3],
+                            'descripcion': row[3], 
                             'entradas_totales':row[4],
                             'entradas_disponibles':row[5],
                             'fecha_hora':row[6],
@@ -287,26 +287,23 @@ def obtener_eventos():
 
 @app.route('/eliminar-reserva/<int:id_reserva>', methods=['DELETE'])
 def eliminar_evento(id_evento):
-
-    try:
+    try:      
         result_reservas = run_query(QUERY_RESERVAS_EVENTO, {'id_evento': id_evento}).fetchone()
 
         if result_reservas[0] > 0:
-
+        
             run_query(QUERY_ELIMINAR_RESERVA, {'id_evento': id_evento})
-
-
+        
         result = run_query(QUERY_ELIMINAR_EVENTO, {'id_evento': id_evento})
 
         if result.rowcount == 0:
             return jsonify({'error': 'No se encontró un evento con este ID'}), 404
 
         return jsonify({'mensaje': f'El evento ID {id_evento} fue eliminado junto con sus reservas'}), 200
-
-
+    
     except SQLAlchemyError as e:
         return jsonify({'error': str(e)}), 500
-
+    
 #- --- - -- - -crear evento---
 
 
@@ -322,13 +319,13 @@ def api_crear_evento():
     try:
         data = request.form
 
-        campos_requeridos = ['nombre_evento',
-            'categoria',
-            'descripcion',
+        campos_requeridos = ['nombre_evento', 
+            'categoria', 
+            'descripcion', 
             'entradas_totales',
-            'entradas_disponibles',
-            'fecha_hora',
-            'localizacion',
+            'entradas_disponibles', 
+            'fecha_hora', 
+            'localizacion', 
             'precio_entrada',
             'imagen_url']
         if not all(campo in data for campo in campos_requeridos):
@@ -343,12 +340,12 @@ def api_crear_evento():
             'fecha_hora': data['fecha_hora'],
             'localizacion': data['localizacion'],
             'precio_entrada': data['precio_entrada'],'imagen_url': data['imagen_url'],
-
-            'es_recomendacion': 0
+            'es_recomendacion': 0 
         })
-
+        
         return redirect('https://ruy.pythonanywhere.com/')
 
     except SQLAlchemyError as e:
         return jsonify({"error": f"Error al crear el evento: {str(e)}"}), 400
-
+    
+    
