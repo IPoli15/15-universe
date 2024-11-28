@@ -13,7 +13,7 @@
             Rectangle:
                 pos: self.pos
                 size: self.size
-                source: 'assets/images/Fondo.jpg'
+                source: 'assets/images/fondohome.jpg'
 
         # Top bar
         BoxLayout:
@@ -27,6 +27,13 @@
                 Rectangle:
                     pos: self.pos
                     size: self.size
+
+            Image:
+                source: 'assets/images/logo-br.png'
+                size_hint: None, None
+                height: "65dp" 
+                width: self.height
+                allow_stretch: True
 
             TextInput:
                 id: Mensaje_busqueda
@@ -302,7 +309,7 @@
             Rectangle:
                 pos: self.pos
                 size: self.size
-                source: 'assets/images/Fondo.jpg' 
+                source: 'assets/images/fondologin.jpg' 
 
         AnchorLayout:
             anchor_x: 'center'
@@ -408,7 +415,7 @@
             Rectangle:
                 pos: self.pos
                 size: self.size
-                source: 'assets/images/Fondo.jpg'
+                source: 'assets/images/fondologin.jpg'
 
         AnchorLayout:
             anchor_x: 'center'
