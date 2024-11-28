@@ -2,7 +2,7 @@
 
 {% block content %}
 
-{% with messages = get_flashed_messages() %}
+{% with messages = get_flashed_messages(category_filter=["login_incorrecto"]) %}
     {% if messages %}
         <div class="flash-messages">
             {% for message in messages %}
