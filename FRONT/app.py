@@ -53,6 +53,7 @@ def login():
                     app.config['SESION_INICIADA'] = True
                 return redirect(url_for('index'))
             else:
+                flash('⚠ Datos Incorrectos',"login_incorrecto")
                 print('Invalid credentials')
                 return redirect(url_for('login'))
         except Exception as e:
