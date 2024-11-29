@@ -1,4 +1,10 @@
-{% extends "base.html" %}
+{% if es_admin %}
+    {% extends "admin-base.html" %}
+{% elif sesion_iniciada %}
+    {% extends "usuarios-base.html" %}
+{% else %}
+    {% extends "base.html" %}
+{% endif %}
 
 {% block content %}
 
@@ -13,11 +19,6 @@
     <div class="informacion-reserva">
         <section>
             <label for="class">Codigo de reserva: {{ id_reserva }}</label>
-        </section>
-    </div>
-    <div class="informacion-reserva">
-        <section>
-            <label for="class">Sector: {{ sector if sector else "No disponible" }}</label>
         </section>
     </div>
     <div class="informacion-reserva">

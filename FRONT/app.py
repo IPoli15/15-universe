@@ -218,7 +218,7 @@ def reserva():
 
         # Renderizar plantilla con los datos de la reserva
         # Aquí estamos pasando correctamente los datos del JSON a la plantilla.
-        return render_template('tu-reserva.html', **datos_reserva)
+        return render_template('tu-reserva.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'], **datos_reserva)
 
     return render_template('reserva.html', es_admin=app.config.get('ES_ADMIN', False), sesion_iniciada=app.config.get('SESION_INICIADA', False))
 
