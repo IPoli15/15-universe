@@ -16,7 +16,7 @@ app.config['NOMBRE_USUARIO'] = ''
 @app.route('/')
 def index():
     try:
-        response = requests.get('http://127.0.0.1:5001/consultar-eventos-recomendados')
+        response = requests.get(f'{BACKEND_URL}/consultar-eventos-recomendados')
         response.raise_for_status()
         eventos = response.json()
     except requests.exceptions.RequestException as e:
@@ -113,7 +113,7 @@ def conciertos():
     nombre_categoria = 'Musica'
     descripcion_categoria = '¡Disfruta de la mejor musica en BA!'
     try:
-        response = requests.get('http://127.0.0.1:5001/consultar-eventos/'+nombre_categoria)
+        response = requests.get(f'{BACKEND_URL}/consultar-eventos/'+nombre_categoria)
         response.raise_for_status()
         eventos = response.json()
     except requests.exceptions.RequestException as e:
@@ -136,7 +136,7 @@ def cultura_jp():
     nombre_categoria = 'Cultura Japonesa'
     descripcion_categoria = '¡Visita todos los eventos relacionados al mundo de la Cultura Japonesa!'
     try:
-        response = requests.get('http://127.0.0.1:5001/consultar-eventos/'+nombre_categoria)
+        response = requests.get(f'{BACKEND_URL}/consultar-eventos/'+nombre_categoria)
         response.raise_for_status()
         eventos = response.json()
     except requests.exceptions.RequestException as e:
@@ -157,7 +157,7 @@ def fiestas():
     nombre_categoria = 'Fiestas'
     descripcion_categoria = '¡Las mejores fiestas estan aquí!'
     try:
-        response = requests.get('http://127.0.0.1:5001/consultar-eventos/'+nombre_categoria)
+        response = requests.get(f'{BACKEND_URL}/consultar-eventos/'+nombre_categoria)
         response.raise_for_status()
         eventos = response.json()
     except requests.exceptions.RequestException as e:
@@ -176,7 +176,7 @@ def esports():
     nombre_categoria = 'eSports'
     descripcion_categoria = '¡Los Torneos de eSports mas relevantes el país!'
     try:
-        response = requests.get('http://127.0.0.1:5001/consultar-eventos/'+nombre_categoria)
+        response = requests.get(f'{BACKEND_URL}/consultar-eventos/'+nombre_categoria)
         response.raise_for_status()
         eventos = response.json()
     except requests.exceptions.RequestException as e:
@@ -205,7 +205,7 @@ def reserva():
 
         try:
             # Consultar reserva en el backend
-            response = requests.get(f'http://127.0.0.1:5001/consultar-reserva/{id_reserva}')
+            response = requests.get(f'{BACKEND_URL}/consultar-reserva/{id_reserva}')
             response.raise_for_status()
             datos_reserva = response.json()
         except requests.exceptions.RequestException as e:
@@ -228,7 +228,7 @@ def Futbol():
     nombre_categoria = 'Futbol'
     descripcion_categoria = '¡Disfruta de los mejores eventos del mundo del futbol!'
     try:
-        response = requests.get('http://127.0.0.1:5001/consultar-eventos/'+nombre_categoria)
+        response = requests.get(f'{BACKEND_URL}/consultar-eventos/'+nombre_categoria)
         response.raise_for_status()
         eventos = response.json()
     except requests.exceptions.RequestException as e:
@@ -248,7 +248,7 @@ def Stand_up():
     nombre_categoria = 'Stand Up'
     descripcion_categoria = '¡Disfruta de los MEJORES Shows de Stand Up!'
     try:
-        response = requests.get('http://127.0.0.1:5001/consultar-eventos/'+nombre_categoria)
+        response = requests.get(f'{BACKEND_URL}/consultar-eventos/'+nombre_categoria)
         response.raise_for_status()
         eventos = response.json()
     except requests.exceptions.RequestException as e:
@@ -268,7 +268,7 @@ def Teatro():
     nombre_categoria = 'Teatro'
     descripcion_categoria = '¡Disfruta de las mejores obras de Teatro del pais!'
     try:
-        response = requests.get('http://127.0.0.1:5001/consultar-eventos/'+nombre_categoria)
+        response = requests.get(f'{BACKEND_URL}/consultar-eventos/'+nombre_categoria)
         response.raise_for_status()
         eventos = response.json()
     except requests.exceptions.RequestException as e:
@@ -308,7 +308,7 @@ def crear_evento():
 @app.route('/descripcion-evento/<id_evento>')
 def Descripcion_evento(id_evento):
     try:
-            response = requests.get('http://127.0.0.1:5001/consultar-eventos/'+id_evento)
+            response = requests.get(f'{BACKEND_URL}/consultar-eventos/'+id_evento)
             response.raise_for_status()
             datos_evento = response.json()
     except requests.exceptions.RequestException as e:
@@ -354,7 +354,7 @@ def Descripcion_evento(id_evento):
 def busqueda_eventos():
     nombre_evento = request.args.get('fname')
     try:
-        response = requests.get('http://127.0.0.1:5001/consultar-eventos')
+        response = requests.get(f'{BACKEND_URL}/consultar-eventos')
         response.raise_for_status()
         eventos = response.json()
         print(eventos)
