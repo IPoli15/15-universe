@@ -21,7 +21,7 @@
         </div>
         <div class="input-group">
             <label for="cant_tickets">Cantidad Tickets</label>
-            <input type="text" id="cant_tickets" name="cant_tickets" required>
+            <input type="text" id="cant_tickets" name="cant_tickets" min="1" required>
         </div>
         <div class="input-group">
             <label for="cardNumber">Número de Tarjeta</label>
@@ -42,5 +42,7 @@
         <button type="submit" class="boton-reservar">Pagar Ahora</button>
     </form>
 </div>
+
+<script src="{{ url_for('static', filename='js/pago.js') }}"></script>
 
 {% endblock %}

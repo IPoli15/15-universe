@@ -80,6 +80,9 @@ def Pago():
         id_evento = request.form['id_evento']
         cant_tickets = request.form['cant_tickets']
         
+        if not cant_tickets.isdigit() or int(cant_tickets) <= 0:
+            flash('La cantidad de tickets debe ser un número positivo.', 'error')
+            return redirect(url_for('Pago'))
         try:
             # Enviar los datos al backend
             response = requests.post('http://localhost:5001/crear-reserva', json={
