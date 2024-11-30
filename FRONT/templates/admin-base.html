@@ -15,11 +15,17 @@
                 <input type="text" placeholder="Buscar" class="barra-busqueda" name="fname">
             </form>
             <a class="boton-reservar" href="{{url_for('reserva')}}">Consulta tu reserva</a>
-            <a href="{{ url_for('crear_evento') }}" class="boton-modificar" href=""> Crear Evento </a>
-            <a class="boton-cerrar-sesion" href="{{ url_for('logout') }}">Cerrar sesión</a>
-            <img src="/static/img/icon-admin.jpg" alt="admin"class="icono_admin"></a>
+            <a href="{{ url_for('crear_evento') }}" class="boton-modificar">Crear Evento</a>
+            
+            <div class="menu-admin">
+                <img src="/static/img/icon-admin.jpg" alt="admin" class="icono">
+                <div class="menu-desplegable">
+                    <a class="boton-cerrar-sesion" href="{{ url_for('logout') }}">Cerrar sesión</a>
+                </div>
+            </div>
         </div>
     </header>
+    <script src="{{ url_for('static', filename='js/icono.js') }}"></script>
     <main>
         {% block content %}{% endblock %}
     </main>
