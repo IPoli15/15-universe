@@ -11,7 +11,7 @@
 
 <div class="container">
     <h2>Crear Nuevo Evento</h2>
-    <form action="http://127.0.0.1:5001/api/crear_evento" method="POST">
+    <form action="{{ url_for('crear_evento') }}" method="POST">
 
         <label for="nombre_evento">Nombre del Evento:</label>
         <input type="text" id="nombre_evento" name="nombre_evento" required>

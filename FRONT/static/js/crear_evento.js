@@ -1,10 +1,14 @@
-const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('evento_creado') === '1') {
-            const successMessage = document.getElementById('successMessage');
-            successMessage.style.display = 'block';
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form');
+    const successMessage = document.getElementById('successMessage'); 
 
-            // Ocultar el mensaje despues de 6 segundos
-            setTimeout(() => {
-                successMessage.style.display = 'none';
-            }, 6000); 
-        }
+    form.addEventListener('submit', function (event) {
+        event.preventDefault(); 
+
+        successMessage.style.display = 'block';
+
+        setTimeout(function () {
+            successMessage.style.display = 'none';
+        }, 6000);
+    });
+});

@@ -293,9 +293,12 @@ def crear_evento():
             'nombre_evento': request.form['nombre_evento'],
             'categoria': request.form['categoria'],
             'descripcion': request.form['descripcion'],
+            'entradas_totales': request.form['entradas_totales'],
             'entradas_disponibles': request.form['entradas_disponibles'],
+            'fecha_hora': request.form['fecha_hora'],             
             'localizacion': request.form['localizacion'],
-            'precio_entrada': request.form['precio_entrada']
+            'precio_entrada': request.form['precio_entrada'],
+            'imagen_url': request.form['imagen_url']               
         }
         
         response = requests.post(f"{BACKEND_URL}/api/crear_evento", json=data)

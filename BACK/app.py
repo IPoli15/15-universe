@@ -276,7 +276,7 @@ def crear_evento_form():
 @app.route('/api/crear_evento', methods=['POST'])
 def api_crear_evento():
     try:
-        data = request.form
+        data = request.json
 
         campos_requeridos = ['nombre_evento', 'categoria', 'descripcion', 'entradas_totales',
                             'entradas_disponibles', 'fecha_hora', 'localizacion', 'precio_entrada', 'imagen_url']
@@ -299,7 +299,7 @@ def api_crear_evento():
         # Assuming run_query returns the last inserted id
         id_evento = result.lastrowid
 
-        return redirect('http://127.0.0.1:5000/crear_evento?evento_creado=1')
+        return jsonify({"mensaje": "Evento creado exitosamente"}), 201
 
     except SQLAlchemyError as e:
         return jsonify({"error": f"Error al crear el evento: {str(e)}"}), 500
