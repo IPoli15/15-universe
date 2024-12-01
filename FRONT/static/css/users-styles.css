@@ -256,3 +256,39 @@ button:hover {
 .menu-admin.active .menu-desplegable {
     display: block;
 }
+
+@media (max-width: 768px) {
+    .contenedor-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .barra-busqueda {
+        width: 85%;
+    }
+
+    .boton-login {
+        width: 60%;
+        text-align: center;
+    }
+
+    .footer {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .contactos {
+        gap: 10px;
+    }
+
+    .logo svg {
+        position: center;
+        width: 40px;
+        height: 40px;
+    }
+
+    .creadores p {
+        font-size: 12px;
+    }
+}
+
