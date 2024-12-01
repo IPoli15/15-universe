@@ -1,10 +1,16 @@
-{% extends "base.html" %}
+{% if es_admin %}
+    {% extends "admin-base.html" %}
+{% elif sesion_iniciada %}
+    {% extends "usuarios-base.html" %}
+{% else %}
+    {% extends "base.html" %}
+{% endif %}
 
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 <div id="categorias">
     <a href="{{url_for('Futbol')}}" class="categoria"><img src="{{ url_for('static', filename='img/cat_futbol.png') }}" alt="Futbol" class="cat_logo"><h3>futbol</h3></a>
-    <a href="{{url_for('musica')}}" class="categoria"><img src="{{ url_for('static', filename='img/cat_conciertos.png') }}" alt="Conciertos" class="cat_logo"><h3>conciertos</h3></a>
+    <a href="{{url_for('conciertos')}}" class="categoria"><img src="{{ url_for('static', filename='img/cat_conciertos.png') }}" alt="Conciertos" class="cat_logo"><h3>conciertos</h3></a>
     <a href="{{url_for('fiestas')}}" class="categoria"><img src="{{ url_for('static', filename='img/cat_fiestas.png') }}" alt="Fiestas" class="cat_logo"><h3>Fiestas</h3></a>
     <a href="{{url_for('Teatro')}}" class="categoria"><img src="{{ url_for('static', filename='img/cat_teatro.png') }}" alt="Teatro" class="cat_logo"><h3>Teatro</h3></a>
     <a href="{{url_for('cultura_jp')}}" class="categoria"><img src="{{ url_for('static', filename='img/jp.png') }}" alt="JP" class="cat_logo"><h3>Cultura japonesa</h3></a>
@@ -15,24 +21,15 @@
 
 <h2 id="texto">Nuestras recomendaciones</h2>
 <div id="recomendaciones">
+    {%for evento in eventos %}
     <div class="recom">
-        <a href="{{url_for('index')}}" class="recomendacion"><img src="{{url_for('static', filename='img/recom_lib.png')}}" class="img_evento" alt=""></a>
-        <a href="{{url_for('index')}}" class="recomendacion"><img src="{{url_for('static', filename='img/recom_sud.png')}}" class="img_evento" alt=""></a>
-        <a href="{{url_for('index')}}" class="recomendacion"><img src="{{url_for('static', filename='img/recom_concierto.png')}}" class="img_evento" alt=""></a>
-        <a href="{{url_for('index')}}" class="recomendacion"><img src="{{url_for('static', filename='img/recom_comic.png')}}" class="img_evento" alt=""></a>
+        <div class = "eventos" style="background-image:url('{{ evento.imagen_url }}'); background-size: cover; background-position: center;">
+            <h2>{{evento.nombre_evento}}</h2>
+            <p>{{evento.descripcion}}</p>
+            <a id="boton_mas_info" href="{{url_for('Descripcion_evento', id_evento=evento.id_evento)}}">Más Información</a>
+        </div>
     </div>
-    <div class="recom">
-        <a href="{{url_for('index')}}" class="recomendacion"><img src="{{url_for('static', filename='img/recom_ca.jpg')}}" class="img_evento" alt=""></a>
-        <a href="{{url_for('index')}}" class="recomendacion"><img src="{{url_for('static', filename='img/recom_tenis.jpg')}}" class="img_evento" alt=""></a>
-        <a href="{{url_for('index')}}" class="recomendacion"><img src="{{url_for('static', filename='img/recom_teatro.jpg')}}" class="img_evento" alt=""></a>
-        <a href="{{url_for('index')}}" class="recomendacion"><img src="{{url_for('static', filename='img/recom_f1.jpg')}}" class="img_evento" alt=""></a>
-    </div>
-</div>
-
-<h2>Reseñas</h2>
-<div id="reseñas">
-
-
+    {% endfor %}  
 </div>
 
 {% endblock %}

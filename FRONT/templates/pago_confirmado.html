@@ -1,0 +1,20 @@
+{% if es_admin %}
+    {% extends "admin-base.html" %}
+{% elif sesion_iniciada %}
+    {% extends "usuarios-base.html" %}
+{% else %}
+    {% extends "base.html" %}
+{% endif %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/pago_confirmado.css') }}">
+
+<div class="container">
+    <h2>Pago Exitoso</h2>
+    
+    <p>Tu pago ha sido procesado exitosamente. El ID de tu reserva es: <STRONg>{{id_reserva}}</STRONg></p>
+    
+    <a href="{{ url_for('index') }}" class="boton-inicio">Volver al inicio</a>
+</div>
+{% endblock %}

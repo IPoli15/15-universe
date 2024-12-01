@@ -1,0 +1,44 @@
+{% if es_admin %}
+    {% extends "admin-base.html" %}
+{% elif sesion_iniciada %}
+    {% extends "usuarios-base.html" %}
+{% else %}
+    {% extends "base.html" %}
+{% endif %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/Descripcion_evento.css') }}">
+<div id="contenedor-principal">
+    <dev id="banner">
+        <!-- <img src="{{ url_for('static', filename='/img/musica/camilo-concierto.jpeg') }}" alt="foto" id="imagen-arriba"> -->
+        <img src="{{ imagen_url }}" alt="Imagen de {{ nombre_evento }}" class="imagen-arriba"> 
+    </dev>
+    <div id="contenedor-secundario">
+        <div id="parte-izquierda">
+            <div class="texto-izquierda">
+                <h1>{{nombre_evento}}</h1>
+                <h2>Descripcion</h2><p>{{descripcion}}</p>
+                <h2>Cupos</h2><p>Totales: {{entradas_totales}}</p><p>Disponibles: {{entradas_disponibles}}</p>
+                <h2>Precio:</h2><p>${{precio_entrada}}</p>
+                <a id="enlace" href="{{ url_for('verificar_sesion', id_evento_deseado=id_evento) }}">Comprar Entrada</a>
+            </div>
+        </div>
+        <div id="parte-derecha">
+            <div class="texto-derecha">
+                <h3>Fecha y hora:</h3><p>{{fecha_hora}}</p>
+                <h3>Localizacion:</h3>
+            </div>
+            <aside class="event-map">
+                <iframe 
+                    src={{localizacion}}
+                    frameborder="0" 
+                    allowfullscreen 
+                    title="Mapa del Movistar Arena">
+                </iframe>
+            </aside>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

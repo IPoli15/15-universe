@@ -1,0 +1,94 @@
+.container {
+    /* border: 2px solid green; */
+    width: 30%;
+    display: grid;
+    grid-template-columns: 100%;
+    text-align: center;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+label {
+    font-weight: bold;
+    color: #555;
+    display: block;
+    font-size: 0.9rem;
+}
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.7rem;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+    border-color: #333;
+    outline: none;
+}
+
+
+button[type="submit"] {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #555;
+}
+
+.msg {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #28a745; 
+    background: #e2f5e9;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.success-message {
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+    border-radius: 5px;
+    display: none;
+}
+
+#imagen_url {
+    margin: 10px;
+}
+
+#fecha_hora {
+    margin: 10px;
+}

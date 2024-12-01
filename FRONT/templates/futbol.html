@@ -1,41 +1,26 @@
-{% extends "base.html" %}
-
+{% if es_admin %}
+    {% extends "admin-base.html" %}
+{% elif sesion_iniciada %}
+    {% extends "usuarios-base.html" %}
+{% else %}
+    {% extends "base.html" %}
+{% endif %}
 
 {% block content %}
 
 <link rel="stylesheet" href="{{ url_for('static', filename='/css/futbol.css') }}">
 
-<div class="contenedor-eventos">
-    <div class="evento">
-        <h2>Visita al Museo de Boca Juniors</h2>
-        <div class="contenido-evento">
-            <div class="parte-izquierda">
-                <h3>¡Vení a visitar el museo de uno de los clubes mas grandes de Argentina!</h3>
-                <p>Conocé el museo de Boca Juniors, con la exposición de sus trofeos mas importantes</p>
-                <p>Te esperamos en La bombonera, Brandsen 805, CABA</p>
-                <p><strong>Horario:</strong> Lunes a Viernes de 10hs a 18hs</p>
-                <a id="enlace" href="{{url_for('Pago')}}">Comprar Entrada</a>
+<div class = "contenedor">
+    <h1>Eventos de {{nombre_categoria}}</h1>
+    <p id = "texto-inicial">{{descripcion_categoria}}</p>
+    <div class = "pagina">
+        {%for evento in eventos %}
+            <div class = "eventos" style="background-image: linear-gradient(0deg,rgba(58, 58, 58, 0.7),rgba(58, 58, 58, 0.7)), url('{{ evento.imagen_url }}'); background-size: cover; background-position: center;">
+                <h2>{{evento.nombre_evento}}</h2>
+                <p>{{evento.descripcion}}</p>
+                <a id="boton_mas_info" href="{{url_for('Descripcion_evento', id_evento=evento.id_evento)}}">Más Información</a>
             </div>
-            <div class="parte-derecha">
-                <img src="{{ url_for('static', filename='/img/ubicacionmuseoboca.png') }}" alt="Mapa Museo Boca" class="mapa">
-            </div>
-        </div>
-    </div>
-
-    <div class="evento">
-        <h2>RIVER VS BARRACAS CENTRAL</h2>
-        <div class="contenido-evento">
-            <div class="parte-izquierda">
-                <h3>River quiere prenderse en la lucha por el campeonato</h3>
-                <p>Pero antes debe recibir al siempre dificil Barracas Central</p>
-                <p><strong>Horario:</strong> Domingo 17:15hs</p>
-                <p><strong>Ubicación:</strong> Av. Pres. Figueroa Alcorta 7597, CABA</p>
-                <a id="enlace" href="{{url_for('Pago')}}">Comprar Entrada</a>
-            </div>
-            <div class="parte-derecha">
-                <img src="{{ url_for('static', filename='/img/ubicacionmonumental.png') }}" alt="Mapa Fiesta FEBA" class="mapa">
-            </div>
-        </div>
+        {% endfor %}           
     </div>
 </div>
 

@@ -1,0 +1,60 @@
+{% if es_admin %}
+    {% extends "admin-base.html" %}
+{% elif sesion_iniciada %}
+    {% extends "usuarios-base.html" %}
+{% else %}
+    {% extends "base.html" %}
+{% endif %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/crear_evento.css') }}">
+
+<div class="container">
+    <h2>Crear Nuevo Evento</h2>
+    <form action="{{ url_for('crear_evento') }}" method="POST">
+
+        <label for="nombre_evento">Nombre del Evento:</label>
+        <input type="text" id="nombre_evento" name="nombre_evento" required>
+
+        <label for="categoria">Categoria:</label>
+        <select id="categoria" name="categoria" required>
+            <option value="Fiestas">Fiesta</option>
+            <option value="Teatro">Teatro</option>
+            <option value="Esports">Esports</option>
+            <option value="Futbol">Futbol</option>
+            <option value="Musica">Conciertos</option>
+            <option value="Cultura Japonesa">Cultura Japonesa</option>
+            <option value="Stand Up">Stand-Up</option>
+        </select>
+
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" name="descripcion" required></textarea>
+
+        <label for="imagen_url">URL de la Imagen:</label>
+        <input type="url" id="imagen_url" name="imagen_url" required>
+
+        <label for="entradas_totales">Entradas Totales:</label>
+        <input type="number" id="entradas_totales" name="entradas_totales" min="1" required>
+
+        <label for="entradas_disponibles">Entradas Disponibles:</label>
+        <input type="number" id="entradas_disponibles" name="entradas_disponibles" min="1" required>
+
+        <label for="fecha_hora">Fecha y Hora:</label>
+        <input type="datetime-local" id="fecha_hora" name="fecha_hora" min="{{ current_datetime }}" required>
+
+        <label for="localizacion">Localizacion:</label>
+        <input type="text" id="localizacion" name="localizacion" required>
+
+        <label for="precio_entrada">Precio de Entrada:</label>
+        <input type="number" step="1" id="precio_entrada" name="precio_entrada" min="0" required>
+
+        <button type="submit">Crear Evento</button>
+    </form>
+    <div id="successMessage" class="success-message">
+        ¡Evento creado con Exito!
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/crear_evento.js') }}"></script>
+
+{% endblock %}

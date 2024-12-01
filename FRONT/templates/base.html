@@ -11,10 +11,11 @@
 
     <header>
         <div class="contenedor-header">
-            <img src="{{ url_for('static', filename='img/logo-br.png') }}" alt="Logo" class="logo">
-            <input type="text" placeholder="Buscar" class="barra-busqueda">
-            <a class="boton-reservar" href="{{url_for('Reserva')}}">Consulta tu reserva</a>
-            <a class="boton-reservar" href="{{url_for('login')}}">Login</a>
+            <a href="{{ url_for('index') }}"> <img src="/static/img/logo-br.png" alt="Logo" class="logo"> </a>
+            <form action="{{ url_for('busqueda_eventos') }}" id="form-busqueda" method="get">
+                <input type="text" placeholder="Buscar" class="barra-busqueda" name="fname">
+            </form>
+            <a class="boton-login" href="{{url_for('login')}}">Login</a>
         </div>
     </header>
     <main>
@@ -46,21 +47,6 @@
                 <p>Santiago Di MAsso</p>
                 <p>Ruy Mori</p>
             </div>
-            <!-- otra opcio -->
-            <!-- <div class="creadores">
-    <div class="columna-creadores">
-        <p>Ignacio Mauel Poli Salvador</p>
-        <p>Sol Yohara Szinvelski</p>
-        <p>Blas Perez</p>
-        <p>Alejandro Cabrera Diaz</p>
-    </div>
-    <div class="columna-creadores">
-        <p>Henry Yahuasi</p>
-        <p>Santiago Di MAsso</p>
-        <p>Ruy Mori</p>
-    </div>
-</div>
--->
         </div>
     </footer>
 </body>

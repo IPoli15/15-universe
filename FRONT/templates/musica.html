@@ -1,9 +1,15 @@
-{% extends "base.html" %}
+{% if es_admin %}
+    {% extends "admin-base.html" %}
+{% elif sesion_iniciada %}
+    {% extends "usuarios-base.html" %}
+{% else %}
+    {% extends "base.html" %}
+{% endif %}
 
 
 {% block content %}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='/css/musica.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/Descripcion_evento.css') }}">
 
 <div id="contenedor-principal">
     <dev id="banner">

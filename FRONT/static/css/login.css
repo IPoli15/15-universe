@@ -1,19 +1,19 @@
-/* main {
-    background-image: url(/15-universe/FRONT/static/img/fondo-login.jpg);
-} */
-
 main {
     background-image: url("/static/img/fondologin.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    width: 1270px; 
-    height: 500px; 
+    width: 100%; 
+    height: 100%; 
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto; 
     padding: 0;
+
+    display: grid;
+    place-items: center;
+    grid-template-rows: auto auto;
 }
 
 
@@ -22,7 +22,6 @@ main {
     margin: 0 auto;
     padding: 2em;
     background-color: #D9B2EC;
-    border: 1px solid #8400ff;
     border-radius: 10px;
     text-align: center;
 }
@@ -97,4 +96,18 @@ main {
 
 .contenedor-login button[type="submit"]:hover {
     background-color: #3a006a;
+}
+
+.flash-messages {
+    text-align: center;
+    margin-bottom: 20px; /* Ajusta el espacio entre el mensaje y el contenedor de login */
+}
+
+.alert {
+    display: inline-block;
+    color: rgb(207, 10, 10);
+    font-weight: bold;
+    background-color: #f8d7da;
+    padding: 10px;
+    border-radius: 5px;
 }

@@ -1,4 +1,10 @@
-{% extends "base.html" %}
+{% if es_admin %}
+    {% extends "admin-base.html" %}
+{% elif sesion_iniciada %}
+    {% extends "usuarios-base.html" %}
+{% else %}
+    {% extends "base.html" %}
+{% endif %}
 
 
 {% block content %}
@@ -12,7 +18,7 @@
             <div class="texto-izquierda">
                 <h2>sobre el jardin japones</h2>
                 <div id="descripcion">
-                         <div class="texto">
+                        <div class="texto">
                                 <p> "Me sentiré sumamente complacido si una visita nuestra, aunque sea de corta duración,
                                     nos permite servir de puente [entre Japón y Argentina] para un más estrecho vínculo..."
                                 (Akihito- 15 de mayo de 1967)</p>

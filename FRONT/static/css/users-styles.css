@@ -1,0 +1,294 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* ? ___________ Global Styles____________ */
+*{
+    font-family: "Montserrat", sans-serif;
+}
+/* ? _____________________________________ */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #220752;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    width: 100%;
+    background-color: #220752;
+    padding: 20px 0; 
+    text-align: center;
+}
+
+.contenedor-header {
+    max-width: 1200px;
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px; 
+}
+
+.logo {
+    width: 80px;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.barra-busqueda {
+    width: 350px; 
+    padding: 12px;
+    font-size: 18px; 
+    border-radius: 15px;
+    border: none;
+    outline: none;
+}
+
+.boton-reservar, .boton-modificar, .boton-cerrar-sesion {
+    padding: 12px 25px; 
+    background-color: #9a4d9b;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.boton-reservar:hover, .boton-modificar:hover, .boton-cerrar-sesion:hover {
+    transform: scale(1.02);
+    background-color: #ae55af;
+}
+
+.icono {
+    width: 35px;
+    height: 35px;
+    border-radius: 20px;
+    margin: 0;
+    transition: transform 0.3s ease;
+}
+
+.icono:hover {
+    transform: scale(1.1);
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer {
+    width: 100%;
+    background-color: #220752;
+    padding: 20px 0;
+}
+
+.footer {
+    max-width: 1200px;
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+}
+
+.contacto, .creadores {
+    text-align: center;
+}
+
+.contactos {
+    display: flex;
+    gap: 10px;
+}
+
+.logo svg {
+    width: 70px; 
+    height: 70px;
+    fill: #faf9f8;
+    transition: transform 0.3s ease;
+}
+
+
+.logo:hover svg {
+    transform: scale(1.1);
+    fill: #efcef0; 
+}
+
+.st0 {
+    fill: #270F47;
+}
+.container {
+    background-color: #ffffff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    text-align: center;
+}
+
+
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+    padding: auto;
+}
+.input-group label {
+    display: block;
+    color: #555;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #2f2f2f;
+    font-size: 1em;
+}
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #000000;
+}
+
+#titulo-futbol-1{
+    font-size: 70px;
+    float: left;
+}
+
+#subtitulo-futbol{
+    font-size: 30px;
+    float: left;
+}
+
+.informacion-reserva{
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #2f2f2f;
+    font-size: 1em;
+    display: block;
+    color: #555;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.aviso {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.aviso-mensaje {
+    background-color: #fff;
+    color:black;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 300px;
+}
+
+button {
+    background-color: #9a4d9b;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #7a2f7e;
+}
+
+
+.menu-admin {
+    position: relative;
+    display: inline-block;
+}
+
+.menu-desplegable {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #8b8b8b;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.menu-admin .menu-desplegable a {
+    text-decoration: none;
+    color: #000;
+    display: block;
+    margin: 5px 0;
+}
+
+.menu-admin .menu-desplegable a:hover {
+    color: #fff;
+    background-color: rgb(113, 34, 187);
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.menu-admin.active .menu-desplegable {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .contenedor-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .barra-busqueda {
+        width: 85%;
+    }
+
+    .boton-login {
+        width: 60%;
+        text-align: center;
+    }
+
+    .footer {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .contactos {
+        gap: 10px;
+    }
+
+    .logo svg {
+        position: center;
+        width: 40px;
+        height: 40px;
+    }
+
+    .creadores p {
+        font-size: 12px;
+    }
+}
+

@@ -1,0 +1,757 @@
+#:kivy 2.3.0
+
+<RootScreen>:
+    MyRoot:
+        id: my_root
+
+<MyRoot>:
+    BoxLayout:
+        orientation: "vertical"
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/fondohome.jpg'
+
+        # Header
+        BoxLayout:
+            size_hint_y: None
+            height: "60dp"
+            padding: [20, 5]
+            spacing: 10
+            canvas.before:
+                Color:
+                    rgba: 0.133, 0.027, 0.322, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            Image:
+                source: 'assets/images/logo-br.png'
+                size_hint: None, None
+                height: "50dp" 
+                width: self.height
+                allow_stretch: True
+
+            BoxLayout:
+                orientation: "horizontal"
+                spacing: 10
+
+                TextInput:
+                    id: Mensaje_busqueda
+                    hint_text: "Buscar"
+                    size_hint_x: 0.4
+                    background_color: 0.2, 0.2, 0.25, 1
+                    foreground_color: 1, 1, 1, 1
+                    hint_text_color: 0.5, 0.5, 0.5, 1
+                    cursor_color: 1, 1, 1, 1
+                    padding: [10, 10]
+                    font_size: '16sp'
+                    on_text_validate: root.busqueda_eventos(self.text)
+                
+                Button:
+                    text: 'Buscar'
+                    size_hint_x: 0.15
+                    on_release: root.busqueda_eventos(Mensaje_busqueda.text)
+                    opacity: 1 if app.is_logged_in else 0
+                    disabled: not app.is_logged_in
+                    background_normal: ''
+                    background_color: 0.604, 0.302, 0.608, 1
+                    canvas.before:
+                        Color:
+                            rgba: self.background_color
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [10]
+                
+                Button:
+                    id: login_button
+                    text: "Login"
+                    size_hint_x: 0.20
+                    background_normal: ''
+                    background_color: 0.604, 0.302, 0.608, 1 
+                    on_release: root.switch_screen('Log')
+                    opacity: 1 if not app.is_logged_in else 0
+                    disabled: app.is_logged_in
+                    canvas.before:
+                        Color:
+                            rgba: self.background_color
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [10]
+                    
+                Button:
+                    id: reserva_button
+                    text: "Consultar tu reserva"
+                    size_hint_x: 0.35
+                    background_normal: ''
+                    background_color: 0.604, 0.302, 0.608, 1 
+                    on_release: root.switch_screen('Res')
+                    opacity: 1 if app.is_logged_in else 0
+                    disabled: not app.is_logged_in
+                    canvas.before:
+                        Color:
+                            rgba: self.background_color
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [10]
+
+#                Button:
+#                    id: crear_evento_button
+#                    text: "Crear Evento"
+#                    size_hint_x: 0.25
+#                    background_normal: ''
+#                    background_color: 0.604, 0.302, 0.608, 1  
+#                    on_release: root.switch_screen('CrearEvento')
+#                    opacity: 1 if app.is_logged_in and app.is_admin else 0
+#                    disabled: not (app.is_logged_in and app.is_admin)
+#                    canvas.before:
+#                        Color:
+#                            rgba: self.background_color
+#                        RoundedRectangle:
+#                            pos: self.pos
+#                            size: self.size
+#                            radius: [10]
+
+                Button:
+                    id: logout_button
+                    text: "Cerrar sesion"
+                    size_hint_x: 0.25
+                    background_normal: ''
+                    background_color: 0.604, 0.302, 0.608, 1 
+                    on_release: root.logout()
+                    opacity: 1 if app.is_logged_in else 0
+                    disabled: not app.is_logged_in
+                    canvas.before:
+                        Color:
+                            rgba: self.background_color
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [10]
+
+        BoxLayout:
+            orientation: "vertical"
+
+            # Categories grid
+            GridLayout:
+                cols: 4
+                padding: [20, 20]
+                spacing: 20
+
+                # Futbol
+                Button:
+                    id: futbol_button
+                    background_color: 0, 0, 0, 0
+                    on_release: root.access_category('Futbol')
+                    canvas.before:
+                        Color:
+                            rgba: 0.8, 0.8, 0.8, 1
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [15]
+                    BoxLayout:
+                        orientation: "vertical"
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        padding: 10
+                        spacing: 5
+
+                        Image:
+                            source: "assets/images/cat_futbol.png"
+                            allow_stretch: True
+                            keep_ratio: True
+                            size_hint_y: 0.8
+
+                        Label:
+                            text: "Fútbol"
+                            size_hint_y: 0.2
+                            color: 0, 0, 0, 1
+
+                # Musica
+                Button:
+                    id: musica_button
+                    background_color: 0, 0, 0, 0
+                    on_release: root.access_category('Musica')
+                    canvas.before:
+                        Color:
+                            rgba: 0.8, 0.8, 0.8, 1
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [15]
+                    BoxLayout:
+                        orientation: "vertical"
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        padding: 10
+                        spacing: 5
+
+                        Image:
+                            source: "assets/images/cat_conciertos.png"
+                            allow_stretch: True
+                            keep_ratio: True
+                            size_hint_y: 0.8
+
+                        Label:
+                            text: "Conciertos"
+                            size_hint_y: 0.2
+                            color: 0, 0, 0, 1
+
+                # Fiestas
+                Button:
+                    id: fiestas_button
+                    background_color: 0, 0, 0, 0
+                    on_release: root.access_category('Fiestas')
+                    canvas.before:
+                        Color:
+                            rgba: 0.8, 0.8, 0.8, 1
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [15]
+                    BoxLayout:
+                        orientation: "vertical"
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        padding: 10
+                        spacing: 5
+
+                        Image:
+                            source: "assets/images/cat_fiestas.png"
+                            allow_stretch: True
+                            keep_ratio: True
+                            size_hint_y: 0.8
+
+                        Label:
+                            text: "Fiestas"
+                            size_hint_y: 0.2
+                            color: 0, 0, 0, 1
+
+                # Teatro
+                Button:
+                    id: teatro_button
+                    background_color: 0, 0, 0, 0
+                    on_release: root.access_category('Teatro')
+                    canvas.before:
+                        Color:
+                            rgba: 0.8, 0.8, 0.8, 1
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [15]
+                    BoxLayout:
+                        orientation: "vertical"
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        padding: 10
+                        spacing: 5
+
+                        Image:
+                            source: "assets/images/cat_teatro.png"
+                            allow_stretch: True
+                            keep_ratio: True
+                            size_hint_y: 0.8
+
+                        Label:
+                            text: "Teatro"
+                            size_hint_y: 0.2
+                            color: 0, 0, 0, 1
+
+                # eSports
+                Button:
+                    id: esports_button
+                    background_color: 0, 0, 0, 0
+                    on_release: root.access_category('eSports')
+                    canvas.before:
+                        Color:
+                            rgba: 0.8, 0.8, 0.8, 1
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [15]
+                    BoxLayout:
+                        orientation: "vertical"
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        padding: 10
+                        spacing: 5
+
+                        Image:
+                            source: "assets/images/cat_esport.png"
+                            allow_stretch: True
+                            keep_ratio: True
+                            size_hint_y: 0.8
+
+                        Label:
+                            text: "E-sports"
+                            size_hint_y: 0.2
+                            color: 0, 0, 0, 1
+
+                # Stand-Up
+                Button:
+                    id: stand_up_button
+                    background_color: 0, 0, 0, 0
+                    on_release: root.access_category('Stand Up')
+                    canvas.before:
+                        Color:
+                            rgba: 0.8, 0.8, 0.8, 1
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [15]
+                    BoxLayout:
+                        orientation: "vertical"
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        padding: 10
+                        spacing: 5
+
+                        Image:
+                            source: "assets/images/stand_up_icon.png"
+                            allow_stretch: True
+                            keep_ratio: True
+                            size_hint_y: 0.8
+
+                        Label:
+                            text: "Stand-Up"
+                            size_hint_y: 0.2
+                            color: 0, 0, 0, 1
+
+                # Cultura Japonesa
+                Button:
+                    id: cultura_japonesa_button
+                    background_color: 0, 0, 0, 0
+                    on_release: root.access_category('Cultura Japonesa')
+                    canvas.before:
+                        Color:
+                            rgba: 0.8, 0.8, 0.8, 1
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [15]
+                    BoxLayout:
+                        orientation: "vertical"
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        padding: 10
+                        spacing: 5
+
+                        Image:
+                            source: "assets/images/jp.png"
+                            allow_stretch: True
+                            keep_ratio: True
+                            size_hint_y: 0.8
+
+                        Label:
+                            text: "Cultura Japonesa"
+                            size_hint_y: 0.2
+                            color: 0, 0, 0, 1
+
+
+        # Footer
+        BoxLayout:
+            size_hint_y: None
+            height: "60dp"
+            padding: [20, 5]
+            spacing: 10
+            orientation: "horizontal"
+            pos_hint: {'center_x': 0.5}  
+            canvas.before:
+                Color:
+                    rgba: 0.133, 0.027, 0.322, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            Widget:
+                size_hint_x: 1  
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_x: None
+                width: self.minimum_width
+                spacing: 20 
+
+                Image:
+                    source: 'assets/images/Facebook.png'
+                    size_hint: None, None
+                    height: "40dp" 
+                    width: self.height
+                    allow_stretch: True
+
+                Image:
+                    source: 'assets/images/Instagram.png'
+                    size_hint: None, None
+                    height: "40dp" 
+                    width: self.height
+                    allow_stretch: True
+
+                Image:
+                    source: 'assets/images/Whatsapp.png'
+                    size_hint: None, None
+                    height: "40dp" 
+                    width: self.height
+                    allow_stretch: True
+
+            Widget:
+                size_hint_x: 1
+
+<LoginScreen>:
+    Login:
+
+<Login>:
+    BoxLayout:
+        orientation: "vertical"
+        canvas.before:
+            Color:
+                rgba: 0.2, 0.1, 0.5, 0.8 
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/fondologin.jpg' 
+
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+
+            BoxLayout:
+                orientation: "vertical"
+                size_hint: None, None
+                size: "400dp", "300dp"
+                padding: 20
+                spacing: 20
+
+                canvas.before:
+                    Color:
+                        rgba: 0.1, 0.1, 0.15, 0.9
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [15]
+
+                Label:
+                    text: "Iniciar sesión"
+                    font_name: "Roboto"
+                    font_size: 30
+                    size_hint_y: None
+                    height: 50
+                    color: 1, 1, 1, 1
+
+                BoxLayout:
+                    orientation: "vertical"
+                    spacing: 5
+                    size_hint_y: None
+                    height: "70dp"
+
+                    Label:
+                        text: "Usuario:"
+                        size_hint_y: None
+                        height: "20dp"
+                        color: 1, 1, 1, 1
+                        halign: 'left'
+                        text_size: self.size
+
+                    TextInput:
+                        id: username
+                        multiline: False
+                        size_hint_y: None
+                        height: "40dp"
+                        background_color: 0.2, 0.2, 0.25, 1
+                        foreground_color: 1, 1, 1, 1
+                        cursor_color: 1, 1, 1, 1
+                        padding: [10, 10]
+
+                BoxLayout:
+                    orientation: "vertical"
+                    spacing: 5
+                    size_hint_y: None
+                    height: "70dp"
+
+                    Label:
+                        text: "Contraseña:"
+                        size_hint_y: None
+                        height: "20dp"
+                        color: 1, 1, 1, 1
+                        halign: 'left'
+                        text_size: self.size
+
+                    TextInput:
+                        id: password
+                        multiline: False
+                        password: True
+                        size_hint_y: None
+                        height: "40dp"
+                        background_color: 0.2, 0.2, 0.25, 1
+                        foreground_color: 1, 1, 1, 1
+                        cursor_color: 1, 1, 1, 1
+                        padding: [10, 10]
+
+                Button:
+                    text: "Iniciar sesión"
+                    size_hint_y: None
+                    height: "40dp"
+                    background_color: 0.3, 0.2, 0.8, 1
+                    color: 1, 1, 1, 1
+                    on_release: root.send_login(username.text, password.text)
+
+                Button:
+                    text: "Volver"
+                    size_hint_y: None
+                    height: "40dp"
+                    background_color: 0.5, 0.5, 0.5, 1
+                    color: 1, 1, 1, 1
+                    on_release: root.switch_root()
+
+# <CrearEventoScreen>:
+#     BoxLayout:
+#         orientation: "vertical"
+#         canvas.before:
+#             Color:
+#                 rgba: 0.2, 0.1, 0.5, 0.8  # Color de fondo con opacidad
+#             Rectangle:
+#                 pos: self.pos  # Posición del fondo
+#                 size: self.size  # Tamaño del fondo
+#                 source: 'assets/images/Fondo.jpg'  # Imagen de fondo
+
+#         ScrollView:
+#             BoxLayout:
+#                 orientation: "vertical"  # Organiza los elementos verticalmente
+#                 size_hint_y: None  # Tamaño vertical no dependiente del contenedor
+#                 height: self.minimum_height  # Ajusta la altura al contenido
+#                 padding: 20  # Espaciado interior
+#                 spacing: 10  # Espaciado entre elementos
+
+#                 Label:
+#                     text: "Crear Nuevo Evento"  # Título de la pantalla
+#                     font_size: '24sp'  # Tamaño de fuente
+#                     size_hint_y: None
+#                     height: '40dp'
+#                     color: 1, 1, 1, 1  # Color del texto (blanco)
+
+#                 Label:
+#                     text: "Nombre del Evento:"  # Etiqueta para el nombre
+#                     size_hint_y: None
+#                     height: '30dp'
+#                     color: 1, 1, 1, 1
+
+#                 TextInput:
+#                     id: nombre_evento  # Campo de entrada para el nombre del evento
+#                     multiline: False  # Entrada de una sola línea
+#                     size_hint_y: None
+#                     height: '30dp'
+
+#                 Label:
+#                     text: "Categoría:"  # Etiqueta para la categoría
+#                     size_hint_y: None
+#                     height: '30dp'
+#                     color: 1, 1, 1, 1
+
+#                 Spinner:
+#                     id: categoria  # Selector de categoría
+#                     text: 'Fiesta'  # Valor por defecto
+#                     values: 'Fiesta', 'Musica', 'Teatro', 'Futbol', 'eSports', 'Stand Up', 'Cultura Japonesa'  # Opciones
+#                     size_hint_y: None
+#                     height: '40dp'
+#                     color: 0.604, 0.302, 0.608, 1  # Color del texto
+
+#                 Label:
+#                     text: "Descripción:"  # Etiqueta para la descripción
+#                     size_hint_y: None
+#                     height: '30dp'
+#                     color: 1, 1, 1, 1
+
+#                 TextInput:
+#                     id: descripcion  # Campo de entrada para la descripción
+#                     multiline: True  # Entrada de varias líneas
+#                     size_hint_y: None
+#                     height: '70dp'
+
+#                 Label:
+#                     text: "URL de la Imagen:"  # Etiqueta para la URL de la imagen
+#                     size_hint_y: None
+#                     height: '30dp'
+#                     color: 1, 1, 1, 1
+
+#                 TextInput:
+#                     id: imagen_url  # Campo de entrada para la URL de la imagen
+#                     multiline: False
+#                     size_hint_y: None
+#                     height: '30dp'
+
+#                 Label:
+#                     text: "Entradas Totales:"  # Etiqueta para las entradas totales
+#                     size_hint_y: None
+#                     height: '30dp'
+#                     color: 1, 1, 1, 1
+
+#                 TextInput:
+#                     id: entradas_totales  # Campo de entrada para el total de entradas
+#                     multiline: False
+#                     input_filter: 'int'  # Solo números enteros
+#                     size_hint_y: None
+#                     height: '30dp'
+
+#                 Label:
+#                     text: "Entradas Disponibles:"  # Etiqueta para las entradas disponibles
+#                     size_hint_y: None
+#                     height: '30dp'
+#                     color: 1, 1, 1, 1
+
+#                 TextInput:
+#                     id: entradas_disponibles  # Campo de entrada para entradas disponibles
+#                     multiline: False
+#                     input_filter: 'int'
+#                     size_hint_y: None
+#                     width: '300dp'
+#                     height: '30dp'
+
+#                 Label:
+#                     text: "Fecha y Hora:"  # Etiqueta para la fecha y hora
+#                     size_hint_y: None
+#                     height: '30dp'
+#                     color: 1, 1, 1, 1
+
+#                 TextInput:
+#                     id: fecha_hora  # Campo de entrada para la fecha y hora
+#                     multiline: False
+#                     size_hint_y: None
+#                     height: '30dp'
+
+#                 Label:
+#                     text: "Localización:"  # Etiqueta para la localización
+#                     size_hint_y: None
+#                     height: '30dp'
+#                     color: 1, 1, 1, 1
+
+#                 TextInput:
+#                     id: localizacion  # Campo de entrada para la localización
+#                     multiline: False
+#                     size_hint_y: None
+#                     height: '30dp'
+
+#                 Label:
+#                     text: "Precio de Entrada:"  # Etiqueta para el precio de entrada
+#                     size_hint_y: None
+#                     height: '30dp'
+#                     color: 1, 1, 1, 1
+
+#                 TextInput:
+#                     id: precio_entrada  # Campo de entrada para el precio
+#                     multiline: False
+#                     input_filter: 'int'
+#                     size_hint_y: None
+#                     height: '30dp'
+
+#                 BoxLayout:
+#                     orientation: 'horizontal'  # Botones en fila
+#                     size_hint_y: None
+#                     height: '50dp'
+#                     spacing: 10
+
+#                     Button:
+#                         text: "Crear Evento"  # Botón para crear evento
+#                         size_hint_x: 0.5
+#                         background_color: 0.3, 0.2, 0.8, 1
+#                         on_release: root.create_event()  # Acción al presionar
+
+#                     Button:
+#                         text: "Cancelar"  # Botón para cancelar
+#                         size_hint_x: 0.5
+#                         background_color: 0.5, 0.5, 0.5, 1
+#                         on_release: root.go_back()  # Acción al presionar
+
+<ReservaScreen>:
+    Reserva:
+
+<Reserva>:
+    BoxLayout:
+        orientation: "vertical"
+        canvas.before:
+            Color:
+                rgba: 0.2, 0.1, 0.5, 0.8 
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/fondologin.jpg'
+
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+
+            BoxLayout:
+                orientation: "vertical"
+                size_hint: None, None
+                size: "400dp", "300dp"
+                padding: 20
+                spacing: 20
+
+                canvas.before:
+                    Color:
+                        rgba: 0.1, 0.1, 0.15, 0.9
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [15]
+
+                Label:
+                    text: "Consultar tu reserva"
+                    font_name: "Roboto"
+                    font_size: 30
+                    size_hint_y: None
+                    height: 50
+                    color: 1, 1, 1, 1
+
+                BoxLayout:
+                    orientation: "vertical"
+                    spacing: 5
+                    size_hint_y: None
+                    height: "70dp"
+
+                    Label:
+                        text: "Numero de reserva:"
+                        size_hint_y: None
+                        height: "20dp"
+                        color: 1, 1, 1, 1
+                        halign: 'left'
+                        text_size: self.size
+
+                    TextInput:
+                        id: idreserva
+                        multiline: False
+                        size_hint_y: None
+                        height: "40dp"
+                        background_color: 0.2, 0.2, 0.25, 1
+                        foreground_color: 1, 1, 1, 1
+                        cursor_color: 1, 1, 1, 1
+                        padding: [10, 10]
+
+                Button:
+                    text: "Buscar reserva"
+                    size_hint_y: None
+                    height: "40dp"
+                    background_color: 0.3, 0.2, 0.8, 1
+                    color: 1, 1, 1, 1
+                    on_release: root.check_reservation(idreserva.text) 
+
+                Button:
+                    text: "Cancelar reserva"
+                    size_hint_y: None
+                    height: "40dp"
+                    background_color: 0.3, 0.2, 0.8, 1
+                    color: 1, 1, 1, 1
+                    on_release: root.delete_reservation(idreserva.text)
+
+                Button:
+                    text: "Volver"
+                    size_hint_y: None
+                    height: "40dp"
+                    background_color: 0.5, 0.5, 0.5, 1
+                    color: 1, 1, 1, 1
+                    on_release: root.switch_root()
