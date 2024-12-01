@@ -128,3 +128,30 @@ aside iframe {
     background-color: #fc5542;
 }
 
+@media (max-width: 768px) {
+    #contenedor-principal {
+        max-width: 90%;
+    }
+
+    #contenedor-secundario {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+
+    .imagen-arriba {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    aside {
+        height: 300px;
+    }
+}
