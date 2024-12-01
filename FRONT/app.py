@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, current_app, redirect, url_for, flash, jsonify
+from datetime import datetime
 import requests
 
 PORT = 5000
@@ -309,7 +310,9 @@ def crear_evento():
         else:
             flash(response.json().get('error', 'Error desconocido al crear el evento.'), 'danger')
 
-    return render_template('crear_evento.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'])
+    #La ultima parte hace referncia a year , month ,datetiem , hour y minutes.
+    current_datetime = datetime.now().strftime('%Y-%m-%dT%H:%M')
+    return render_template('crear_evento.html', es_admin=app.config['ES_ADMIN'], sesion_iniciada=app.config['SESION_INICIADA'],current_datetime=current_datetime)
 
 
 @app.route('/descripcion-evento/<id_evento>')

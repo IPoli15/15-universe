@@ -40,7 +40,7 @@
         <input type="number" id="entradas_disponibles" name="entradas_disponibles" min="1" required>
 
         <label for="fecha_hora">Fecha y Hora:</label>
-        <input type="datetime-local" id="fecha_hora" name="fecha_hora" required>
+        <input type="datetime-local" id="fecha_hora" name="fecha_hora" min="{{ current_datetime }}" required>
 
         <label for="localizacion">Localizacion:</label>
         <input type="text" id="localizacion" name="localizacion" required>
