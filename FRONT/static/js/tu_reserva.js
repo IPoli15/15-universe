@@ -1,3 +1,4 @@
+const Backend_url = "https://Ruy.pythonanywhere.com"
 document.getElementById("cancelarReserva").addEventListener("click", function () {
     const id_reserva = this.getAttribute("data-reserva-id");
     
@@ -12,7 +13,7 @@ document.getElementById("cancelarReserva").addEventListener("click", function ()
         return;
     }
 
-    fetch(`http://127.0.0.1:5001/eliminar-reserva/${id_reserva}`, {
+    fetch(`${Backend_url}/eliminar-reserva/${id_reserva}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
