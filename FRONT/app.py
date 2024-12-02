@@ -3,7 +3,7 @@ from datetime import datetime
 import requests
 
 PORT = 5000
-BACKEND_URL = "https://ruy.pythonanywhere.com"
+BACKEND_URL = "https://Ruy.pythonanywhere.com"
 app = Flask(__name__)
 app.secret_key = 'coqui2529'
 # Variable para validar si es admin o no,
@@ -86,7 +86,7 @@ def Pago():
             return redirect(url_for('Pago'))
         try:
             # Enviar los datos al backend
-            response = requests.post('http://localhost:5001/crear-reserva', json={
+            response = requests.post(f'{BACKEND_URL}/crear-reserva', json={
                 'nombre': nombre,
                 'id_evento': id_evento,
                 'cant_tickets': cant_tickets
