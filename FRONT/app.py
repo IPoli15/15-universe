@@ -306,7 +306,6 @@ def crear_evento():
 
         if response.status_code == 201:
             flash('Evento creado con éxito.', 'success')
-            return redirect('/crear_evento')
         else:
             flash(response.json().get('error', 'Error desconocido al crear el evento.'), 'danger')
 
